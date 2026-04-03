@@ -45,7 +45,23 @@ def main():
     print(f"  Network: {G.number_of_nodes()} nodes, {G.number_of_edges()} edges")
 
     degree_cent = nx.degree_centrality(G)
-    betweenness_cent = nx.betweenness_centrality(G, k=min(500, G.number_of_nodes()))
+
+    try:
+        import networkit as nk
+        # Use networkit for faster approximate betweenness centrality
+        nk_graph = nk.nxadapter.nx2nk(G, weightAttr="weight")
+        nk_betweenness = nk.centrality.EstimateBetweenness(
+            nk_graph, nSamples=min(500, G.number_of_nodes()), parallel=True
+        )
+        nk_betweenness.run()
+        nk_scores = nk_betweenness.scores()
+        nx_nodes = list(G.nodes())
+        nk_node_map = {i: nx_nodes[i] for i in range(len(nx_nodes))}
+        betweenness_cent = {nk_node_map[i]: nk_scores[i] for i in range(len(nk_scores))}
+        print("  Using networkit for betweenness centrality (parallel)")
+    except ImportError:
+        betweenness_cent = nx.betweenness_centrality(G, k=min(500, G.number_of_nodes()))
+        print("  Using networkx for betweenness centrality (install networkit for speedup)")
 
     centrality_df = pl.DataFrame({
         "author_id": list(degree_cent.keys()),

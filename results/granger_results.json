@@ -1,0 +1,66 @@
+{
+  "zeiger_to_community_lag1": {
+    "f_stat": 0.007084426828340439,
+    "p_value": 0.9331010317083129
+  },
+  "zeiger_to_community_lag2": {
+    "f_stat": 0.022491054328589073,
+    "p_value": 0.9777654172354252
+  },
+  "zeiger_to_community_lag3": {
+    "f_stat": 0.18397613555227002,
+    "p_value": 0.9070316559529129
+  },
+  "zeiger_to_community_lag4": {
+    "f_stat": 0.16913315944739116,
+    "p_value": 0.9535626189098975
+  },
+  "zeiger_to_community_lag5": {
+    "f_stat": 0.45812053750321613,
+    "p_value": 0.8062468491119306
+  },
+  "zeiger_to_community_lag6": {
+    "f_stat": 0.35967160989576014,
+    "p_value": 0.902180443760462
+  },
+  "zeiger_to_community_lag7": {
+    "f_stat": 0.43988857328479836,
+    "p_value": 0.8740207524768933
+  },
+  "zeiger_to_community_lag8": {
+    "f_stat": 0.3826674430234122,
+    "p_value": 0.9265788198218741
+  },
+  "community_to_zeiger_lag1": {
+    "f_stat": 0.4447758425938664,
+    "p_value": 0.5064600882630149
+  },
+  "community_to_zeiger_lag2": {
+    "f_stat": 0.5873388676840336,
+    "p_value": 0.5578973286356586
+  },
+  "community_to_zeiger_lag3": {
+    "f_stat": 0.6775118598154267,
+    "p_value": 0.568109129252054
+  },
+  "community_to_zeiger_lag4": {
+    "f_stat": 1.0155143954813486,
+    "p_value": 0.4040859362632195
+  },
+  "community_to_zeiger_lag5": {
+    "f_stat": 0.7836292977058865,
+    "p_value": 0.564387122556586
+  },
+  "community_to_zeiger_lag6": {
+    "f_stat": 0.6544023982366343,
+    "p_value": 0.6864495089374706
+  },
+  "community_to_zeiger_lag7": {
+    "f_stat": 0.7257885727334898,
+    "p_value": 0.6505341217241134
+  },
+  "community_to_zeiger_lag8": {
+    "f_stat": 0.6268191873367158,
+    "p_value": 0.7526653763620167
+  }
+}

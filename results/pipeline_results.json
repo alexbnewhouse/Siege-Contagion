@@ -1,0 +1,12 @@
+{
+  "n_users": 155,
+  "mean_dm_lead_days": -176.29032258064515,
+  "median_dm_lead_days": -48.0,
+  "dm_first_pct": 16.7741935483871,
+  "forum_first_pct": 75.48387096774194,
+  "same_pct": 7.741935483870968,
+  "t_stat": -6.8697896845086435,
+  "t_pvalue": 1.4942315588904657e-10,
+  "wilcoxon_stat": 1238.5,
+  "wilcoxon_pvalue": 0.9999999999999983
+}

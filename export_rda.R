@@ -8,6 +8,15 @@ data_dir <- "data/raw/ironmarch/data"
 
 export_list <- function(obj, prefix) {
   if (is.data.frame(obj)) {
+    # Flatten list columns to character so write.csv doesn't fail
+    for (cn in colnames(obj)) {
+      if (is.list(obj[[cn]])) {
+        obj[[cn]] <- vapply(obj[[cn]], function(x) {
+          if (is.null(x) || length(x) == 0) NA_character_
+          else paste(x, collapse = ";")
+        }, character(1))
+      }
+    }
     path <- file.path(out_dir, paste0(prefix, ".csv"))
     cat("  Writing", path, ":", nrow(obj), "rows x", ncol(obj), "cols\n")
     write.csv(obj, path, row.names = FALSE)

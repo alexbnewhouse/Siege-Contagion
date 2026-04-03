@@ -8,7 +8,10 @@ from __future__ import annotations
 
 import json
 import datetime
+import multiprocessing
+import os
 from collections import defaultdict
+from concurrent.futures import ProcessPoolExecutor
 
 import numpy as np
 import pandas as pd
@@ -16,6 +19,8 @@ import polars as pl
 import statsmodels.api as sm
 
 from utils import DATA_PROCESSED, NETWORKS_DIR, RESULTS_DIR, ZEIGER_MEMBER_ID
+
+_N_WORKERS = min(multiprocessing.cpu_count(), int(os.environ.get("SIEGE_WORKERS", "16")))
 
 
 def load_network_neighbors(name: str, directed: bool = False) -> dict[int, set[int]]:
@@ -150,6 +155,47 @@ def run_panel_regression(panel: pd.DataFrame, label: str) -> dict:
     return result
 
 
+def _run_single_permutation(args: tuple) -> dict[str, float]:
+    """Run a single permutation (top-level function for pickling)."""
+    perm_idx, seed, panel_values, panel_columns, panel_dtypes, neighbors_dict_serializable, user_monthly_scores, users_list, months = args
+
+    panel = pd.DataFrame(panel_values, columns=panel_columns)
+    # Restore dtypes lost during numpy serialization
+    for col, dtype in panel_dtypes.items():
+        if col in panel.columns:
+            try:
+                panel[col] = panel[col].astype(dtype)
+            except (ValueError, TypeError):
+                pass
+    users = set(users_list)
+
+    # Reconstruct neighbors as dict[int, set[int]]
+    neighbors_dict = {name: {int(k): set(int(v) for v in vs) for k, vs in nbrs.items()}
+                      for name, nbrs in neighbors_dict_serializable.items()}
+
+    rng = np.random.default_rng(seed)
+    perm_panel = panel.copy()
+
+    for net_name, nbrs in neighbors_dict.items():
+        all_nodes = list(nbrs.keys())
+        perm_mapping = dict(zip(all_nodes, rng.permutation(all_nodes)))
+        perm_nbrs = {perm_mapping.get(k, k): {perm_mapping.get(v, v) for v in vs}
+                     for k, vs in nbrs.items()}
+
+        exposure = compute_network_exposure(user_monthly_scores, perm_nbrs, users, months)
+        col = f"{net_name}_exposure"
+        if col in perm_panel.columns:
+            perm_panel[col] = perm_panel.apply(
+                lambda row, _exp=exposure: _exp.get(
+                    (int(row["author_id"]), row["month"]), 0.0
+                ),
+                axis=1,
+            )
+
+    perm_result = run_panel_regression(perm_panel, f"perm_{perm_idx}")
+    return {k: v for k, v in perm_result.items() if k.startswith("b_") and "exposure" in k}
+
+
 def run_permutation_test(
     panel: pd.DataFrame,
     neighbors_dict: dict[str, dict[int, set[int]]],
@@ -159,7 +205,7 @@ def run_permutation_test(
     n_perms: int = 200,
 ) -> dict:
     """Permutation test: shuffle network edges and re-run regression."""
-    print(f"\n  Running permutation test ({n_perms} permutations)…")
+    print(f"\n  Running permutation test ({n_perms} permutations, {_N_WORKERS} workers)…")
 
     # Get observed coefficients
     obs_result = run_panel_regression(panel, "observed")
@@ -167,31 +213,31 @@ def run_permutation_test(
 
     perm_betas: dict[str, list[float]] = {k: [] for k in obs_betas}
 
-    rng = np.random.default_rng(42)
-    for perm in range(n_perms):
-        if (perm + 1) % 50 == 0:
-            print(f"    Permutation {perm + 1}/{n_perms}")
+    # Serialize neighbors for pickling (convert sets to lists)
+    nbrs_serializable = {
+        name: {k: list(vs) for k, vs in nbrs.items()}
+        for name, nbrs in neighbors_dict.items()
+    }
 
-        perm_panel = panel.copy()
+    # Pre-generate seeds for reproducibility
+    master_rng = np.random.default_rng(42)
+    seeds = master_rng.integers(0, 2**31, size=n_perms).tolist()
 
-        for net_name, nbrs in neighbors_dict.items():
-            # Shuffle edges: permute node identities
-            all_nodes = list(nbrs.keys())
-            perm_mapping = dict(zip(all_nodes, rng.permutation(all_nodes)))
-            perm_nbrs = {perm_mapping.get(k, k): {perm_mapping.get(v, v) for v in vs}
-                         for k, vs in nbrs.items()}
+    panel_values = panel.values
+    panel_columns = panel.columns.tolist()
+    panel_dtypes = {col: str(panel[col].dtype) for col in panel.columns}
+    users_list = list(users)
 
-            exposure = compute_network_exposure(user_monthly_scores, perm_nbrs, users, months)
-            col = f"{net_name}_exposure"
-            if col in perm_panel.columns:
-                perm_panel[col] = perm_panel.apply(
-                    lambda row, _exp=exposure: _exp.get(
-                        (int(row["author_id"]), row["month"]), 0.0
-                    ),
-                    axis=1,
-                )
+    args_list = [
+        (i, seeds[i], panel_values, panel_columns, panel_dtypes, nbrs_serializable,
+         user_monthly_scores, users_list, months)
+        for i in range(n_perms)
+    ]
 
-        perm_result = run_panel_regression(perm_panel, f"perm_{perm}")
+    with ProcessPoolExecutor(max_workers=_N_WORKERS) as executor:
+        results = list(executor.map(_run_single_permutation, args_list, chunksize=4))
+
+    for perm_result in results:
         for k in perm_betas:
             perm_betas[k].append(perm_result.get(k, 0.0))
 

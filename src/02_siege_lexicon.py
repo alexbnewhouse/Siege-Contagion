@@ -5,11 +5,15 @@ Builds a weighted keyword dictionary and computes per-post siege scores.
 
 from __future__ import annotations
 
+import multiprocessing
+import os
 import re
 
 import polars as pl
 
 from utils import DATA_PROCESSED
+
+_N_WORKERS = min(multiprocessing.cpu_count(), int(os.environ.get("SIEGE_WORKERS", "16")))
 
 
 # ── Siege keyword dictionary ─────────────────────────────────────────
@@ -99,7 +103,10 @@ def compute_siege_keyword_score(text: str | None) -> dict:
 def score_dataframe(df: pl.DataFrame, text_col: str = "text") -> pl.DataFrame:
     """Add siege keyword columns to a Polars DataFrame."""
     scores = df[text_col].to_list()
-    results = [compute_siege_keyword_score(t) for t in scores]
+
+    print(f"    Scoring {len(scores):,} texts with {_N_WORKERS} workers…")
+    with multiprocessing.Pool(_N_WORKERS) as pool:
+        results = pool.map(compute_siege_keyword_score, scores, chunksize=1024)
 
     keyword_counts = [r["keyword_count"] for r in results]
     keyword_scores = [r["keyword_score"] for r in results]

@@ -141,6 +141,48 @@ def ingest_all() -> dict[str, pl.DataFrame]:
         if tbl in tables:
             tables[tbl] = _parse_unix_ts(tables[tbl], cols)
 
+    # ── Fallbacks: use orig_* when core_* is missing ──────────────────
+    _FALLBACKS = {
+        "core_message_posts": "orig_message_posts",
+        "core_message_topics": "orig_message_topics",
+        "core_message_topic_user_map": "orig_message_topic_user_map",
+        "core_pfields_content": "orig_pfields_content",
+    }
+    for core_name, orig_name in _FALLBACKS.items():
+        if core_name not in tables and orig_name in tables:
+            tables[core_name] = tables[orig_name]
+            print(f"    ↳ Using {orig_name} as fallback for {core_name}")
+
+    # Reputation: derive member_received from post author lookups
+    if "core_reputation_index" not in tables and "orig_reputation_index" in tables:
+        rep = tables["orig_reputation_index"]
+        rep = _safe_int_cols(rep, ["id", "member_id", "type_id"])
+        rep = _parse_unix_ts(rep, ["rep_date"])
+        # type_id refers to a post id — join with forum posts to get post author
+        if "forums_posts" in tables:
+            post_authors = tables["forums_posts"].select([
+                pl.col("pid").alias("type_id"),
+                pl.col("author_id").alias("member_received"),
+            ]).unique(subset=["type_id"])
+            rep = rep.join(post_authors, on="type_id", how="left")
+            rep = _safe_int_cols(rep, ["member_received"])
+        else:
+            rep = rep.with_columns(pl.lit(None).cast(pl.Int64).alias("member_received"))
+        rep = rep.with_columns(pl.col("type_id").alias("item_id"))
+        tables["core_reputation_index"] = rep
+        print(f"    ↳ Built core_reputation_index from orig_reputation_index "
+              f"({rep.height:,} rows, {rep.filter(pl.col('member_received').is_not_null()).height:,} with receiver)")
+
+    # Tags: map orig_core_tags → core_search_index_tags schema
+    if "core_search_index_tags" not in tables:
+        tags_csv = DATA_CSV / "im_orig_dfs__orig_core_tags.csv"
+        if tags_csv.exists():
+            tags = pl.read_csv(tags_csv, infer_schema_length=10000, ignore_errors=True)
+            tags = tags.rename({"tag_meta_id": "index_id", "tag_text": "index_tag"})
+            tags = _safe_int_cols(tags, ["index_id"])
+            tables["core_search_index_tags"] = tags
+            print(f"    ↳ Built core_search_index_tags from orig_core_tags ({tags.height:,} rows)")
+
     return tables
 
 

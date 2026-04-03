@@ -17,7 +17,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from utils import DATA_PROCESSED, ZEIGER_MEMBER_ID
 
 MODEL_NAME = "all-MiniLM-L6-v2"
-BATCH_SIZE = 256
+BATCH_SIZE = 512
 MAX_SEQ_LEN = 256  # tokens; truncate long posts
 
 

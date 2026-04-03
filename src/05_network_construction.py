@@ -8,6 +8,8 @@ Builds three user-to-user interaction networks:
 
 from __future__ import annotations
 
+import multiprocessing
+import os
 from collections import defaultdict
 from itertools import combinations
 
@@ -15,6 +17,8 @@ import networkx as nx
 import polars as pl
 
 from utils import DATA_PROCESSED, NETWORKS_DIR
+
+_N_WORKERS = min(multiprocessing.cpu_count(), int(os.environ.get("SIEGE_WORKERS", "16")))
 
 
 def build_dm_network(msg_map: pl.DataFrame) -> nx.Graph:
@@ -44,6 +48,18 @@ def build_dm_network(msg_map: pl.DataFrame) -> nx.Graph:
     return G
 
 
+def _process_topic_authors(authors: list) -> list[tuple[tuple[int, int], int]]:
+    """Compute pairwise edges for a single topic's author list."""
+    unique_authors = sorted(set(authors))
+    if len(unique_authors) < 2 or len(unique_authors) > 50:
+        return []
+    edges = []
+    for u1, u2 in combinations(unique_authors, 2):
+        if u1 != u2:
+            edges.append(((u1, u2), 1))
+    return edges
+
+
 def build_forum_coparticipation_network(forum_posts: pl.DataFrame) -> nx.Graph:
     """Build undirected forum co-participation network."""
     G = nx.Graph()
@@ -57,18 +73,19 @@ def build_forum_coparticipation_network(forum_posts: pl.DataFrame) -> nx.Graph:
         .agg(pl.col("author_id").alias("authors"))
     )
 
+    author_lists = [row["authors"] for row in topics.iter_rows(named=True)]
+    skipped = sum(1 for a in author_lists if len(set(a)) > 50)
+    if skipped:
+        print(f"  Skipped {skipped} topics with >50 unique authors")
+
+    print(f"  Processing {len(author_lists)} topics with {_N_WORKERS} workers…")
+    with multiprocessing.Pool(_N_WORKERS) as pool:
+        all_edges = pool.map(_process_topic_authors, author_lists, chunksize=64)
+
     edge_weights: dict[tuple, int] = defaultdict(int)
-    for row in topics.iter_rows(named=True):
-        authors = row["authors"]
-        if len(authors) < 2:
-            continue
-        unique_authors = sorted(set(authors))
-        if len(unique_authors) > 50:
-            # Skip very large threads to avoid O(n²) explosion
-            continue
-        for u1, u2 in combinations(unique_authors, 2):
-            if u1 != u2:
-                edge_weights[(u1, u2)] += 1
+    for topic_edges in all_edges:
+        for (u1, u2), w in topic_edges:
+            edge_weights[(u1, u2)] += w
 
     for (u1, u2), w in edge_weights.items():
         G.add_edge(u1, u2, weight=w)

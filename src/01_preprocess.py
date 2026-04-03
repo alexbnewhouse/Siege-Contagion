@@ -3,12 +3,16 @@ and treatment date identification."""
 
 from __future__ import annotations
 
+import multiprocessing
+import os
 import re
 
 import polars as pl
 from bs4 import BeautifulSoup
 
 from utils import DATA_PROCESSED, ZEIGER_MEMBER_ID, load_parquet
+
+_N_WORKERS = min(multiprocessing.cpu_count(), int(os.environ.get("SIEGE_WORKERS", "16")))
 
 
 # ── HTML / text cleaning ─────────────────────────────────────────────
@@ -165,9 +169,14 @@ def main():
     fp = load_parquet("forums_posts.parquet")
     print(f"  Raw forum posts: {fp.height:,}")
 
+    raw_html = fp["post"].to_list()
+    print(f"  Stripping HTML with {_N_WORKERS} workers…")
+    with multiprocessing.Pool(_N_WORKERS) as pool:
+        texts = pool.map(strip_html, raw_html, chunksize=512)
+        texts_full = pool.map(strip_html_full, raw_html, chunksize=512)
     fp = fp.with_columns([
-        pl.col("post").map_elements(strip_html, return_dtype=pl.Utf8).alias("text"),
-        pl.col("post").map_elements(strip_html_full, return_dtype=pl.Utf8).alias("text_full"),
+        pl.Series("text", texts, dtype=pl.Utf8),
+        pl.Series("text_full", texts_full, dtype=pl.Utf8),
     ])
     fp = fp.with_columns(
         pl.col("text").str.split(" ").list.len().alias("word_count")
@@ -180,9 +189,14 @@ def main():
     dm = load_parquet("core_message_posts.parquet")
     print(f"  Raw DM posts: {dm.height:,}")
 
+    raw_html_dm = dm["msg_post"].to_list()
+    print(f"  Stripping DM HTML with {_N_WORKERS} workers…")
+    with multiprocessing.Pool(_N_WORKERS) as pool:
+        dm_texts = pool.map(strip_html, raw_html_dm, chunksize=512)
+        dm_texts_full = pool.map(strip_html_full, raw_html_dm, chunksize=512)
     dm = dm.with_columns([
-        pl.col("msg_post").map_elements(strip_html, return_dtype=pl.Utf8).alias("text"),
-        pl.col("msg_post").map_elements(strip_html_full, return_dtype=pl.Utf8).alias("text_full"),
+        pl.Series("text", dm_texts, dtype=pl.Utf8),
+        pl.Series("text_full", dm_texts_full, dtype=pl.Utf8),
     ])
     dm = dm.with_columns(
         pl.col("text").str.split(" ").list.len().alias("word_count")

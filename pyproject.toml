@@ -29,6 +29,9 @@ test = [
     "pytest",
     "pytest-cov",
 ]
+perf = [
+    "networkit",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

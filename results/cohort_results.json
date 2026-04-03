@@ -1,0 +1,19 @@
+{
+  "pre_siege_did": {
+    "n_users": 152,
+    "mean_diff": 0.03215537046188864,
+    "median_diff": 0.0,
+    "t_stat": 1.8062147596010683,
+    "t_pvalue": 0.07287629452057706,
+    "wilcoxon_stat": 2876.0,
+    "wilcoxon_pvalue": 0.0013265291900222426
+  },
+  "entry_comparison": {
+    "pre_n": 3634,
+    "post_n": 6708,
+    "pre_mean": 0.014997248211337369,
+    "post_mean": 0.1462432915921288,
+    "mann_whitney_u": 11639832.0,
+    "mann_whitney_p": 3.175121075530524e-29
+  }
+}
