@@ -1,0 +1,35 @@
+[project]
+name = "siege-contagion"
+version = "0.1.0"
+description = "Testing Siege Culture diffusion in the Iron March dataset"
+requires-python = ">=3.11"
+dependencies = [
+    "polars>=0.20",
+    "pandas>=2.0",
+    "pyreadr",
+    "beautifulsoup4",
+    "sentence-transformers",
+    "torch",
+    "scikit-learn",
+    "statsmodels",
+    "linearmodels",
+    "networkx",
+    "ruptures",
+    "lifelines",
+    "matplotlib",
+    "seaborn",
+    "pyarrow",
+    "lxml",
+    "tqdm",
+    "scipy",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-cov",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
