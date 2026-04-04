@@ -1,0 +1,27 @@
+{
+  "url_analysis": {
+    "total_im_urls": 15995,
+    "total_pol_urls": 31082,
+    "shared_urls": 334,
+    "im_first": 196,
+    "pol_first": 108,
+    "simultaneous": 30,
+    "n_url_records": 200
+  },
+  "ngram_analysis": {
+    "n": 4,
+    "min_frequency": 3,
+    "im_unique_ngrams": 10810422,
+    "pol_unique_ngrams": 33501395,
+    "shared_ngram_count": 112822
+  },
+  "temporal_priority": {
+    "terms_on_both": 48,
+    "im_led": 40,
+    "pol_led": 8
+  },
+  "ironmarch_mentions": {
+    "total_mentions": 5099,
+    "n_weeks_with_mentions": 200
+  }
+}

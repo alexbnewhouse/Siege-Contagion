@@ -285,10 +285,9 @@ def weekly_totals_to_dataframe(weekly_totals: dict[str, int]) -> pl.DataFrame:
         "total_posts": counts,
     })
 
-    # Parse ISO week to a Monday date
+    # Parse ISO week to a Monday date (%G-W%V needs a weekday → append -1 for Monday)
     df = df.with_columns(
-        pl.col("week_iso").str.strptime(pl.Date, "%G-W%V", strict=False)
-        .dt.offset_by("0d")  # ensure Monday
+        (pl.col("week_iso") + "-1").str.strptime(pl.Date, "%G-W%V-%u")
         .alias("week_start")
     )
 

@@ -1,0 +1,18 @@
+{
+  "platform": "pol",
+  "n_months": 75,
+  "its_model": {
+    "level_change": 0.6442198974415463,
+    "level_change_p": 0.006836693194212875,
+    "slope_change": -0.06252511035255047,
+    "slope_change_p": 0.3789122314566675,
+    "r_squared": 0.01841045308809186
+  },
+  "pre_post_comparison": {
+    "pre_mean_cv": 0.6102341641328415,
+    "post_mean_cv": 1.0656869487282616,
+    "t_stat": -2.179242422426763,
+    "t_p": 0.04571160603978735,
+    "direction": "divergent"
+  }
+}

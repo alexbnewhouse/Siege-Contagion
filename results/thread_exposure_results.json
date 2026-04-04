@@ -1,12 +1,12 @@
 {
   "n_user_months": 5998,
   "n_users": 641,
-  "thread_exposure_coef": 0.14402550410471035,
-  "thread_exposure_se": 0.0842345580801021,
-  "thread_exposure_p": 0.08730010331332375,
-  "lagged_own_score_coef": 0.29528598482871626,
-  "lagged_own_score_p": 0.013381687221553534,
-  "r_squared": 0.10571682410676886,
+  "thread_exposure_coef": 0.14402550410471024,
+  "thread_exposure_se": 0.08423455808010219,
+  "thread_exposure_p": 0.08730010331332429,
+  "lagged_own_score_coef": 0.2952859848287161,
+  "lagged_own_score_p": 0.013381687221553598,
+  "r_squared": 0.10571682410676864,
   "tercile_means": {
     "Low": 0.04996285065612907,
     "Medium": 0.05797544642928971,

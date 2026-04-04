@@ -1,27 +1,27 @@
 {
   "cv_keyword": {
     "label": "CV of keyword score",
-    "level_change": 3.4135667710400583,
+    "level_change": 3.4135667710400592,
     "level_change_p": 0.009265991840560203,
-    "slope_change": -0.05433707521481897,
-    "slope_change_p": 0.011059875467023292,
-    "r_squared": 0.18742202045234924,
+    "slope_change": -0.054337075214818994,
+    "slope_change_p": 0.011059875467023273,
+    "r_squared": 0.18742202045234957,
     "n_months": 75
   },
   "cv_similarity": {
     "label": "CV of similarity score",
-    "level_change": 0.022519872246897776,
-    "level_change_p": 0.7093859603423526,
-    "slope_change": 0.000340249539455194,
-    "slope_change_p": 0.7679465508383231,
-    "r_squared": 0.4667533139092308,
+    "level_change": 0.022519870090337235,
+    "level_change_p": 0.7093859825884865,
+    "slope_change": 0.0003402495469514719,
+    "slope_change_p": 0.76794654297488,
+    "r_squared": 0.46675332268319003,
     "n_months": 75
   },
   "pre_post_comparison": {
-    "pre_mean_cv": 1.4508458180920485,
-    "post_mean_cv": 1.7296764203971304,
-    "t_stat": -1.5718182251989883,
-    "t_p": 0.12304427282129102,
+    "pre_mean_cv": 1.4508458180920487,
+    "post_mean_cv": 1.7296764203971307,
+    "t_stat": -1.571818225198988,
+    "t_p": 0.12304427282129103,
     "direction": "divergent"
   }
 }

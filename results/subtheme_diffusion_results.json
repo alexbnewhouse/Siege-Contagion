@@ -1,0 +1,114 @@
+{
+  "subthemes": [
+    "accelerationism",
+    "mason_core",
+    "atomwaffen_org",
+    "violence",
+    "enemy_framing"
+  ],
+  "accelerationism": {
+    "im_hits": 824,
+    "pol_hits": 180558,
+    "its": {
+      "label": "accelerationism_its",
+      "n_weeks": 377,
+      "b_level": -0.08523616482254315,
+      "b_slope": 0.0014324711691330973,
+      "p_level": 3.0068797126616363e-10,
+      "p_slope": 1.3942878629774545e-19,
+      "r_squared": 0.7376492467348246
+    },
+    "granger_im_to_pol": {
+      "direction": "im_to_pol",
+      "best_lag": 1,
+      "f_statistic": 0.7352074677346978,
+      "p_value": 0.39220173020496346,
+      "significant_05": false,
+      "n_weeks": 209
+    }
+  },
+  "mason_core": {
+    "im_hits": 554,
+    "pol_hits": 11328,
+    "its": {
+      "label": "mason_core_its",
+      "n_weeks": 377,
+      "b_level": -8.526340364000799e-05,
+      "b_slope": 7.908905054177419e-05,
+      "p_level": 0.9399545771281135,
+      "p_slope": 5.373632383782613e-18,
+      "r_squared": 0.4675540848921992
+    },
+    "granger_im_to_pol": {
+      "direction": "im_to_pol",
+      "best_lag": 3,
+      "f_statistic": 14.558612849739694,
+      "p_value": 1.3058021943178402e-08,
+      "significant_05": true,
+      "n_weeks": 209
+    }
+  },
+  "atomwaffen_org": {
+    "im_hits": 527,
+    "pol_hits": 8956,
+    "its": {
+      "label": "atomwaffen_org_its",
+      "n_weeks": 377,
+      "b_level": -0.00017534235527883363,
+      "b_slope": 5.352734576777235e-05,
+      "p_level": 0.8822691135758342,
+      "p_slope": 2.3442613349836444e-06,
+      "r_squared": 0.36528549090131357
+    },
+    "granger_im_to_pol": {
+      "direction": "im_to_pol",
+      "best_lag": 2,
+      "f_statistic": 16.436586573544016,
+      "p_value": 2.4339596976572987e-07,
+      "significant_05": true,
+      "n_weeks": 209
+    }
+  },
+  "violence": {
+    "im_hits": 1130,
+    "pol_hits": 292382,
+    "its": {
+      "label": "violence_its",
+      "n_weeks": 377,
+      "b_level": 0.0531961337534516,
+      "b_slope": -0.0027605466422869324,
+      "p_level": 0.268696638925063,
+      "p_slope": 0.0001707359849601937,
+      "r_squared": 0.7591980165629465
+    },
+    "granger_im_to_pol": {
+      "direction": "im_to_pol",
+      "best_lag": 2,
+      "f_statistic": 1.071830730431458,
+      "p_value": 0.34432013973356895,
+      "significant_05": false,
+      "n_weeks": 209
+    }
+  },
+  "enemy_framing": {
+    "im_hits": 1130,
+    "pol_hits": 5861,
+    "its": {
+      "label": "enemy_framing_its",
+      "n_weeks": 377,
+      "b_level": -0.0007664082219478214,
+      "b_slope": 3.4159641671046514e-05,
+      "p_level": 0.3137396507646477,
+      "p_slope": 0.008758339581395252,
+      "r_squared": 0.06838255055959441
+    },
+    "granger_im_to_pol": {
+      "direction": "im_to_pol",
+      "best_lag": 2,
+      "f_statistic": 0.8014364594110318,
+      "p_value": 0.4501054115930601,
+      "significant_05": false,
+      "n_weeks": 209
+    }
+  }
+}

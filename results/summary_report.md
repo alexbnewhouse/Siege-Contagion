@@ -64,13 +64,13 @@
 ## H2: Social Contagion in the Interaction Network
 
 - N observations: 8870
-- R²: 0.038592602211472204
+- R²: 0.03859260221147243
 - b_dm_exposure_dm: -0.0401 (p = 0.394) 
 - b_forum_exposure_dm: 1.1312 (p < 0.001) ***
 - b_reputation_exposure_dm: -0.0566 (p = 0.695) 
-- Permutation perm_p_dm_exposure_dm: 0.4250
+- Permutation perm_p_dm_exposure_dm: 0.4400
 - Permutation perm_p_forum_exposure_dm: 0.0000
-- Permutation perm_p_reputation_exposure_dm: 0.5200
+- Permutation perm_p_reputation_exposure_dm: 0.5100
 
 **Endogeneity warning:** Network contagion models are susceptible to homophily confounds. User fixed effects partially address this. Permutation p-values provide a robustness check.
 
@@ -136,9 +136,9 @@
 
 | Variable | Coef | HR | SE | p-value | Sig. |
 |----------|------|----|----|---------|------|
-| degree_centrality | 1.0538 | 2.8685 | 0.0659 | p < 0.001 | *** |
-| betweenness_centrality | -0.4175 | 0.6587 | 0.0900 | p < 0.001 | *** |
-| reputation | -0.0284 | 0.9720 | 0.0555 | p = 0.608 |  |
+| degree_centrality | 1.0731 | 2.9246 | 0.0662 | p < 0.001 | *** |
+| betweenness_centrality | -0.4463 | 0.6400 | 0.0905 | p < 0.001 | *** |
+| reputation | -0.0258 | 0.9745 | 0.0558 | p = 0.644 |  |
 
 
 ## H7: Reputation Reinforcement of Siege Rhetoric

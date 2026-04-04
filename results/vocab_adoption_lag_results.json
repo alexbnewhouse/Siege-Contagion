@@ -1,0 +1,367 @@
+{
+  "n_terms": 50,
+  "im_led": 42,
+  "pol_led": 8,
+  "median_lag_days": 670.2607986111111,
+  "mean_lag_days": 601.6674685185185,
+  "acceleration_test": {
+    "n_terms": 50,
+    "slope": -0.6164571383221263,
+    "intercept": 10300.533569684856,
+    "r_squared": 0.45523289577744197,
+    "p_value": 7.747200032111561e-08,
+    "interpretation": "accelerating"
+  },
+  "term_lags": [
+    {
+      "term": "\\bsystem\\s+pig\\b",
+      "weight": 2.5,
+      "lag_days": -675.2398726851852,
+      "im_first_str": "2015-12-17 16:28:34",
+      "pol_first_str": "2014-02-10 10:43:09"
+    },
+    {
+      "term": "\\batwa\\b",
+      "weight": 2.0,
+      "lag_days": -556.7320717592593,
+      "im_first_str": "2015-10-28 21:58:11",
+      "pol_first_str": "2014-04-20 04:24:00"
+    },
+    {
+      "term": "\\btotal\\s+attack\\b",
+      "weight": 2.0,
+      "lag_days": -363.2247222222222,
+      "im_first_str": "2015-11-07 23:50:41",
+      "pol_first_str": "2014-11-09 18:27:05"
+    },
+    {
+      "term": "\\bdotr\\b",
+      "weight": 2.0,
+      "lag_days": -313.6356944444444,
+      "im_first_str": "2014-10-19 16:34:08",
+      "pol_first_str": "2013-12-10 01:18:44"
+    },
+    {
+      "term": "\\brwds\\b",
+      "weight": 2.0,
+      "lag_days": -222.1787037037037,
+      "im_first_str": "2016-02-07 13:34:58",
+      "pol_first_str": "2015-06-30 09:17:38"
+    },
+    {
+      "term": "\\batomwaffen\\b",
+      "weight": 3.0,
+      "lag_days": -217.4941550925926,
+      "im_first_str": "2015-04-11 23:37:53",
+      "pol_first_str": "2014-09-06 11:46:18"
+    },
+    {
+      "term": "\\bwhite\\s+jihad\\b",
+      "weight": 2.0,
+      "lag_days": -181.62648148148148,
+      "im_first_str": "2014-11-09 20:31:51",
+      "pol_first_str": "2014-05-12 05:29:43"
+    },
+    {
+      "term": "\\bdylann\\s+roof\\b",
+      "weight": 1.5,
+      "lag_days": -1.357002314814815,
+      "im_first_str": "2015-06-19 18:37:06",
+      "pol_first_str": "2015-06-18 10:03:01"
+    },
+    {
+      "term": "\\bsiege\\s*culture\\b",
+      "weight": 3.0,
+      "lag_days": 1.4424537037037037,
+      "im_first_str": "2017-07-29 05:19:20",
+      "pol_first_str": "2017-07-30 15:56:28"
+    },
+    {
+      "term": "\\bantipodean\\s+resistance\\b",
+      "weight": 2.5,
+      "lag_days": 55.08664351851852,
+      "im_first_str": "2016-10-10 00:59:46",
+      "pol_first_str": "2016-12-04 03:04:32"
+    },
+    {
+      "term": "\\bsiegepill(?:ed)?\\b",
+      "weight": 3.0,
+      "lag_days": 98.55940972222223,
+      "im_first_str": "2017-01-24 01:16:59",
+      "pol_first_str": "2017-05-02 14:42:32"
+    },
+    {
+      "term": "\\bboogaloo\\b",
+      "weight": 2.0,
+      "lag_days": 286.3516087962963,
+      "im_first_str": "2013-02-16 00:22:51",
+      "pol_first_str": "2013-11-29 08:49:10"
+    },
+    {
+      "term": "\\bskull\\s*mask\\b",
+      "weight": 2.5,
+      "lag_days": 313.6884490740741,
+      "im_first_str": "2013-01-25 20:55:21",
+      "pol_first_str": "2013-12-05 13:26:43"
+    },
+    {
+      "term": "\\bwhite\\s+revolution\\b",
+      "weight": 2.0,
+      "lag_days": 436.6010763888889,
+      "im_first_str": "2012-09-25 11:17:48",
+      "pol_first_str": "2013-12-06 01:43:21"
+    },
+    {
+      "term": "\\bpolitical\\s+terror\\b",
+      "weight": 3.0,
+      "lag_days": 515.5845254629629,
+      "im_first_str": "2012-07-28 01:10:53",
+      "pol_first_str": "2013-12-25 15:12:36"
+    },
+    {
+      "term": "\\bpropaganda\\s+of\\s+the\\s+deed\\b",
+      "weight": 2.5,
+      "lag_days": 560.697650462963,
+      "im_first_str": "2012-05-19 06:15:43",
+      "pol_first_str": "2013-11-30 23:00:20"
+    },
+    {
+      "term": "\\bo9a\\b",
+      "weight": 2.0,
+      "lag_days": 577.1091782407408,
+      "im_first_str": "2012-05-04 18:37:44",
+      "pol_first_str": "2013-12-02 21:14:57"
+    },
+    {
+      "term": "\\border\\s+of\\s+nine\\s+angles?\\b",
+      "weight": 2.5,
+      "lag_days": 580.563113425926,
+      "im_first_str": "2012-05-04 18:37:44",
+      "pol_first_str": "2013-12-06 08:08:37"
+    },
+    {
+      "term": "\\bleaderless\\s+resistance\\b",
+      "weight": 2.5,
+      "lag_days": 582.0693171296297,
+      "im_first_str": "2012-05-27 01:28:20",
+      "pol_first_str": "2013-12-30 03:08:09"
+    },
+    {
+      "term": "\\baccelerat(?:e|ion|ionism|ionist)\\b",
+      "weight": 2.0,
+      "lag_days": 594.0932175925926,
+      "im_first_str": "2012-04-14 11:15:44",
+      "pol_first_str": "2013-11-29 13:29:58"
+    },
+    {
+      "term": "\\bday\\s+of\\s+the\\s+rope\\b",
+      "weight": 2.5,
+      "lag_days": 598.6727430555555,
+      "im_first_str": "2012-04-09 17:01:47",
+      "pol_first_str": "2013-11-29 09:10:32"
+    },
+    {
+      "term": "\\bzionist\\s+occupation\\s+government\\b",
+      "weight": 2.5,
+      "lag_days": 601.8724652777778,
+      "im_first_str": "2012-04-12 00:38:10",
+      "pol_first_str": "2013-12-04 21:34:31"
+    },
+    {
+      "term": "\\barmed\\s+struggle\\b",
+      "weight": 2.0,
+      "lag_days": 612.6657407407407,
+      "im_first_str": "2012-03-26 19:50:20",
+      "pol_first_str": "2013-11-29 11:49:00"
+    },
+    {
+      "term": "\\bread\\s+siege\\b",
+      "weight": 3.0,
+      "lag_days": 643.4696296296296,
+      "im_first_str": "2012-11-25 11:05:37",
+      "pol_first_str": "2014-08-30 22:21:53"
+    },
+    {
+      "term": "\\bethnostate\\b",
+      "weight": 1.5,
+      "lag_days": 666.1914351851852,
+      "im_first_str": "2012-02-06 12:19:08",
+      "pol_first_str": "2013-12-03 16:54:48"
+    },
+    {
+      "term": "\\blone\\s+wolf\\b",
+      "weight": 2.0,
+      "lag_days": 674.330162037037,
+      "im_first_str": "2012-01-25 22:47:16",
+      "pol_first_str": "2013-11-30 06:42:42"
+    },
+    {
+      "term": "\\bblack\\s+sun\\b",
+      "weight": 0.5,
+      "lag_days": 700.9384143518519,
+      "im_first_str": "2012-03-02 15:40:53",
+      "pol_first_str": "2014-02-01 14:12:12"
+    },
+    {
+      "term": "\\binsurrection\\b",
+      "weight": 1.0,
+      "lag_days": 712.3362268518518,
+      "im_first_str": "2011-12-18 22:34:56",
+      "pol_first_str": "2013-11-30 06:39:06"
+    },
+    {
+      "term": "\\brahowa\\b",
+      "weight": 2.0,
+      "lag_days": 716.8135300925926,
+      "im_first_str": "2011-12-15 17:55:25",
+      "pol_first_str": "2013-12-01 13:26:54"
+    },
+    {
+      "term": "\\brace\\s+war\\b",
+      "weight": 2.0,
+      "lag_days": 758.8403819444444,
+      "im_first_str": "2011-11-01 07:49:58",
+      "pol_first_str": "2013-11-29 04:00:07"
+    },
+    {
+      "term": "\\bhelter\\s+skelter\\b",
+      "weight": 2.0,
+      "lag_days": 762.8306828703704,
+      "im_first_str": "2011-11-01 07:49:58",
+      "pol_first_str": "2013-12-03 03:46:09"
+    },
+    {
+      "term": "\\bsavitri\\s+devi\\b",
+      "weight": 2.0,
+      "lag_days": 766.9934143518518,
+      "im_first_str": "2011-11-01 07:49:58",
+      "pol_first_str": "2013-12-07 07:40:29"
+    },
+    {
+      "term": "\\btommasi\\b",
+      "weight": 2.5,
+      "lag_days": 775.4710185185185,
+      "im_first_str": "2012-02-10 09:51:39",
+      "pol_first_str": "2014-03-26 21:09:55"
+    },
+    {
+      "term": "\\buniversal\\s+order\\b",
+      "weight": 3.0,
+      "lag_days": 777.856875,
+      "im_first_str": "2011-11-01 07:49:58",
+      "pol_first_str": "2013-12-18 04:23:52"
+    },
+    {
+      "term": "\\bcharles\\s+manson\\b",
+      "weight": 2.0,
+      "lag_days": 792.8635532407408,
+      "im_first_str": "2011-09-30 02:23:27",
+      "pol_first_str": "2013-11-30 23:06:58"
+    },
+    {
+      "term": "\\bmanson\\b",
+      "weight": 1.5,
+      "lag_days": 792.8635532407408,
+      "im_first_str": "2011-09-30 02:23:27",
+      "pol_first_str": "2013-11-30 23:06:58"
+    },
+    {
+      "term": "\\bsiege\\b",
+      "weight": 1.0,
+      "lag_days": 793.387974537037,
+      "im_first_str": "2011-09-27 21:39:13",
+      "pol_first_str": "2013-11-29 06:57:54"
+    },
+    {
+      "term": "\\brace\\s+trait(?:or|ors?)\\b",
+      "weight": 1.5,
+      "lag_days": 802.7683101851852,
+      "im_first_str": "2011-09-18 21:18:20",
+      "pol_first_str": "2013-11-29 15:44:42"
+    },
+    {
+      "term": "\\bturner\\s+diar(?:y|ies)\\b",
+      "weight": 2.0,
+      "lag_days": 805.1228472222223,
+      "im_first_str": "2011-09-16 15:26:20",
+      "pol_first_str": "2013-11-29 18:23:14"
+    },
+    {
+      "term": "\\bzog\\b",
+      "weight": 0.5,
+      "lag_days": 806.8490277777778,
+      "im_first_str": "2011-09-20 01:11:55",
+      "pol_first_str": "2013-12-04 21:34:31"
+    },
+    {
+      "term": "\\bbreivik\\b",
+      "weight": 1.5,
+      "lag_days": 807.1857523148149,
+      "im_first_str": "2011-09-13 09:52:23",
+      "pol_first_str": "2013-11-28 14:19:52"
+    },
+    {
+      "term": "\\bwilliam\\s+(?:luther\\s+)?pierce\\b",
+      "weight": 2.0,
+      "lag_days": 816.182974537037,
+      "im_first_str": "2011-09-18 03:28:54",
+      "pol_first_str": "2013-12-12 07:52:23"
+    },
+    {
+      "term": "\\bjames\\s+mason\\b",
+      "weight": 3.0,
+      "lag_days": 824.0486111111111,
+      "im_first_str": "2011-11-02 10:00:55",
+      "pol_first_str": "2014-02-03 11:10:55"
+    },
+    {
+      "term": "\\bironpill\\b",
+      "weight": 2.0,
+      "lag_days": 1000.361574074074,
+      "im_first_str": "2014-08-08 22:19:16",
+      "pol_first_str": "2017-05-05 06:59:56"
+    },
+    {
+      "term": "\\bjew[- ]?capitalist\\b",
+      "weight": 2.5,
+      "lag_days": 1202.6425694444445,
+      "im_first_str": "2015-08-02 15:29:33",
+      "pol_first_str": "2018-11-17 06:54:51"
+    },
+    {
+      "term": "\\bjoseph\\s+tommasi\\b",
+      "weight": 3.0,
+      "lag_days": 1419.3364930555556,
+      "im_first_str": "2012-02-10 09:51:39",
+      "pol_first_str": "2015-12-30 17:56:12"
+    },
+    {
+      "term": "\\banti[- ]?system\\b",
+      "weight": 1.5,
+      "lag_days": 1497.2057291666667,
+      "im_first_str": "2012-02-24 23:34:47",
+      "pol_first_str": "2016-04-01 04:31:02"
+    },
+    {
+      "term": "\\bamerican\\s+futurist\\b",
+      "weight": 2.5,
+      "lag_days": 1617.4051157407407,
+      "im_first_str": "2011-11-06 06:29:01",
+      "pol_first_str": "2016-04-10 16:12:23"
+    },
+    {
+      "term": "\\bnational\\s+socialist\\s+liberation\\s+front\\b",
+      "weight": 3.0,
+      "lag_days": 2107.1901388888887,
+      "im_first_str": "2011-11-01 07:49:58",
+      "pol_first_str": "2017-08-08 12:23:46"
+    },
+    {
+      "term": "\\bnslf\\b",
+      "weight": 2.0,
+      "lag_days": 2158.3185416666665,
+      "im_first_str": "2011-11-01 07:49:58",
+      "pol_first_str": "2017-09-28 15:28:40"
+    }
+  ]
+}

@@ -1,0 +1,1066 @@
+{
+  "im_unique_domains": 6344,
+  "pol_unique_domains": 6898,
+  "temporal_priority": {
+    "total_im_domains": 6344,
+    "total_pol_domains": 6898,
+    "shared_domains": 1326,
+    "im_first": 1046,
+    "pol_first": 272,
+    "simultaneous": 8
+  },
+  "domain_records": [
+    {
+      "domain": "publicintelligence.net",
+      "im_first": "2017-07-07 04:36:20",
+      "pol_first": "2014-01-15 00:18:28",
+      "lag_days": -1269.2,
+      "source": "pol"
+    },
+    {
+      "domain": "docdroid.net",
+      "im_first": "2017-08-14 01:23:07",
+      "pol_first": "2014-10-14 05:30:36",
+      "lag_days": -1034.8,
+      "source": "pol"
+    },
+    {
+      "domain": "cell.com",
+      "im_first": "2017-01-30 06:24:44",
+      "pol_first": "2014-04-03 09:18:47",
+      "lag_days": -1032.9,
+      "source": "pol"
+    },
+    {
+      "domain": "psychology.uwo.ca",
+      "im_first": "2016-09-26 04:21:16",
+      "pol_first": "2013-12-15 01:04:12",
+      "lag_days": -1016.1,
+      "source": "pol"
+    },
+    {
+      "domain": "jasss.soc.surrey.ac.uk",
+      "im_first": "2017-05-20 08:41:58",
+      "pol_first": "2014-08-27 23:13:36",
+      "lag_days": -996.4,
+      "source": "pol"
+    },
+    {
+      "domain": "socialmatter.net",
+      "im_first": "2017-08-01 17:06:38",
+      "pol_first": "2014-11-21 05:55:45",
+      "lag_days": -984.5,
+      "source": "pol"
+    },
+    {
+      "domain": "store.steampowered.com",
+      "im_first": "2017-04-17 19:50:47",
+      "pol_first": "2014-08-18 03:31:57",
+      "lag_days": -973.7,
+      "source": "pol"
+    },
+    {
+      "domain": "m.huffpost.com",
+      "im_first": "2017-03-30 00:01:02",
+      "pol_first": "2014-08-13 23:25:29",
+      "lag_days": -959.0,
+      "source": "pol"
+    },
+    {
+      "domain": "livestream.com",
+      "im_first": "2017-05-01 09:05:06",
+      "pol_first": "2014-09-22 17:34:33",
+      "lag_days": -951.6,
+      "source": "pol"
+    },
+    {
+      "domain": "i.4cdn.org",
+      "im_first": "2016-07-08 05:20:45",
+      "pol_first": "2014-01-27 02:29:04",
+      "lag_days": -893.1,
+      "source": "pol"
+    },
+    {
+      "domain": "mentalfloss.com",
+      "im_first": "2016-06-06 04:31:41",
+      "pol_first": "2014-01-15 00:59:06",
+      "lag_days": -873.1,
+      "source": "pol"
+    },
+    {
+      "domain": "nrk.no",
+      "im_first": "2016-10-22 04:21:34",
+      "pol_first": "2014-06-05 14:43:54",
+      "lag_days": -869.6,
+      "source": "pol"
+    },
+    {
+      "domain": "news.nationalgeographic.com",
+      "im_first": "2017-01-27 05:46:48",
+      "pol_first": "2014-09-14 09:04:26",
+      "lag_days": -865.9,
+      "source": "pol"
+    },
+    {
+      "domain": "sbs.com.au",
+      "im_first": "2017-07-24 13:29:20",
+      "pol_first": "2015-04-06 08:25:38",
+      "lag_days": -840.2,
+      "source": "pol"
+    },
+    {
+      "domain": "derwesten.de",
+      "im_first": "2016-11-23 16:55:55",
+      "pol_first": "2014-08-07 09:16:28",
+      "lag_days": -839.3,
+      "source": "pol"
+    },
+    {
+      "domain": "longwarjournal.org",
+      "im_first": "2016-06-29 22:53:39",
+      "pol_first": "2014-04-10 22:14:08",
+      "lag_days": -811.0,
+      "source": "pol"
+    },
+    {
+      "domain": "thejidf.org",
+      "im_first": "2016-11-17 17:48:30",
+      "pol_first": "2014-09-17 02:19:37",
+      "lag_days": -792.6,
+      "source": "pol"
+    },
+    {
+      "domain": "foxbusiness.com",
+      "im_first": "2016-03-20 13:01:57",
+      "pol_first": "2014-01-24 00:21:51",
+      "lag_days": -786.5,
+      "source": "pol"
+    },
+    {
+      "domain": "aftenposten.no",
+      "im_first": "2016-04-22 21:18:30",
+      "pol_first": "2014-02-28 15:00:12",
+      "lag_days": -784.3,
+      "source": "pol"
+    },
+    {
+      "domain": "wfaa.com",
+      "im_first": "2016-11-20 05:22:36",
+      "pol_first": "2014-10-08 12:51:54",
+      "lag_days": -773.7,
+      "source": "pol"
+    },
+    {
+      "domain": "merriam-webster.com",
+      "im_first": "2017-02-19 00:34:51",
+      "pol_first": "2015-02-14 02:45:06",
+      "lag_days": -735.9,
+      "source": "pol"
+    },
+    {
+      "domain": "nexusmods.com",
+      "im_first": "2017-06-03 19:55:52",
+      "pol_first": "2015-06-03 16:42:56",
+      "lag_days": -731.1,
+      "source": "pol"
+    },
+    {
+      "domain": "mobile.reuters.com",
+      "im_first": "2016-08-27 18:11:30",
+      "pol_first": "2014-09-03 16:13:55",
+      "lag_days": -724.1,
+      "source": "pol"
+    },
+    {
+      "domain": "psychcentral.com",
+      "im_first": "2017-10-29 10:39:05",
+      "pol_first": "2015-11-08 05:47:43",
+      "lag_days": -721.2,
+      "source": "pol"
+    },
+    {
+      "domain": "answering-islam.org",
+      "im_first": "2016-07-20 19:52:00",
+      "pol_first": "2014-08-02 12:32:42",
+      "lag_days": -718.3,
+      "source": "pol"
+    },
+    {
+      "domain": "quadrant.org.au",
+      "im_first": "2017-08-28 10:37:39",
+      "pol_first": "2015-09-15 07:10:33",
+      "lag_days": -713.1,
+      "source": "pol"
+    },
+    {
+      "domain": "subvertednation.net",
+      "im_first": "2017-06-18 02:25:23",
+      "pol_first": "2015-08-01 06:47:25",
+      "lag_days": -686.8,
+      "source": "pol"
+    },
+    {
+      "domain": "xenosystems.net",
+      "im_first": "2016-06-19 00:13:41",
+      "pol_first": "2014-08-02 23:00:35",
+      "lag_days": -686.1,
+      "source": "pol"
+    },
+    {
+      "domain": "greatwar.nl",
+      "im_first": "2015-10-21 20:08:14",
+      "pol_first": "2013-12-04 23:46:26",
+      "lag_days": -685.8,
+      "source": "pol"
+    },
+    {
+      "domain": "pewsocialtrends.org",
+      "im_first": "2017-10-29 10:39:05",
+      "pol_first": "2016-01-05 12:58:12",
+      "lag_days": -662.9,
+      "source": "pol"
+    },
+    {
+      "domain": "hosted.ap.org",
+      "im_first": "2016-03-16 16:14:12",
+      "pol_first": "2014-05-24 12:49:48",
+      "lag_days": -662.1,
+      "source": "pol"
+    },
+    {
+      "domain": "wtop.com",
+      "im_first": "2016-03-30 18:09:14",
+      "pol_first": "2014-06-14 03:29:14",
+      "lag_days": -655.6,
+      "source": "pol"
+    },
+    {
+      "domain": "demographics.coopercenter.org",
+      "im_first": "2016-08-10 01:20:05",
+      "pol_first": "2014-11-20 23:42:50",
+      "lag_days": -628.1,
+      "source": "pol"
+    },
+    {
+      "domain": "theconversation.com",
+      "im_first": "2017-03-07 19:58:17",
+      "pol_first": "2015-06-20 08:35:57",
+      "lag_days": -626.5,
+      "source": "pol"
+    },
+    {
+      "domain": "w2.vatican.va",
+      "im_first": "2017-04-23 20:37:20",
+      "pol_first": "2015-08-12 11:50:52",
+      "lag_days": -620.4,
+      "source": "pol"
+    },
+    {
+      "domain": "linkedin.com",
+      "im_first": "2016-03-20 13:05:04",
+      "pol_first": "2014-07-11 23:29:53",
+      "lag_days": -617.6,
+      "source": "pol"
+    },
+    {
+      "domain": "vultureofcritique.wordpress.com",
+      "im_first": "2017-08-14 01:06:55",
+      "pol_first": "2015-12-07 15:24:30",
+      "lag_days": -615.4,
+      "source": "pol"
+    },
+    {
+      "domain": "wsws.org",
+      "im_first": "2016-03-01 18:44:08",
+      "pol_first": "2014-07-17 01:09:25",
+      "lag_days": -593.7,
+      "source": "pol"
+    },
+    {
+      "domain": "marketwatch.com",
+      "im_first": "2017-04-05 17:56:02",
+      "pol_first": "2015-09-03 16:18:32",
+      "lag_days": -580.1,
+      "source": "pol"
+    },
+    {
+      "domain": "blogs.spectator.co.uk",
+      "im_first": "2016-09-08 07:12:45",
+      "pol_first": "2015-02-07 10:41:33",
+      "lag_days": -578.9,
+      "source": "pol"
+    },
+    {
+      "domain": "abc.net.au",
+      "im_first": "2015-09-15 14:46:48",
+      "pol_first": "2014-02-17 10:15:45",
+      "lag_days": -575.2,
+      "source": "pol"
+    },
+    {
+      "domain": "manchestereveningnews.co.uk",
+      "im_first": "2015-12-06 12:21:11",
+      "pol_first": "2014-06-01 19:14:08",
+      "lag_days": -552.7,
+      "source": "pol"
+    },
+    {
+      "domain": "louisbeam.com",
+      "im_first": "2017-05-17 13:45:55",
+      "pol_first": "2015-11-26 22:29:42",
+      "lag_days": -537.6,
+      "source": "pol"
+    },
+    {
+      "domain": "southfront.org",
+      "im_first": "2017-07-07 18:29:21",
+      "pol_first": "2016-01-26 21:01:32",
+      "lag_days": -527.9,
+      "source": "pol"
+    },
+    {
+      "domain": "m.spiegel.de",
+      "im_first": "2017-03-31 15:31:38",
+      "pol_first": "2015-10-26 23:04:38",
+      "lag_days": -521.7,
+      "source": "pol"
+    },
+    {
+      "domain": "sciencedaily.com",
+      "im_first": "2015-09-04 21:38:47",
+      "pol_first": "2014-04-03 09:18:47",
+      "lag_days": -519.5,
+      "source": "pol"
+    },
+    {
+      "domain": "theconservativetreehouse.com",
+      "im_first": "2016-01-08 06:00:58",
+      "pol_first": "2014-08-06 21:46:41",
+      "lag_days": -519.3,
+      "source": "pol"
+    },
+    {
+      "domain": "firstlook.org",
+      "im_first": "2015-07-29 10:41:40",
+      "pol_first": "2014-02-27 00:46:52",
+      "lag_days": -517.4,
+      "source": "pol"
+    },
+    {
+      "domain": "europa.eu",
+      "im_first": "2017-04-16 23:50:32",
+      "pol_first": "2015-11-18 07:18:44",
+      "lag_days": -515.7,
+      "source": "pol"
+    },
+    {
+      "domain": "blogs.ft.com",
+      "im_first": "2015-07-01 10:55:24",
+      "pol_first": "2014-02-06 07:06:37",
+      "lag_days": -510.2,
+      "source": "pol"
+    },
+    {
+      "domain": "stltoday.com",
+      "im_first": "2016-03-10 19:21:04",
+      "pol_first": "2014-10-20 03:44:51",
+      "lag_days": -507.7,
+      "source": "pol"
+    },
+    {
+      "domain": "welt.de",
+      "im_first": "2016-08-25 23:25:20",
+      "pol_first": "2015-04-23 11:16:17",
+      "lag_days": -490.5,
+      "source": "pol"
+    },
+    {
+      "domain": "abc7chicago.com",
+      "im_first": "2016-12-07 02:19:15",
+      "pol_first": "2015-08-04 16:08:30",
+      "lag_days": -490.4,
+      "source": "pol"
+    },
+    {
+      "domain": "collective-evolution.com",
+      "im_first": "2015-11-20 18:11:32",
+      "pol_first": "2014-08-03 19:45:09",
+      "lag_days": -473.9,
+      "source": "pol"
+    },
+    {
+      "domain": "middleeasteye.net",
+      "im_first": "2015-11-27 13:47:37",
+      "pol_first": "2014-08-20 01:07:54",
+      "lag_days": -464.5,
+      "source": "pol"
+    },
+    {
+      "domain": "nbcnewyork.com",
+      "im_first": "2015-07-24 02:03:21",
+      "pol_first": "2014-04-27 20:33:42",
+      "lag_days": -452.2,
+      "source": "pol"
+    },
+    {
+      "domain": "blogs.reuters.com",
+      "im_first": "2016-03-30 00:30:43",
+      "pol_first": "2015-01-07 17:38:57",
+      "lag_days": -447.3,
+      "source": "pol"
+    },
+    {
+      "domain": "lifenews.ru",
+      "im_first": "2015-06-08 21:14:09",
+      "pol_first": "2014-03-22 13:13:16",
+      "lag_days": -443.3,
+      "source": "pol"
+    },
+    {
+      "domain": "gopthedailydose.com",
+      "im_first": "2016-01-06 23:07:21",
+      "pol_first": "2014-10-21 12:36:37",
+      "lag_days": -442.4,
+      "source": "pol"
+    },
+    {
+      "domain": "pressreader.com",
+      "im_first": "2017-11-11 08:36:07",
+      "pol_first": "2016-09-01 03:47:44",
+      "lag_days": -436.2,
+      "source": "pol"
+    },
+    {
+      "domain": "zdf.de",
+      "im_first": "2016-11-23 16:55:55",
+      "pol_first": "2015-09-21 15:27:05",
+      "lag_days": -429.1,
+      "source": "pol"
+    },
+    {
+      "domain": "tmz.com",
+      "im_first": "2015-01-26 05:13:29",
+      "pol_first": "2013-12-05 09:15:32",
+      "lag_days": -416.8,
+      "source": "pol"
+    },
+    {
+      "domain": "finance.yahoo.com",
+      "im_first": "2015-02-03 01:20:26",
+      "pol_first": "2013-12-19 04:57:51",
+      "lag_days": -410.8,
+      "source": "pol"
+    },
+    {
+      "domain": "complex.com",
+      "im_first": "2016-09-30 00:15:04",
+      "pol_first": "2015-08-18 17:10:11",
+      "lag_days": -408.3,
+      "source": "pol"
+    },
+    {
+      "domain": "hangthebankers.com",
+      "im_first": "2015-02-03 01:20:26",
+      "pol_first": "2013-12-23 10:53:53",
+      "lag_days": -406.6,
+      "source": "pol"
+    },
+    {
+      "domain": "almasdarnews.com",
+      "im_first": "2016-01-16 13:56:28",
+      "pol_first": "2014-12-08 03:19:23",
+      "lag_days": -404.4,
+      "source": "pol"
+    },
+    {
+      "domain": "nationalreview.com",
+      "im_first": "2015-02-03 01:13:58",
+      "pol_first": "2013-12-28 13:05:35",
+      "lag_days": -401.5,
+      "source": "pol"
+    },
+    {
+      "domain": "americanmilitarynews.com",
+      "im_first": "2017-08-13 20:49:58",
+      "pol_first": "2016-07-09 06:36:56",
+      "lag_days": -400.6,
+      "source": "pol"
+    },
+    {
+      "domain": "news.cnet.com",
+      "im_first": "2015-02-03 01:20:50",
+      "pol_first": "2013-12-29 20:33:52",
+      "lag_days": -400.2,
+      "source": "pol"
+    },
+    {
+      "domain": "bjs.ojp.usdoj.gov",
+      "im_first": "2015-02-03 01:19:25",
+      "pol_first": "2014-01-09 16:00:46",
+      "lag_days": -389.4,
+      "source": "pol"
+    },
+    {
+      "domain": "heartiste.wordpress.com",
+      "im_first": "2015-07-18 08:25:15",
+      "pol_first": "2014-06-24 04:35:47",
+      "lag_days": -389.2,
+      "source": "pol"
+    },
+    {
+      "domain": "egaliteetreconciliation.fr",
+      "im_first": "2015-10-01 02:22:47",
+      "pol_first": "2014-09-07 12:03:52",
+      "lag_days": -388.6,
+      "source": "pol"
+    },
+    {
+      "domain": "people.uncw.edu",
+      "im_first": "2017-01-23 01:54:11",
+      "pol_first": "2016-01-02 15:23:25",
+      "lag_days": -386.4,
+      "source": "pol"
+    },
+    {
+      "domain": "theamericanmirror.com",
+      "im_first": "2016-08-14 19:33:20",
+      "pol_first": "2015-07-25 19:09:09",
+      "lag_days": -386.0,
+      "source": "pol"
+    },
+    {
+      "domain": "nyheteridag.se",
+      "im_first": "2015-11-14 00:54:56",
+      "pol_first": "2014-10-24 11:27:02",
+      "lag_days": -385.6,
+      "source": "pol"
+    },
+    {
+      "domain": "fr.wikipedia.org",
+      "im_first": "2015-02-03 01:23:51",
+      "pol_first": "2014-01-13 13:57:20",
+      "lag_days": -385.5,
+      "source": "pol"
+    },
+    {
+      "domain": "wantchinatimes.com",
+      "im_first": "2015-08-23 21:03:53",
+      "pol_first": "2014-08-03 19:45:09",
+      "lag_days": -385.1,
+      "source": "pol"
+    },
+    {
+      "domain": "jihadwatch.org",
+      "im_first": "2015-02-03 01:19:25",
+      "pol_first": "2014-01-13 21:52:07",
+      "lag_days": -385.1,
+      "source": "pol"
+    },
+    {
+      "domain": "frontpagemag.com",
+      "im_first": "2015-02-03 01:08:18",
+      "pol_first": "2014-01-14 18:05:55",
+      "lag_days": -384.3,
+      "source": "pol"
+    },
+    {
+      "domain": "nbcchicago.com",
+      "im_first": "2016-12-06 05:58:50",
+      "pol_first": "2015-11-18 21:38:01",
+      "lag_days": -383.3,
+      "source": "pol"
+    },
+    {
+      "domain": "es.wikipedia.org",
+      "im_first": "2015-04-18 22:47:46",
+      "pol_first": "2014-04-06 11:34:55",
+      "lag_days": -377.5,
+      "source": "pol"
+    },
+    {
+      "domain": "thenewamerican.com",
+      "im_first": "2015-02-03 01:21:18",
+      "pol_first": "2014-01-22 02:46:18",
+      "lag_days": -376.9,
+      "source": "pol"
+    },
+    {
+      "domain": "hotair.com",
+      "im_first": "2015-02-03 01:21:18",
+      "pol_first": "2014-01-24 00:21:51",
+      "lag_days": -375.0,
+      "source": "pol"
+    },
+    {
+      "domain": "mobile.twitter.com",
+      "im_first": "2016-07-08 02:21:40",
+      "pol_first": "2015-06-29 17:58:03",
+      "lag_days": -374.3,
+      "source": "pol"
+    },
+    {
+      "domain": "pinknews.co.uk",
+      "im_first": "2017-04-12 12:18:52",
+      "pol_first": "2016-04-03 08:09:35",
+      "lag_days": -374.2,
+      "source": "pol"
+    },
+    {
+      "domain": "world.time.com",
+      "im_first": "2015-02-03 01:13:40",
+      "pol_first": "2014-01-26 09:56:46",
+      "lag_days": -372.6,
+      "source": "pol"
+    },
+    {
+      "domain": "psywarrior.com",
+      "im_first": "2015-02-03 01:22:21",
+      "pol_first": "2014-01-27 17:08:22",
+      "lag_days": -371.3,
+      "source": "pol"
+    },
+    {
+      "domain": "rehmat1.com",
+      "im_first": "2015-08-29 02:05:06",
+      "pol_first": "2014-08-25 06:01:48",
+      "lag_days": -368.8,
+      "source": "pol"
+    },
+    {
+      "domain": "dagbladet.no",
+      "im_first": "2015-09-01 15:29:45",
+      "pol_first": "2014-09-06 13:47:19",
+      "lag_days": -360.1,
+      "source": "pol"
+    },
+    {
+      "domain": "media.spacial.com",
+      "im_first": "2015-03-15 03:43:37",
+      "pol_first": "2014-03-29 19:19:34",
+      "lag_days": -350.4,
+      "source": "pol"
+    },
+    {
+      "domain": "theralphretort.com",
+      "im_first": "2016-07-01 01:54:51",
+      "pol_first": "2015-07-21 08:53:37",
+      "lag_days": -345.7,
+      "source": "pol"
+    },
+    {
+      "domain": "justice.gov.uk",
+      "im_first": "2015-02-03 01:19:25",
+      "pol_first": "2014-02-28 15:00:12",
+      "lag_days": -339.4,
+      "source": "pol"
+    },
+    {
+      "domain": "amid.dk",
+      "im_first": "2015-02-03 01:19:25",
+      "pol_first": "2014-02-28 15:00:12",
+      "lag_days": -339.4,
+      "source": "pol"
+    },
+    {
+      "domain": "emnbelgium.be",
+      "im_first": "2015-02-03 01:19:25",
+      "pol_first": "2014-02-28 15:00:12",
+      "lag_days": -339.4,
+      "source": "pol"
+    },
+    {
+      "domain": "ipsos.fr",
+      "im_first": "2015-02-03 01:19:25",
+      "pol_first": "2014-02-28 15:00:12",
+      "lag_days": -339.4,
+      "source": "pol"
+    },
+    {
+      "domain": "ojp.usdoj.gov",
+      "im_first": "2015-02-03 01:19:25",
+      "pol_first": "2014-02-28 15:29:19",
+      "lag_days": -339.4,
+      "source": "pol"
+    },
+    {
+      "domain": "historycommons.org",
+      "im_first": "2015-02-03 01:03:09",
+      "pol_first": "2014-03-01 05:19:37",
+      "lag_days": -338.8,
+      "source": "pol"
+    },
+    {
+      "domain": "acolumbinesite.com",
+      "im_first": "2017-03-22 12:43:25",
+      "pol_first": "2016-04-20 03:24:19",
+      "lag_days": -336.4,
+      "source": "pol"
+    },
+    {
+      "domain": "quod.lib.umich.edu",
+      "im_first": "2015-10-11 02:24:46",
+      "pol_first": "2014-11-11 14:37:04",
+      "lag_days": -333.5,
+      "source": "pol"
+    },
+    {
+      "domain": "congress.gov",
+      "im_first": "2016-11-22 15:42:54",
+      "pol_first": "2015-12-25 14:01:24",
+      "lag_days": -333.1,
+      "source": "pol"
+    }
+  ],
+  "gateway_domains": [
+    {
+      "domain": "bitchute.com",
+      "im_first": "2017-09-20 04:29:09",
+      "pol_first": "2017-09-21 10:32:57",
+      "lag_days": 1.3,
+      "pol_count": 9347
+    },
+    {
+      "domain": "pastebin.com",
+      "im_first": "2012-08-26 20:54:51",
+      "pol_first": "2013-12-23 10:53:53",
+      "lag_days": 483.6,
+      "pol_count": 7198
+    },
+    {
+      "domain": "archive.is",
+      "im_first": "2015-02-03 01:03:09",
+      "pol_first": "2015-05-02 01:30:33",
+      "lag_days": 88.0,
+      "pol_count": 6378
+    },
+    {
+      "domain": "mega.nz",
+      "im_first": "2015-11-24 17:17:22",
+      "pol_first": "2016-02-06 00:55:08",
+      "lag_days": 73.3,
+      "pol_count": 2008
+    },
+    {
+      "domain": "my.mixtape.moe",
+      "im_first": "2016-01-19 20:03:21",
+      "pol_first": "2016-08-28 17:20:06",
+      "lag_days": 221.9,
+      "pol_count": 1314
+    },
+    {
+      "domain": "ironmarch.org",
+      "im_first": "2011-10-06 20:28:31",
+      "pol_first": "2013-12-21 10:37:53",
+      "lag_days": 806.6,
+      "pol_count": 1164
+    },
+    {
+      "domain": "laraj.ca",
+      "im_first": "2013-08-29 18:28:37",
+      "pol_first": "2015-09-14 12:59:32",
+      "lag_days": 745.8,
+      "pol_count": 1161
+    },
+    {
+      "domain": "infostormer.com",
+      "im_first": "2015-12-03 22:29:55",
+      "pol_first": "2016-06-23 15:10:10",
+      "lag_days": 202.7,
+      "pol_count": 982
+    },
+    {
+      "domain": "jrbooksonline.com",
+      "im_first": "2011-10-07 20:38:18",
+      "pol_first": "2013-12-12 07:52:23",
+      "lag_days": 796.5,
+      "pol_count": 912
+    },
+    {
+      "domain": "theoccidentalobserver.net",
+      "im_first": "2012-12-02 19:12:43",
+      "pol_first": "2014-01-15 00:49:37",
+      "lag_days": 408.2,
+      "pol_count": 868
+    },
+    {
+      "domain": "nationalactionlondon.files.wordpress.com",
+      "im_first": "2016-07-28 03:17:33",
+      "pol_first": "2016-08-28 13:33:31",
+      "lag_days": 31.4,
+      "pol_count": 844
+    },
+    {
+      "domain": "dailymail.co.uk",
+      "im_first": "2011-10-02 18:10:55",
+      "pol_first": "2013-12-22 22:48:01",
+      "lag_days": 812.2,
+      "pol_count": 838
+    },
+    {
+      "domain": "vnnforum.com",
+      "im_first": "2011-12-14 16:16:47",
+      "pol_first": "2014-06-13 04:15:30",
+      "lag_days": 911.5,
+      "pol_count": 820
+    },
+    {
+      "domain": "dailystormer.com",
+      "im_first": "2014-01-04 18:10:37",
+      "pol_first": "2014-03-24 01:12:18",
+      "lag_days": 78.3,
+      "pol_count": 806
+    },
+    {
+      "domain": "thegreateststorynevertold.tv",
+      "im_first": "2014-01-30 08:48:44",
+      "pol_first": "2014-10-21 20:39:49",
+      "lag_days": 264.5,
+      "pol_count": 802
+    },
+    {
+      "domain": "biblegateway.com",
+      "im_first": "2013-04-07 05:17:30",
+      "pol_first": "2017-10-28 20:50:31",
+      "lag_days": 1665.6,
+      "pol_count": 744
+    },
+    {
+      "domain": "radioaryan.com",
+      "im_first": "2016-05-10 14:14:55",
+      "pol_first": "2016-06-23 15:10:10",
+      "lag_days": 44.0,
+      "pol_count": 734
+    },
+    {
+      "domain": "m.youtube.com",
+      "im_first": "2012-07-02 11:28:15",
+      "pol_first": "2014-01-21 13:21:46",
+      "lag_days": 568.1,
+      "pol_count": 725
+    },
+    {
+      "domain": "nordfront.se",
+      "im_first": "2013-01-22 06:55:21",
+      "pol_first": "2016-04-27 19:09:31",
+      "lag_days": 1191.5,
+      "pol_count": 688
+    },
+    {
+      "domain": "counter-currents.com",
+      "im_first": "2012-02-27 01:56:34",
+      "pol_first": "2014-04-22 08:37:46",
+      "lag_days": 785.3,
+      "pol_count": 657
+    },
+    {
+      "domain": "commonfilthradio.bandcamp.com",
+      "im_first": "2015-11-12 19:34:26",
+      "pol_first": "2016-06-23 15:10:10",
+      "lag_days": 223.8,
+      "pol_count": 655
+    },
+    {
+      "domain": "aryanism.net",
+      "im_first": "2012-03-24 23:07:16",
+      "pol_first": "2014-02-25 00:08:07",
+      "lag_days": 702.0,
+      "pol_count": 638
+    },
+    {
+      "domain": "scribd.com",
+      "im_first": "2011-09-13 13:24:03",
+      "pol_first": "2013-12-11 11:00:30",
+      "lag_days": 819.9,
+      "pol_count": 626
+    },
+    {
+      "domain": "therightstuff.biz",
+      "im_first": "2013-09-13 08:12:34",
+      "pol_first": "2014-01-26 18:43:03",
+      "lag_days": 135.4,
+      "pol_count": 581
+    },
+    {
+      "domain": "research.calvin.edu",
+      "im_first": "2014-09-27 11:42:09",
+      "pol_first": "2015-04-18 17:59:48",
+      "lag_days": 203.3,
+      "pol_count": 572
+    },
+    {
+      "domain": "theguardian.com",
+      "im_first": "2013-09-06 16:26:48",
+      "pol_first": "2013-12-09 10:11:48",
+      "lag_days": 93.7,
+      "pol_count": 546
+    },
+    {
+      "domain": "hitler.org",
+      "im_first": "2016-07-10 14:54:40",
+      "pol_first": "2016-12-10 16:11:46",
+      "lag_days": 153.1,
+      "pol_count": 534
+    },
+    {
+      "domain": "bbc.co.uk",
+      "im_first": "2011-09-29 02:26:48",
+      "pol_first": "2013-12-16 00:30:33",
+      "lag_days": 808.9,
+      "pol_count": 521
+    },
+    {
+      "domain": "natall.com",
+      "im_first": "2015-02-27 23:22:25",
+      "pol_first": "2016-12-09 03:48:27",
+      "lag_days": 650.2,
+      "pol_count": 515
+    },
+    {
+      "domain": "whitehouse.gov",
+      "im_first": "2017-01-22 22:20:53",
+      "pol_first": "2017-02-09 15:01:33",
+      "lag_days": 17.7,
+      "pol_count": 509
+    },
+    {
+      "domain": "donaldjtrump.com",
+      "im_first": "2015-10-13 13:29:53",
+      "pol_first": "2016-02-13 01:31:44",
+      "lag_days": 122.5,
+      "pol_count": 485
+    },
+    {
+      "domain": "angelfire.com",
+      "im_first": "2012-03-02 15:40:53",
+      "pol_first": "2015-08-16 12:57:29",
+      "lag_days": 1261.9,
+      "pol_count": 444
+    },
+    {
+      "domain": "toqonline.com",
+      "im_first": "2012-11-25 22:14:29",
+      "pol_first": "2016-09-05 15:58:11",
+      "lag_days": 1379.7,
+      "pol_count": 399
+    },
+    {
+      "domain": "christogenea.org",
+      "im_first": "2013-04-24 23:38:22",
+      "pol_first": "2019-08-24 00:52:17",
+      "lag_days": 2312.1,
+      "pol_count": 397
+    },
+    {
+      "domain": "theneworder.org",
+      "im_first": "2013-05-05 19:56:12",
+      "pol_first": "2016-09-05 15:58:11",
+      "lag_days": 1218.8,
+      "pol_count": 393
+    },
+    {
+      "domain": "nytimes.com",
+      "im_first": "2012-04-13 13:00:57",
+      "pol_first": "2013-12-02 03:58:16",
+      "lag_days": 597.6,
+      "pol_count": 372
+    },
+    {
+      "domain": "rt.com",
+      "im_first": "2011-10-02 18:10:55",
+      "pol_first": "2013-12-04 17:21:28",
+      "lag_days": 794.0,
+      "pol_count": 354
+    },
+    {
+      "domain": "resist.com",
+      "im_first": "2012-02-10 19:00:16",
+      "pol_first": "2013-12-15 00:46:06",
+      "lag_days": 673.2,
+      "pol_count": 345
+    },
+    {
+      "domain": "telegraph.co.uk",
+      "im_first": "2011-09-25 18:19:43",
+      "pol_first": "2013-12-05 16:49:48",
+      "lag_days": 801.9,
+      "pol_count": 342
+    },
+    {
+      "domain": "humanbiologicaldiversity.com",
+      "im_first": "2013-07-29 01:51:05",
+      "pol_first": "2016-02-17 18:00:34",
+      "lag_days": 933.7,
+      "pol_count": 339
+    },
+    {
+      "domain": "xryshaygh.com",
+      "im_first": "2012-07-03 08:57:09",
+      "pol_first": "2016-12-09 03:48:27",
+      "lag_days": 1619.8,
+      "pol_count": 314
+    },
+    {
+      "domain": "spreaker.com",
+      "im_first": "2016-10-21 20:10:06",
+      "pol_first": "2017-05-18 13:19:07",
+      "lag_days": 208.7,
+      "pol_count": 300
+    },
+    {
+      "domain": "ncbi.nlm.nih.gov",
+      "im_first": "2012-07-11 06:21:06",
+      "pol_first": "2014-01-05 18:39:28",
+      "lag_days": 543.5,
+      "pol_count": 297
+    },
+    {
+      "domain": "independent.co.uk",
+      "im_first": "2011-12-13 17:44:29",
+      "pol_first": "2014-02-15 16:34:06",
+      "lag_days": 795.0,
+      "pol_count": 291
+    },
+    {
+      "domain": "timesofisrael.com",
+      "im_first": "2012-07-15 20:07:17",
+      "pol_first": "2014-02-22 19:46:01",
+      "lag_days": 587.0,
+      "pol_count": 283
+    },
+    {
+      "domain": "strawpoll.me",
+      "im_first": "2013-08-16 01:47:55",
+      "pol_first": "2014-08-27 20:31:49",
+      "lag_days": 376.8,
+      "pol_count": 276
+    },
+    {
+      "domain": "reuters.com",
+      "im_first": "2012-09-14 15:36:04",
+      "pol_first": "2013-12-01 21:09:51",
+      "lag_days": 443.2,
+      "pol_count": 273
+    },
+    {
+      "domain": "bbc.com",
+      "im_first": "2012-08-30 13:57:15",
+      "pol_first": "2014-03-07 11:56:07",
+      "lag_days": 553.9,
+      "pol_count": 268
+    },
+    {
+      "domain": "zerohedge.com",
+      "im_first": "2012-09-21 16:35:34",
+      "pol_first": "2014-01-26 16:56:44",
+      "lag_days": 492.0,
+      "pol_count": 250
+    },
+    {
+      "domain": "dumpert.nl",
+      "im_first": "2013-04-25 19:09:17",
+      "pol_first": "2016-06-25 07:51:03",
+      "lag_days": 1156.5,
+      "pol_count": 247
+    }
+  ]
+}

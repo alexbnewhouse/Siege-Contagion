@@ -355,3 +355,386 @@ class TestBuildWeeklySeriesPol:
         assert "post_treatment" in result.columns
         assert "time_centered" in result.columns
         assert result.height > 0
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# 22_shutdown_its tests
+# ═══════════════════════════════════════════════════════════════════════
+
+_shutdown = importlib.import_module("22_shutdown_its")
+
+
+class TestShutdownBuildWeeklySeries:
+    def test_builds_weekly_with_treatment(self):
+        from datetime import datetime, timezone
+        dates = [
+            datetime(2017, 11, 1, tzinfo=timezone.utc),
+            datetime(2017, 11, 8, tzinfo=timezone.utc),
+            datetime(2017, 11, 22, tzinfo=timezone.utc),
+            datetime(2017, 11, 29, tzinfo=timezone.utc),
+        ]
+        df = pl.DataFrame({
+            "date": dates,
+            "siege_keyword_score": [1.0, 2.0, 3.0, 4.0],
+            "siege_binary": [0, 1, 1, 1],
+        })
+        t0 = datetime(2017, 11, 21, tzinfo=timezone.utc)
+        result = _shutdown.build_weekly_series(df, t0, "siege_keyword_score")
+        assert "post_treatment" in result.columns
+        assert "time_centered" in result.columns
+        assert "time_x_post" in result.columns
+        assert result.height > 0
+
+    def test_pre_post_split(self):
+        from datetime import datetime, timezone
+        dates = [datetime(2017, 10, i, tzinfo=timezone.utc) for i in range(1, 29)]
+        dates += [datetime(2017, 12, i, tzinfo=timezone.utc) for i in range(1, 29)]
+        df = pl.DataFrame({
+            "date": dates,
+            "siege_keyword_score": np.random.rand(56),
+            "siege_binary": np.random.randint(0, 2, 56).tolist(),
+        })
+        t0 = datetime(2017, 11, 21, tzinfo=timezone.utc)
+        result = _shutdown.build_weekly_series(df, t0, "siege_keyword_score")
+        pre = result.filter(pl.col("post_treatment") == 0).height
+        post = result.filter(pl.col("post_treatment") == 1).height
+        assert pre > 0
+        assert post > 0
+
+
+class TestShutdownRunIts:
+    def test_returns_coefficients(self):
+        from datetime import datetime, timezone
+        np.random.seed(42)
+        n = 50
+        dates = [datetime(2017, 1, 1, tzinfo=timezone.utc)]
+        for i in range(1, n):
+            dates.append(dates[-1] + __import__("datetime").timedelta(weeks=1))
+        df = pl.DataFrame({
+            "date": dates,
+            "siege_keyword_score": np.random.rand(n),
+            "siege_binary": np.random.randint(0, 2, n).tolist(),
+        })
+        t0 = datetime(2017, 6, 1, tzinfo=timezone.utc)
+        weekly = _shutdown.build_weekly_series(df, t0, "siege_keyword_score")
+        result = _shutdown.run_its(weekly, "test_label")
+        assert "b_level" in result
+        assert "b_slope" in result
+        assert "p_level" in result
+        assert "r_squared" in result
+
+
+class TestShutdownTreatmentDate:
+    def test_t_shutdown_correct(self):
+        from datetime import datetime, timezone
+        expected = datetime(2017, 11, 21, tzinfo=timezone.utc)
+        assert _shutdown.T_SHUTDOWN == expected
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# 23_vocab_adoption_lags tests
+# ═══════════════════════════════════════════════════════════════════════
+
+_lags = importlib.import_module("23_vocab_adoption_lags")
+
+
+class TestLagAcceleration:
+    def test_returns_result_keys(self):
+        from datetime import datetime
+        term_lags = [
+            {"im_first": datetime(2015, 1, 1), "lag_days": 100.0},
+            {"im_first": datetime(2015, 3, 1), "lag_days": 90.0},
+            {"im_first": datetime(2015, 5, 1), "lag_days": 80.0},
+            {"im_first": datetime(2015, 7, 1), "lag_days": 70.0},
+            {"im_first": datetime(2015, 9, 1), "lag_days": 60.0},
+        ]
+        result = _lags.test_lag_acceleration(term_lags)
+        assert "slope" in result
+        assert "p_value" in result
+        assert "interpretation" in result
+
+    def test_insufficient_terms(self):
+        result = _lags.test_lag_acceleration([{"im_first": None, "lag_days": 1}])
+        assert "error" in result
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# 24_transfer_entropy tests
+# ═══════════════════════════════════════════════════════════════════════
+
+_te = importlib.import_module("24_transfer_entropy")
+
+
+class TestDiscretise:
+    def test_output_shape(self):
+        x = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], dtype=float)
+        result = _te._discretise(x, n_bins=3)
+        assert len(result) == 10
+
+    def test_all_same(self):
+        x = np.ones(20)
+        result = _te._discretise(x, n_bins=5)
+        assert len(result) == 20
+
+
+class TestTransferEntropy:
+    def test_zero_for_independent(self):
+        np.random.seed(42)
+        x = np.random.normal(0, 1, 200)
+        y = np.random.normal(0, 1, 200)
+        te = _te._transfer_entropy(x, y, lag=1, n_bins=3)
+        assert isinstance(te, float)
+        # Should be near zero for independent series
+        assert te < 0.5
+
+    def test_positive_for_dependent(self):
+        np.random.seed(42)
+        x = np.random.normal(0, 1, 200)
+        # y follows x with lag
+        y = np.zeros(200)
+        y[1:] = 0.8 * x[:-1] + 0.2 * np.random.normal(0, 1, 199)
+        te = _te._transfer_entropy(x, y, lag=1, n_bins=3)
+        assert te >= 0.0
+
+    def test_short_series(self):
+        te = _te._transfer_entropy(np.array([1.0, 2.0]), np.array([3.0, 4.0]))
+        assert te == 0.0
+
+
+class TestTransferEntropySignificance:
+    def test_result_structure(self):
+        np.random.seed(42)
+        x = np.random.normal(0, 1, 100)
+        y = np.random.normal(0, 1, 100)
+        result = _te.transfer_entropy_with_significance(
+            x, y, lag=1, n_bins=3, n_surrogates=20, seed=42
+        )
+        assert "te" in result
+        assert "p_value" in result
+        assert "z_score" in result
+        assert "significant_05" in result
+
+
+class TestBuildWeeklyPair:
+    def test_builds_aligned_arrays(self):
+        from datetime import datetime
+        im = pl.DataFrame({
+            "date": [datetime(2016, 1, i) for i in range(1, 15)],
+            "siege_keyword_score": np.random.rand(14),
+            "author_id": [100] * 14,
+        })
+        pol = pl.DataFrame({
+            "date": [datetime(2016, 1, i) for i in range(1, 15)],
+            "siege_keyword_score": np.random.rand(14),
+        })
+        im_arr, pol_arr = _te.build_weekly_pair(im, pol)
+        assert len(im_arr) == len(pol_arr)
+        assert len(im_arr) > 0
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# 25_country_correlation tests
+# ═══════════════════════════════════════════════════════════════════════
+
+_country = importlib.import_module("25_country_correlation")
+
+
+class TestCountrySummary:
+    def test_groups_by_country(self):
+        df = pl.DataFrame({
+            "poster_country": ["US", "US", "GB", "DE", None],
+            "siege_keyword_score": [1.0, 2.0, 3.0, 4.0, 5.0],
+            "siege_binary": [1, 1, 0, 1, 0],
+        })
+        result = _country.country_summary(df)
+        assert result.height == 3  # US, GB, DE (null excluded)
+        assert "mean_score" in result.columns
+        assert "prevalence" in result.columns
+
+    def test_empty_country_excluded(self):
+        df = pl.DataFrame({
+            "poster_country": ["", "US"],
+            "siege_keyword_score": [1.0, 2.0],
+            "siege_binary": [0, 1],
+        })
+        result = _country.country_summary(df)
+        assert result.height == 1
+
+
+class TestImHeavyCountries:
+    def test_us_is_im_heavy(self):
+        assert "US" in _country.IM_HEAVY_COUNTRIES
+
+    def test_gb_is_im_heavy(self):
+        assert "GB" in _country.IM_HEAVY_COUNTRIES
+
+    def test_jp_not_im_heavy(self):
+        assert "JP" not in _country.IM_HEAVY_COUNTRIES
+
+
+class TestImVsRestTest:
+    def test_with_sufficient_data(self):
+        np.random.seed(42)
+        countries = list("US GB CA AU SE FI NO DE FR IT ES PL RU JP BR".split())
+        n = len(countries)
+        summary = pl.DataFrame({
+            "poster_country": countries,
+            "n_posts": np.random.randint(100, 10000, n).tolist(),
+            "mean_score": np.random.rand(n),
+            "prevalence": np.random.rand(n),
+        })
+        result = _country.im_vs_rest_test(summary)
+        assert "u_statistic" in result
+        assert "p_value" in result
+        assert "im_cluster_n" in result
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# 26_dose_response tests
+# ═══════════════════════════════════════════════════════════════════════
+
+_dose = importlib.import_module("26_dose_response")
+
+
+class TestBuildWeeklyScores:
+    def test_joins_platforms(self):
+        from datetime import datetime
+        im = pl.DataFrame({
+            "date": [datetime(2016, 1, i) for i in range(1, 22)],
+            "siege_keyword_score": np.random.rand(21),
+            "author_id": [100] * 21,
+        })
+        pol = pl.DataFrame({
+            "date": [datetime(2016, 1, i) for i in range(1, 22)],
+            "siege_keyword_score": np.random.rand(21),
+        })
+        result = _dose.build_weekly_scores(im, pol)
+        assert "im_score" in result.columns
+        assert "pol_score" in result.columns
+
+
+class TestDoseResponseAnalysis:
+    def test_produces_lag_results(self):
+        from datetime import datetime, timedelta
+        np.random.seed(42)
+        n = 60
+        base = datetime(2016, 1, 4)
+        weeks = [base + timedelta(weeks=i) for i in range(n)]
+        weekly = pl.DataFrame({
+            "week": weeks,
+            "im_score": np.random.rand(n),
+            "pol_score": np.random.rand(n),
+        })
+        result = _dose.dose_response_analysis(weekly, max_lag=4)
+        assert "lag_1" in result
+        assert "kruskal_h" in result["lag_1"]
+        assert "spearman_rho" in result["lag_1"]
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# 27_subtheme_diffusion tests
+# ═══════════════════════════════════════════════════════════════════════
+
+_subtheme = importlib.import_module("27_subtheme_diffusion")
+
+
+class TestSubthemeDefinitions:
+    def test_five_subthemes(self):
+        assert len(_subtheme.SUBTHEMES) == 5
+
+    def test_accelerationism_patterns(self):
+        assert "accelerationism" in _subtheme.SUBTHEMES
+        assert len(_subtheme.SUBTHEMES["accelerationism"]) > 0
+
+
+class TestScoreSubthemes:
+    def test_adds_columns(self):
+        df = pl.DataFrame({
+            "text": [
+                "accelerate the collapse",
+                "read siege by james mason",
+                "atomwaffen skull mask",
+                "nothing related here",
+            ],
+        })
+        result = _subtheme.score_subthemes(df)
+        assert "st_accelerationism" in result.columns
+        assert "st_mason_core" in result.columns
+        assert result["st_accelerationism"][0] is True
+        assert result["st_mason_core"][1] is True
+        assert result["st_atomwaffen_org"][2] is True
+
+    def test_none_text_handled(self):
+        df = pl.DataFrame({"text": [None, ""]})
+        result = _subtheme.score_subthemes(df)
+        assert result.height == 2
+
+
+class TestCompileSubtheme:
+    def test_compiles_and_matches(self):
+        pat = _subtheme._compile_subtheme([r"\bsiege\b", r"\bmason\b"])
+        assert pat.search("read siege")
+        assert pat.search("james mason")
+        assert not pat.search("hello world")
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# 28_domain_diffusion tests
+# ═══════════════════════════════════════════════════════════════════════
+
+_domain = importlib.import_module("28_domain_diffusion")
+
+
+class TestDomainExtraction:
+    def test_extract_domain(self):
+        assert _domain._extract_domain("https://example.com/page") == "example.com"
+
+    def test_extract_domain_www(self):
+        assert _domain._extract_domain("https://www.example.com") == "example.com"
+
+    def test_extract_domain_none(self):
+        assert _domain._extract_domain("not a url") is None
+
+
+class TestExtractDomainsWithDates:
+    def test_extracts_domains(self):
+        from datetime import datetime
+        df = pl.DataFrame({
+            "text": [
+                "Check https://siege-site.example.com/post1",
+                "Another https://siege-site.example.com/post2",
+            ],
+            "date": [datetime(2016, 1, 1), datetime(2016, 1, 2)],
+        })
+        result = _domain.extract_domains_with_dates(df)
+        assert "siege-site.example.com" in result
+        # Should keep earliest date
+        assert result["siege-site.example.com"] == datetime(2016, 1, 1)
+
+    def test_noise_filtered(self):
+        from datetime import datetime
+        df = pl.DataFrame({
+            "text": ["Visit https://youtube.com/watch?v=123"],
+            "date": [datetime(2016, 1, 1)],
+        })
+        result = _domain.extract_domains_with_dates(df)
+        assert len(result) == 0
+
+
+class TestDomainTemporalPriority:
+    def test_counts_correctly(self):
+        from datetime import datetime
+        im = {
+            "a.com": datetime(2015, 1, 1),
+            "b.com": datetime(2016, 6, 1),
+            "c.com": datetime(2016, 1, 1),
+        }
+        pol = {
+            "a.com": datetime(2016, 1, 1),  # IM first
+            "b.com": datetime(2015, 1, 1),  # pol first
+            "d.com": datetime(2016, 1, 1),  # no IM match
+        }
+        result = _domain.domain_temporal_priority(im, pol)
+        assert result["shared_domains"] == 2
+        assert result["im_first"] == 1
+        assert result["pol_first"] == 1

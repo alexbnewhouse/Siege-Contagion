@@ -95,7 +95,9 @@ def build_weekly_prevalence(
     prevalence = siege_weekly.select([
         "week", "siege_post_count", "post_count", "mean_score",
         "post_treatment", "time_centered", "time_x_post",
-    ]).join(
+    ]).with_columns(
+        pl.col("week").cast(pl.Date)
+    ).join(
         all_weekly.select(["week_start", "total_posts"]).rename({"week_start": "week"}),
         on="week",
         how="left",

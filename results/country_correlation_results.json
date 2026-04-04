@@ -1,0 +1,145 @@
+{
+  "n_countries": 225,
+  "posts_with_country": 881747,
+  "im_cluster_countries": [
+    "AU",
+    "CA",
+    "DE",
+    "FI",
+    "GB",
+    "NO",
+    "SE",
+    "US"
+  ],
+  "top_20_countries": [
+    {
+      "poster_country": "US",
+      "n_posts": 464737,
+      "mean_score": 1.8613224253717695,
+      "prevalence": 0.857351577343745
+    },
+    {
+      "poster_country": "N",
+      "n_posts": 83885,
+      "mean_score": 1.8929713297967454,
+      "prevalence": 0.8478631459736544
+    },
+    {
+      "poster_country": "GB",
+      "n_posts": 53894,
+      "mean_score": 1.806830073848666,
+      "prevalence": 0.8328941997253869
+    },
+    {
+      "poster_country": "CA",
+      "n_posts": 52470,
+      "mean_score": 1.7890375452639604,
+      "prevalence": 0.8409186201639032
+    },
+    {
+      "poster_country": "AU",
+      "n_posts": 32016,
+      "mean_score": 1.8023175912043978,
+      "prevalence": 0.8451399300349826
+    },
+    {
+      "poster_country": "DE",
+      "n_posts": 23314,
+      "mean_score": 1.602775156558291,
+      "prevalence": 0.7646049583940979
+    },
+    {
+      "poster_country": "SE",
+      "n_posts": 11420,
+      "mean_score": 1.6442994746059545,
+      "prevalence": 0.8145359019264449
+    },
+    {
+      "poster_country": "NL",
+      "n_posts": 9819,
+      "mean_score": 1.7075771463489156,
+      "prevalence": 0.8071086668703534
+    },
+    {
+      "poster_country": "NO",
+      "n_posts": 8728,
+      "mean_score": 1.7649289642529788,
+      "prevalence": 0.8724793767186068
+    },
+    {
+      "poster_country": "FR",
+      "n_posts": 8654,
+      "mean_score": 1.679708805176797,
+      "prevalence": 0.836838456205223
+    },
+    {
+      "poster_country": "FI",
+      "n_posts": 8071,
+      "mean_score": 1.6672035683310618,
+      "prevalence": 0.8161318300086731
+    },
+    {
+      "poster_country": "PL",
+      "n_posts": 7510,
+      "mean_score": 1.6583222370173103,
+      "prevalence": 0.8053262316910785
+    },
+    {
+      "poster_country": "BR",
+      "n_posts": 6562,
+      "mean_score": 1.7337701920146298,
+      "prevalence": 0.8335873209387382
+    },
+    {
+      "poster_country": "NZ",
+      "n_posts": 6003,
+      "mean_score": 1.8128435782108945,
+      "prevalence": 0.8497417957687823
+    },
+    {
+      "poster_country": "RU",
+      "n_posts": 5990,
+      "mean_score": 1.5682136894824708,
+      "prevalence": 0.8063439065108514
+    },
+    {
+      "poster_country": "IT",
+      "n_posts": 5539,
+      "mean_score": 1.6510200397183608,
+      "prevalence": 0.8116988626105796
+    },
+    {
+      "poster_country": "IE",
+      "n_posts": 5216,
+      "mean_score": 1.7926763803680983,
+      "prevalence": 0.8226610429447853
+    },
+    {
+      "poster_country": "RO",
+      "n_posts": 4531,
+      "mean_score": 1.6203707790774662,
+      "prevalence": 0.785919223129552
+    },
+    {
+      "poster_country": "DK",
+      "n_posts": 4338,
+      "mean_score": 1.666804979253112,
+      "prevalence": 0.801982480405717
+    },
+    {
+      "poster_country": "ES",
+      "n_posts": 4219,
+      "mean_score": 1.731571462431856,
+      "prevalence": 0.8302915382792131
+    }
+  ],
+  "im_vs_rest_test": {
+    "im_cluster_n": 8,
+    "rest_n": 217,
+    "im_mean_score": 1.742339349929635,
+    "rest_mean_score": 1.6559870136885793,
+    "u_statistic": 1007.0,
+    "p_value": 0.22183140252590222,
+    "significant_05": false
+  }
+}

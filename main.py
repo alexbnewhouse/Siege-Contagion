@@ -58,6 +58,13 @@ CROSS_STAGES: list[tuple[str, str]] = [
     ("17_cross_platform_its",  "H12 – Cross-platform ITS"),
     ("18_cross_platform_granger", "H13 – Cross-platform Granger causality"),
     ("19_cross_platform_bridges", "H14 – Cross-platform content bridges"),
+    ("22_shutdown_its",        "H15 – Post-shutdown migration ITS"),
+    ("23_vocab_adoption_lags", "H16 – Vocabulary adoption lag curves"),
+    ("24_transfer_entropy",    "H17 – Transfer entropy"),
+    ("25_country_correlation", "H18 – Country-level correlation"),
+    ("26_dose_response",       "H19 – Dose-response at multiple lags"),
+    ("27_subtheme_diffusion",  "H20 – Sub-theme disaggregation"),
+    ("28_domain_diffusion",    "H21 – URL domain diffusion"),
 ]
 
 
