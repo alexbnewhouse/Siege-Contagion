@@ -16,6 +16,9 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 from utils import DATA_PROCESSED, ZEIGER_MEMBER_ID
 
+# Lazy import to avoid circular; used only in main()
+_apply_embedding_boost = None
+
 MODEL_NAME = "all-MiniLM-L6-v2"
 BATCH_SIZE = 512
 MAX_SEQ_LEN = 256  # tokens; truncate long posts
@@ -116,6 +119,23 @@ def main():
     fp = fp.with_columns(
         pl.Series("siege_similarity", fp_similarities, dtype=pl.Float64)
     )
+
+    # Apply embedding-boosted context adjustment
+    from importlib import import_module
+    _lex = import_module("02_siege_lexicon")
+    _boost = _lex.apply_embedding_boost
+
+    if "siege_keyword_context_score" in fp.columns:
+        print("  Applying embedding boost to context-dependent terms…")
+        fp_adj = _boost(
+            fp["siege_keyword_score"].to_numpy(),
+            fp["siege_keyword_context_score"].to_numpy(),
+            fp_similarities,
+        )
+        fp = fp.with_columns(
+            pl.Series("siege_keyword_score_adjusted", fp_adj, dtype=pl.Float64)
+        )
+
     fp.write_parquet(DATA_PROCESSED / "forum_posts.parquet")
     print(f"  Forum mean similarity: {fp_similarities.mean():.4f}")
     print(f"  Forum max similarity:  {fp_similarities.max():.4f}")
@@ -128,6 +148,18 @@ def main():
     dm = dm.with_columns(
         pl.Series("siege_similarity", dm_similarities, dtype=pl.Float64)
     )
+
+    if "siege_keyword_context_score" in dm.columns:
+        print("  Applying embedding boost to context-dependent terms…")
+        dm_adj = _boost(
+            dm["siege_keyword_score"].to_numpy(),
+            dm["siege_keyword_context_score"].to_numpy(),
+            dm_similarities,
+        )
+        dm = dm.with_columns(
+            pl.Series("siege_keyword_score_adjusted", dm_adj, dtype=pl.Float64)
+        )
+
     dm.write_parquet(DATA_PROCESSED / "dm_posts.parquet")
     print(f"  DM mean similarity: {dm_similarities.mean():.4f}")
     print(f"  DM max similarity:  {dm_similarities.max():.4f}")
@@ -137,6 +169,7 @@ def main():
     score_cols = [
         "siege_keyword_count", "siege_keyword_score",
         "siege_keyword_density", "siege_binary", "siege_similarity",
+        "siege_keyword_context_score", "siege_keyword_score_adjusted",
         "word_count",
     ]
 

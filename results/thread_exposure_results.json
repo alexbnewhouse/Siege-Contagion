@@ -1,0 +1,15 @@
+{
+  "n_user_months": 5998,
+  "n_users": 641,
+  "thread_exposure_coef": 0.14402550410471035,
+  "thread_exposure_se": 0.0842345580801021,
+  "thread_exposure_p": 0.08730010331332375,
+  "lagged_own_score_coef": 0.29528598482871626,
+  "lagged_own_score_p": 0.013381687221553534,
+  "r_squared": 0.10571682410676886,
+  "tercile_means": {
+    "Low": 0.04996285065612907,
+    "Medium": 0.05797544642928971,
+    "High": 0.12628422864381963
+  }
+}

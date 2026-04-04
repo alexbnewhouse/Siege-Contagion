@@ -32,6 +32,11 @@ STAGES: list[tuple[str, str]] = [
     ("08_cohort_analysis",     "H4 – Cohort-stratified analysis"),
     ("09_dm_pipeline",         "H5 – Private-to-public pipeline"),
     ("10_reputation_diffusion","H6 – Reputation-mediated diffusion"),
+    ("12_reputation_reinforcement", "H7 – Reputation reinforcement"),
+    ("13_thread_escalation",   "H8 – Within-thread escalation"),
+    ("14_thread_exposure",     "H9 – Thread exposure → adoption"),
+    ("15_semantic_convergence","H10 – Semantic convergence"),
+    ("16_subforum_diffusion",  "H11 – Subforum diffusion geography"),
     ("11_summary_report",      "Summary report generation"),
 ]
 

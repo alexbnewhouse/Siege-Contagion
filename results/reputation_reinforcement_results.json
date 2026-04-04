@@ -1,0 +1,20 @@
+{
+  "n_posts": 194652,
+  "n_siege_posts": 7358,
+  "mean_rep_siege": 2.3346017939657515,
+  "mean_rep_non_siege": 1.3415539205740707,
+  "mann_whitney_U": 811811413.0,
+  "mann_whitney_p": 2.0922907480731544e-185,
+  "simple_model": {
+    "siege_coef": 0.6669801758673357,
+    "siege_irr": 1.9483447693264666,
+    "siege_p": 0.0,
+    "siege_se": 0.014648527963971935
+  },
+  "month_fe_model": {
+    "siege_coef": 0.42850602065357185,
+    "siege_irr": 1.534962607263574,
+    "siege_p": 2.4811868346571535e-176,
+    "siege_se": 0.015135302852216662
+  }
+}

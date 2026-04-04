@@ -153,6 +153,126 @@ def generate_report():
     else:
         lines.append(f"*Error: {rep.get('error', 'unknown')}*\n")
 
+    # ── H7: Reputation Reinforcement ─────────────────────────────────
+    lines.append("\n\n## H7: Reputation Reinforcement of Siege Rhetoric\n")
+    rep_reinf = load_json("reputation_reinforcement_results.json")
+    if "error" not in rep_reinf:
+        lines.append(f"- Posts analysed: {rep_reinf.get('n_posts', 'N/A'):,}")
+        lines.append(f"- Siege posts: {rep_reinf.get('n_siege_posts', 'N/A'):,}")
+        lines.append(f"- Mean rep (Siege): {rep_reinf.get('mean_rep_siege', 0):.3f}")
+        lines.append(f"- Mean rep (non-Siege): {rep_reinf.get('mean_rep_non_siege', 0):.3f}")
+        lines.append(f"- Mann-Whitney U: {format_p(rep_reinf.get('mann_whitney_p', 1))} "
+                     f"{sig_stars(rep_reinf.get('mann_whitney_p', 1))}")
+        if "month_fe_model" in rep_reinf:
+            m = rep_reinf["month_fe_model"]
+            lines.append(f"\n**Negative binomial (month FE):**")
+            lines.append(f"- Siege coefficient: {m['siege_coef']:.4f} "
+                         f"({format_p(m['siege_p'])}) {sig_stars(m['siege_p'])}")
+            lines.append(f"- Incidence rate ratio: {m['siege_irr']:.4f}")
+        elif "simple_model" in rep_reinf:
+            m = rep_reinf["simple_model"]
+            lines.append(f"\n**Negative binomial (no FE):**")
+            lines.append(f"- Siege coefficient: {m['siege_coef']:.4f} "
+                         f"({format_p(m['siege_p'])}) {sig_stars(m['siege_p'])}")
+            lines.append(f"- Incidence rate ratio: {m['siege_irr']:.4f}")
+    else:
+        lines.append(f"*{rep_reinf.get('error', 'No data')}*\n")
+
+    lines.append("\n**Caution:** Reputation data reliability has not been independently "
+                 "validated. These results should be interpreted with care.\n")
+
+    # ── H8: Within-Thread Escalation ──────────────────────────────────
+    lines.append("\n## H8: Within-Thread Escalation\n")
+    thread_esc = load_json("thread_escalation_results.json")
+    if "error" not in thread_esc:
+        lines.append(f"- Siege threads (≥3 posts): {thread_esc.get('n_siege_threads', 'N/A'):,}")
+        lines.append(f"- Posts in Siege threads: {thread_esc.get('n_posts_in_siege_threads', 'N/A'):,}")
+        if "regression" in thread_esc:
+            reg = thread_esc["regression"]
+            lines.append(f"\n**Position regression (cluster-robust SE):**")
+            lines.append(f"- Position coefficient: {reg['position_coef']:.4f} "
+                         f"({format_p(reg['position_p'])}) {sig_stars(reg['position_p'])}")
+            lines.append(f"- R²: {reg['r_squared']:.4f}")
+        if "first_vs_last" in thread_esc:
+            fvl = thread_esc["first_vs_last"]
+            lines.append(f"\n**First vs. last post in thread:**")
+            lines.append(f"- Mean first: {fvl['mean_first']:.4f}")
+            lines.append(f"- Mean last: {fvl['mean_last']:.4f}")
+            lines.append(f"- Mean diff: {fvl['mean_diff']:.4f}")
+            lines.append(f"- t-test: t={fvl['t_stat']:.3f}, {format_p(fvl['t_p'])} "
+                         f"{sig_stars(fvl['t_p'])}")
+            lines.append(f"- Wilcoxon: {format_p(fvl['wilcoxon_p'])} "
+                         f"{sig_stars(fvl['wilcoxon_p'])}")
+    else:
+        lines.append(f"*{thread_esc.get('error', 'No data')}*\n")
+
+    # ── H9: Thread Exposure → Adoption ────────────────────────────────
+    lines.append("\n\n## H9: Thread Exposure → Subsequent Adoption\n")
+    thread_exp = load_json("thread_exposure_results.json")
+    if "error" not in thread_exp:
+        lines.append(f"- Panel observations: {thread_exp.get('n_user_months', 'N/A'):,} user-months")
+        lines.append(f"- Unique users: {thread_exp.get('n_users', 'N/A'):,}")
+        lines.append(f"- Thread exposure coefficient: {thread_exp.get('thread_exposure_coef', 0):.4f} "
+                     f"({format_p(thread_exp.get('thread_exposure_p', 1))}) "
+                     f"{sig_stars(thread_exp.get('thread_exposure_p', 1))}")
+        lines.append(f"- Lagged own score coefficient: {thread_exp.get('lagged_own_score_coef', 0):.4f} "
+                     f"({format_p(thread_exp.get('lagged_own_score_p', 1))}) "
+                     f"{sig_stars(thread_exp.get('lagged_own_score_p', 1))}")
+        lines.append(f"- R²: {thread_exp.get('r_squared', 0):.4f}")
+        if "tercile_means" in thread_exp:
+            lines.append(f"\n**Mean next-month siege score by thread exposure tercile:**")
+            for k, v in thread_exp["tercile_means"].items():
+                lines.append(f"- {k}: {v:.4f}")
+    else:
+        lines.append(f"*{thread_exp.get('error', 'No data')}*\n")
+
+    # ── H10: Semantic Convergence ─────────────────────────────────────
+    lines.append("\n\n## H10: Semantic Convergence\n")
+    conv = load_json("semantic_convergence_results.json")
+    if "error" not in conv:
+        if "cv_keyword" in conv:
+            ck = conv["cv_keyword"]
+            lines.append(f"**CV of keyword score (ITS):**")
+            lines.append(f"- Level change (β₂): {ck['level_change']:.4f} "
+                         f"({format_p(ck['level_change_p'])}) {sig_stars(ck['level_change_p'])}")
+            lines.append(f"- Slope change (β₃): {ck['slope_change']:.6f} "
+                         f"({format_p(ck['slope_change_p'])}) {sig_stars(ck['slope_change_p'])}")
+            lines.append(f"- R²: {ck['r_squared']:.4f}")
+        if "pre_post_comparison" in conv:
+            pp = conv["pre_post_comparison"]
+            lines.append(f"\n**Pre/post comparison:**")
+            lines.append(f"- Pre-Siege mean CV: {pp['pre_mean_cv']:.4f}")
+            lines.append(f"- Post-Siege mean CV: {pp['post_mean_cv']:.4f}")
+            lines.append(f"- Direction: {pp['direction']}")
+            lines.append(f"- t-test: {format_p(pp['t_p'])} {sig_stars(pp['t_p'])}")
+    else:
+        lines.append(f"*{conv.get('error', 'No data')}*\n")
+
+    # ── H11: Subforum Diffusion ───────────────────────────────────────
+    lines.append("\n\n## H11: Subforum Diffusion Geography\n")
+    subforum = load_json("subforum_diffusion_results.json")
+    if "error" not in subforum:
+        lines.append(f"- Subforums analysed: {subforum.get('n_subforums', 'N/A')}")
+        lines.append(f"- Herfindahl index (overall): {subforum.get('herfindahl_overall', 0):.4f}")
+        lines.append(f"- Pre-Siege HHI: {subforum.get('herfindahl_pre', 0):.4f}")
+        lines.append(f"- Post-Siege HHI: {subforum.get('herfindahl_post', 0):.4f}")
+        lines.append(f"- Direction: {subforum.get('diffusion_direction', 'N/A')}")
+        if "top_subforums" in subforum:
+            lines.append(f"\n**Top subforums by Siege prevalence:**\n")
+            lines.append("| Subforum | Prevalence | Posts |")
+            lines.append("|----------|-----------|-------|")
+            for sf in subforum["top_subforums"][:10]:
+                lines.append(f"| {sf['name']} | {sf['prevalence']:.3f} | {sf['posts']:,} |")
+        if "biggest_increases" in subforum:
+            lines.append(f"\n**Biggest pre→post increases:**\n")
+            lines.append("| Subforum | Pre | Post | Δ |")
+            lines.append("|----------|-----|------|---|")
+            for sf in subforum["biggest_increases"][:10]:
+                lines.append(f"| {sf['name']} | {sf['pre']:.3f} | {sf['post']:.3f} | "
+                             f"{sf['change']:+.3f} |")
+    else:
+        lines.append(f"*{subforum.get('error', 'No data')}*\n")
+
     # ── Methodological notes ──────────────────────────────────────────
     lines.append("\n\n## Methodological Notes\n")
     lines.append("1. **Multiple comparisons:** All primary hypothesis tests should be "

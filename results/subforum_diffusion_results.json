@@ -1,0 +1,121 @@
+{
+  "n_subforums": 87,
+  "herfindahl_overall": 0.07982580178368133,
+  "herfindahl_pre": 0.04974999055066732,
+  "herfindahl_post": 0.11608029230920003,
+  "diffusion_direction": "more concentrated",
+  "top_subforums": [
+    {
+      "name": "hall-of-graduates",
+      "prevalence": 0.5555555555555556,
+      "posts": 99
+    },
+    {
+      "name": "books",
+      "prevalence": 0.19965675057208238,
+      "posts": 1748
+    },
+    {
+      "name": "atomwaffen-division",
+      "prevalence": 0.15384615384615385,
+      "posts": 299
+    },
+    {
+      "name": "antipodean-resistance",
+      "prevalence": 0.10526315789473684,
+      "posts": 133
+    },
+    {
+      "name": "strategy",
+      "prevalence": 0.10221285563751317,
+      "posts": 949
+    },
+    {
+      "name": "noose",
+      "prevalence": 0.0979020979020979,
+      "posts": 429
+    },
+    {
+      "name": "articles",
+      "prevalence": 0.09417040358744394,
+      "posts": 446
+    },
+    {
+      "name": "shrimp-bunker",
+      "prevalence": 0.09230769230769231,
+      "posts": 130
+    },
+    {
+      "name": "antimony-group",
+      "prevalence": 0.09090909090909091,
+      "posts": 253
+    },
+    {
+      "name": "adminship-center",
+      "prevalence": 0.09033613445378151,
+      "posts": 476
+    }
+  ],
+  "biggest_increases": [
+    {
+      "name": "archive-project-central",
+      "pre": 0.01675977653631285,
+      "post": 0.19230769230769232,
+      "change": 0.17554791577137946
+    },
+    {
+      "name": "articles",
+      "pre": 0.02109704641350211,
+      "post": 0.17703349282296652,
+      "change": 0.1559364464094644
+    },
+    {
+      "name": "antimony-group",
+      "pre": 0.01694915254237288,
+      "post": 0.15555555555555556,
+      "change": 0.13860640301318267
+    },
+    {
+      "name": "deutschland-austria",
+      "pre": 0.023255813953488372,
+      "post": 0.15384615384615385,
+      "change": 0.1305903398926655
+    },
+    {
+      "name": "books",
+      "pre": 0.13220815752461323,
+      "post": 0.2459016393442623,
+      "change": 0.11369348181964906
+    },
+    {
+      "name": "external-materials-archive",
+      "pre": 0.05740740740740741,
+      "post": 0.16778523489932887,
+      "change": 0.11037782749192146
+    },
+    {
+      "name": "adminship-center",
+      "pre": 0.051194539249146756,
+      "post": 0.15300546448087432,
+      "change": 0.10181092523172756
+    },
+    {
+      "name": "fascist-fraternity",
+      "pre": 0.02877697841726619,
+      "post": 0.10638297872340426,
+      "change": 0.07760600030613807
+    },
+    {
+      "name": "hungary",
+      "pre": 0.0,
+      "post": 0.06896551724137931,
+      "change": 0.06896551724137931
+    },
+    {
+      "name": "nordic-resistance-movement",
+      "pre": 0.01948051948051948,
+      "post": 0.08615384615384615,
+      "change": 0.06667332667332668
+    }
+  ]
+}

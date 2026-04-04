@@ -1,19 +1,19 @@
 {
   "pre_siege_did": {
     "n_users": 152,
-    "mean_diff": 0.03215537046188864,
+    "mean_diff": 0.04060269327910524,
     "median_diff": 0.0,
-    "t_stat": 1.8062147596010683,
-    "t_pvalue": 0.07287629452057706,
-    "wilcoxon_stat": 2876.0,
-    "wilcoxon_pvalue": 0.0013265291900222426
+    "t_stat": 2.26415978219465,
+    "t_pvalue": 0.024988241851402006,
+    "wilcoxon_stat": 3561.5,
+    "wilcoxon_pvalue": 0.017228723305167892
   },
   "entry_comparison": {
     "pre_n": 3634,
     "post_n": 6708,
-    "pre_mean": 0.014997248211337369,
-    "post_mean": 0.1462432915921288,
-    "mann_whitney_u": 11639832.0,
-    "mann_whitney_p": 3.175121075530524e-29
+    "pre_mean": 0.02193175564116676,
+    "post_mean": 0.18391472868217051,
+    "mann_whitney_u": 11475419.5,
+    "mann_whitney_p": 2.3764194664701637e-35
   }
 }
