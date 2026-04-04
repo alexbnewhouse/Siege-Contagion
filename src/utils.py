@@ -16,7 +16,11 @@ FIGURES_DIR = PROJECT_ROOT / "figures"
 RESULTS_DIR = PROJECT_ROOT / "results"
 NETWORKS_DIR = DATA_PROCESSED / "networks"
 
-for _d in (DATA_PROCESSED, FIGURES_DIR, RESULTS_DIR, NETWORKS_DIR):
+# ── /pol/ platform paths ──────────────────────────────────────────────
+POL_RAW = PROJECT_ROOT / "data" / "pol"
+POL_ARCHIVE = POL_RAW / "pol.csv.tar.gz"
+
+for _d in (DATA_PROCESSED, FIGURES_DIR, RESULTS_DIR, NETWORKS_DIR, POL_RAW):
     _d.mkdir(parents=True, exist_ok=True)
 
 # ── Zeiger constants ──────────────────────────────────────────────────

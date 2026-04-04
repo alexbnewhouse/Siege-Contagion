@@ -16,6 +16,7 @@ env/
 data/raw/ironmarch/
 data/raw/csv/
 data/processed/
+data/pol/
 *.parquet
 *.npy
 

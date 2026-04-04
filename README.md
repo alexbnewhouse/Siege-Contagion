@@ -1,10 +1,10 @@
-# Siege Culture Diffusion in the Iron March Dataset
+# Siege Culture Diffusion in the Iron March Dataset & 4chan /pol/
 
-Analysis pipeline testing whether the publication of the "Iron March edition" of James Mason's *Siege* by user Zeiger (member_id 2170) catalyzed the development of Siege Culture within the Iron March forum community.
+Analysis pipeline testing whether the publication of the "Iron March edition" of James Mason's *Siege* by user Zeiger (member_id 2170) catalyzed the development of Siege Culture within the Iron March forum community, and whether that rhetoric subsequently diffused to 4chan's /pol/ board.
 
 ## Research Overview
 
-This project implements a multi-method quantitative analysis of ideological diffusion on the Iron March (IM) neo-fascist forum (2011–2017), using the leaked MySQL database. The pipeline tests eleven hypotheses spanning macro-temporal trends, network contagion, collective exegesis, and spatial diffusion:
+This project implements a multi-method quantitative analysis of ideological diffusion on the Iron March (IM) neo-fascist forum (2011–2017) and 4chan's /pol/ board, using the leaked Iron March MySQL database and the 4plebs /pol/ archive (Asagi schema). The pipeline tests fourteen hypotheses spanning macro-temporal trends, network contagion, collective exegesis, spatial diffusion, and cross-platform contagion:
 
 | # | Hypothesis | Method | Key Finding |
 |---|-----------|--------|-------------|
@@ -19,6 +19,16 @@ This project implements a multi-method quantitative analysis of ideological diff
 | H9 | Thread exposure predicts subsequent adoption | Lagged panel regression | β=0.14 (p=0.087†), clear dose-response |
 | H10 | Community develops shared Siege interpretation | Inter-user CV convergence (ITS) | Converging slope β₃=-0.054 (p=0.011\*) |
 | H11 | Siege rhetoric concentrates in ideological subforums | Herfindahl index, subforum mapping | Post-Siege HHI increases; books, strategy lead |
+
+### Cross-Platform Hypotheses (H12–H14)
+
+| # | Hypothesis | Method |
+|---|-----------|--------|
+| H12 | Siege rhetoric shows a structural break on /pol/ after IM's T0 | Cross-platform ITS with prevalence correction |
+| H13 | Iron March Siege rhetoric Granger-causes /pol/ Siege rhetoric | Bidirectional Granger tests with stationarity checks |
+| H14 | Content bridges (URLs, phrases) propagate from IM → /pol/ | URL overlap, n-gram fingerprinting, temporal priority |
+
+Additionally, H8 (thread escalation) and H10 (semantic convergence) are adapted for /pol/'s anonymous structure.
 
 ### Theoretical Framework
 
@@ -62,11 +72,17 @@ Rscript export_rda.R
 
 ## Running the Pipeline
 
-The pipeline has 17 stages orchestrated by `main.py`. Each stage is idempotent.
+The pipeline has 17 Iron March stages plus 9 /pol/ and cross-platform stages, orchestrated by `main.py`. Each stage is idempotent.
 
 ```bash
-# Run the full pipeline end-to-end
+# Run the Iron March pipeline (default)
 uv run python main.py
+
+# Run the /pol/ pipeline
+uv run python main.py --platform pol
+
+# Run everything: IM + /pol/ + cross-platform analyses
+uv run python main.py --platform both
 
 # Resume from a specific stage (e.g. after fixing an error)
 uv run python main.py --from 4
@@ -75,7 +91,7 @@ uv run python main.py --from 4
 uv run python main.py --only 2 3
 ```
 
-### Pipeline Stages
+### Iron March Pipeline Stages
 
 | Stage | Script | Description |
 |-------|--------|-------------|
@@ -97,13 +113,32 @@ uv run python main.py --only 2 3
 | 16 | `16_subforum_diffusion.py` | H11: Subforum diffusion geography |
 | 11 | `11_summary_report.py` | Summary report generation |
 
+### /pol/ Platform Stages (`--platform pol`)
+
+| Stage | Script | Description |
+|-------|--------|-------------|
+| 00b | `00b_ingest_pol.py` | Streaming ingest from 4plebs tar.gz with Siege pre-filter |
+| 01b | `01b_preprocess_pol.py` | 4chan HTML cleaning, schema normalisation |
+| 02b | `02b_siege_lexicon_pol.py` | Dictionary-based siege scoring for /pol/ |
+| 03b | `03b_siege_embeddings_pol.py` | Embedding scoring using IM's centroid |
+| 20  | `20_pol_thread_escalation.py` | H8-pol: Within-thread escalation on /pol/ |
+| 21  | `21_pol_semantic_convergence.py` | H10-pol: Semantic convergence on /pol/ |
+
+### Cross-Platform Stages (included in `--platform both`)
+
+| Stage | Script | Description |
+|-------|--------|-------------|
+| 17 | `17_cross_platform_its.py` | H12: Cross-platform ITS |
+| 18 | `18_cross_platform_granger.py` | H13: Cross-platform Granger causality |
+| 19 | `19_cross_platform_bridges.py` | H14: Content bridge detection |
+
 ## Running Tests
 
 ```bash
 uv run pytest tests/ -v
 ```
 
-89 tests covering lexicon scoring, embedding boost, preprocessing, network construction, contagion model, report generation, and all five exegesis-theory modules.
+142 tests covering lexicon scoring, embedding boost, preprocessing, network construction, contagion model, report generation, all five exegesis-theory modules, /pol/ ingest/preprocessing, and cross-platform analysis modules.
 
 ## Project Structure
 
@@ -111,19 +146,24 @@ uv run pytest tests/ -v
 Siege-Contagion/
 ├── README.md
 ├── pyproject.toml
-├── main.py                   # Pipeline orchestrator
+├── main.py                   # Pipeline orchestrator (--platform im|pol|both)
 ├── export_rda.R              # R helper to export .rda → CSV
 ├── siege_culture_agent_prompt.md  # Research design document
 ├── data/
 │   ├── raw/                  # ironmarch repo + CSV exports
+│   ├── pol/                  # 4plebs /pol/ archive (pol.csv.tar.gz)
 │   └── processed/            # Parquet files after preprocessing
 │       └── networks/         # Edge lists (forum, DM, reputation)
 ├── src/
 │   ├── utils.py              # Shared utilities and constants
-│   ├── 00_ingest.py          # Data ingestion
-│   ├── 01_preprocess.py      # HTML stripping, member reconciliation
-│   ├── 02_siege_lexicon.py   # Dictionary-based siege scoring
+│   ├── 00_ingest.py          # IM data ingestion
+│   ├── 00b_ingest_pol.py     # /pol/ streaming ingest with Siege pre-filter
+│   ├── 01_preprocess.py      # IM HTML stripping, member reconciliation
+│   ├── 01b_preprocess_pol.py # 4chan HTML cleaning, schema normalisation
+│   ├── 02_siege_lexicon.py   # Dictionary-based siege scoring (52-term lexicon)
+│   ├── 02b_siege_lexicon_pol.py # /pol/ lexicon scoring
 │   ├── 03_siege_embeddings.py # Embedding-based scoring + boost
+│   ├── 03b_siege_embeddings_pol.py # /pol/ embedding scoring (shared centroid)
 │   ├── 04_its_analysis.py    # H1: Interrupted time series
 │   ├── 05_network_construction.py # Build networks
 │   ├── 06_contagion_model.py # H2: Network contagion
@@ -136,23 +176,30 @@ Siege-Contagion/
 │   ├── 13_thread_escalation.py # H8: Thread escalation
 │   ├── 14_thread_exposure.py # H9: Thread exposure → adoption
 │   ├── 15_semantic_convergence.py # H10: Semantic convergence
-│   └── 16_subforum_diffusion.py # H11: Subforum diffusion
-├── tests/                    # 89 unit tests
+│   ├── 16_subforum_diffusion.py # H11: Subforum diffusion
+│   ├── 17_cross_platform_its.py # H12: Cross-platform ITS
+│   ├── 18_cross_platform_granger.py # H13: Cross-platform Granger
+│   ├── 19_cross_platform_bridges.py # H14: Content bridges
+│   ├── 20_pol_thread_escalation.py # H8-pol: /pol/ thread escalation
+│   └── 21_pol_semantic_convergence.py # H10-pol: /pol/ convergence
+├── tests/                    # 142 unit tests
 │   ├── conftest.py
 │   ├── test_contagion.py
 │   ├── test_exegesis.py      # H7–H11 tests
 │   ├── test_ingest.py
 │   ├── test_lexicon.py       # 34 lexicon tests
 │   ├── test_networks.py
+│   ├── test_pol.py           # 53 /pol/ + cross-platform tests
 │   ├── test_preprocess.py
 │   ├── test_report.py
 │   └── test_utils.py
-├── figures/                  # PNG + PDF plots (22 figures)
+├── figures/                  # PNG + PDF plots
 └── results/                  # JSON results + summary report
 ```
 
-## Data Source
+## Data Sources
 
+### Iron March
 The data comes from the [ironmarch R package](https://github.com/knapply/ironmarch) containing the leaked Iron March database. Key tables:
 
 - **forums_posts** (195K posts): Public forum discussion
@@ -161,6 +208,11 @@ The data comes from the [ironmarch R package](https://github.com/knapply/ironmar
 - **core_message_posts** (21.7K messages): Private DMs
 - **core_members** (1.2K members): User profiles with reputation points
 - **core_reputation_index** (272K events): Likes/reputation interactions
+
+### 4chan /pol/
+The /pol/ data comes from the [4plebs](https://archive.4plebs.org/) archive, stored in the standard Asagi MySQL dump format (Hine et al. 2017; Papasavva et al. 2020). The archive is a ~28GB `pol.csv.tar.gz` containing a single headerless CSV with 28 columns following the Asagi schema.
+
+Place the archive at `data/pol/pol.csv.tar.gz`. The streaming ingest pipeline (`00b_ingest_pol.py`) applies a lightweight Siege pre-filter during extraction, retaining only the ~0.1% of posts matching Siege-related terms while collecting weekly aggregate counts for prevalence normalization.
 
 ## Methodological Notes
 

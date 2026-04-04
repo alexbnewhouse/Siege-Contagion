@@ -5,9 +5,11 @@ Runs all pipeline stages in order.  Each stage is idempotent and writes
 its outputs to data/processed/ or results/.
 
 Usage:
-    uv run python main.py              # run all stages
-    uv run python main.py --from 4     # resume from stage 04
-    uv run python main.py --only 2 3   # run only stages 02 and 03
+    uv run python main.py                    # run all IM stages
+    uv run python main.py --from 4           # resume from stage 04
+    uv run python main.py --only 2 3         # run only stages 02 and 03
+    uv run python main.py --platform pol     # run /pol/ pipeline
+    uv run python main.py --platform both    # run IM + /pol/ + cross-platform
 """
 from __future__ import annotations
 
@@ -20,7 +22,8 @@ from pathlib import Path
 # Ensure src/ is importable
 sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
 
-STAGES: list[tuple[str, str]] = [
+# ── Iron March stages ─────────────────────────────────────────────────
+IM_STAGES: list[tuple[str, str]] = [
     ("00_ingest",              "Data ingestion (CSV → Parquet)"),
     ("01_preprocess",          "Preprocessing & treatment dates"),
     ("02_siege_lexicon",       "Dictionary-based siege scoring"),
@@ -38,6 +41,23 @@ STAGES: list[tuple[str, str]] = [
     ("15_semantic_convergence","H10 – Semantic convergence"),
     ("16_subforum_diffusion",  "H11 – Subforum diffusion geography"),
     ("11_summary_report",      "Summary report generation"),
+]
+
+# ── /pol/ platform stages ─────────────────────────────────────────────
+POL_STAGES: list[tuple[str, str]] = [
+    ("00b_ingest_pol",         "/pol/ data ingestion (tar.gz → Parquet)"),
+    ("01b_preprocess_pol",     "/pol/ preprocessing & HTML cleaning"),
+    ("02b_siege_lexicon_pol",  "/pol/ dictionary-based siege scoring"),
+    ("03b_siege_embeddings_pol", "/pol/ embedding-based siege scoring"),
+    ("20_pol_thread_escalation", "H8-pol – /pol/ within-thread escalation"),
+    ("21_pol_semantic_convergence", "H10-pol – /pol/ semantic convergence"),
+]
+
+# ── Cross-platform stages ────────────────────────────────────────────
+CROSS_STAGES: list[tuple[str, str]] = [
+    ("17_cross_platform_its",  "H12 – Cross-platform ITS"),
+    ("18_cross_platform_granger", "H13 – Cross-platform Granger causality"),
+    ("19_cross_platform_bridges", "H14 – Cross-platform content bridges"),
 ]
 
 
@@ -62,14 +82,26 @@ def main():
         "--only", nargs="*", type=int, default=None,
         help="Run only the listed stage numbers (e.g. --only 2 3)",
     )
+    parser.add_argument(
+        "--platform", choices=["im", "pol", "both"], default="im",
+        help="Which platform pipeline to run: im (default), pol, or both",
+    )
     args = parser.parse_args()
 
     print("=" * 60)
     print("  SIEGE CULTURE DIFFUSION ANALYSIS PIPELINE")
     print("=" * 60)
 
+    # Select which stage lists to run
+    if args.platform == "im":
+        stages = IM_STAGES
+    elif args.platform == "pol":
+        stages = POL_STAGES
+    elif args.platform == "both":
+        stages = IM_STAGES + POL_STAGES + CROSS_STAGES
+
     pipeline_start = time.perf_counter()
-    for module_name, description in STAGES:
+    for module_name, description in stages:
         stage_num = int(module_name[:2])
         if args.only is not None and stage_num not in args.only:
             continue
