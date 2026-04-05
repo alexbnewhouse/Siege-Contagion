@@ -289,7 +289,7 @@ def test_reciprocal_amplification(
             gc_results[f"{by}_causes_{caused}"] = {
                 "test_statistic": float(gc.test_statistic),
                 "p_value": float(gc.pvalue),
-                "df": int(gc.df_num),
+                "df": int(gc.df[0]),
                 "significant": bool(gc.pvalue < 0.05),
             }
         except Exception as e:
@@ -683,7 +683,7 @@ def plot_clustering(results: dict, filename: str):
         df[~df["is_clustered"]]["delta_apoc"].values,
         df[df["is_clustered"]]["delta_apoc"].values,
     ]
-    bp = ax.boxplot(groups, labels=["Isolated", "Clustered"],
+    bp = ax.boxplot(groups, tick_labels=["Isolated", "Clustered"],
                     patch_artist=True)
     bp["boxes"][0].set_facecolor(CB_PALETTE[0])
     bp["boxes"][1].set_facecolor(CB_PALETTE[2])
@@ -856,7 +856,7 @@ def plot_mimetic(results: dict, filename: str):
     # Magnitude comparison
     ax = axes[0]
     groups = [offline["abs_delta"].values, online["abs_delta"].values]
-    bp = ax.boxplot(groups, labels=["No online nexus", "Online nexus"],
+    bp = ax.boxplot(groups, tick_labels=["No online nexus", "Online nexus"],
                     patch_artist=True)
     bp["boxes"][0].set_facecolor(CB_PALETTE[7])
     bp["boxes"][1].set_facecolor(CB_PALETTE[2])
@@ -866,7 +866,7 @@ def plot_mimetic(results: dict, filename: str):
     # Direction comparison
     ax = axes[1]
     groups = [offline["delta_apoc"].values, online["delta_apoc"].values]
-    bp = ax.boxplot(groups, labels=["No nexus", "Online nexus"],
+    bp = ax.boxplot(groups, tick_labels=["No nexus", "Online nexus"],
                     patch_artist=True)
     bp["boxes"][0].set_facecolor(CB_PALETTE[7])
     bp["boxes"][1].set_facecolor(CB_PALETTE[2])
@@ -879,7 +879,7 @@ def plot_mimetic(results: dict, filename: str):
     groups = [offline["variance_ratio"].dropna().values,
               online["variance_ratio"].dropna().values]
     if all(len(g) > 0 for g in groups):
-        bp = ax.boxplot(groups, labels=["No nexus", "Online nexus"],
+        bp = ax.boxplot(groups, tick_labels=["No nexus", "Online nexus"],
                         patch_artist=True)
         bp["boxes"][0].set_facecolor(CB_PALETTE[7])
         bp["boxes"][1].set_facecolor(CB_PALETTE[2])

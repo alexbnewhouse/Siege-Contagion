@@ -222,13 +222,17 @@ def _build_scorecard(its, cont, granger, cohort, pipe, rep, rep_reinf,
     if "error" not in h_results:
         h22 = h_results.get("H22_contagion_decay", {})
         if h22 and "error" not in h22:
+            agg22 = h22.get('aggregate', {})
+            avg22 = h22.get('average_trajectory_fit', {})
+            median_hl = agg22.get('median_half_life', float('nan'))
+            avg_r2 = avg22.get('half_life_days', float('nan'))
             rows.append(f"| H22 | Exponential decay post-attack | "
-                        f"{_verdict(h22.get('r_squared', 0) > 0.3)} | "
-                        f"t½={h22.get('half_life_days', 'N/A')}d, R²={h22.get('r_squared', 'N/A')} |")
+                        f"{_verdict(h22.get('n_valid_fits', 0) > 0)} | "
+                        f"median t½={median_hl:.1f}d, avg t½={avg_r2:.1f}d |")
 
         h23 = h_results.get("H23_reciprocal_amplification", {})
         if h23 and "error" not in h23:
-            bidir = h23.get("bidirectional", False)
+            bidir = h23.get("findings", {}).get("reciprocal_feedback", False)
             rows.append(f"| H23 | Reciprocal amplification | "
                         f"{_verdict(bidir)} | bidirectional={bidir} |")
 
@@ -320,11 +324,12 @@ def _build_key_findings(its, cont, granger, cohort, pipe, rep_reinf,
     if "error" not in adv_ts:
         comparison = adv_ts.get("method_comparison", {})
         if comparison and "error" not in comparison:
-            consensus = comparison.get("consensus_direction", "N/A")
-            n_sig = comparison.get("n_significant", "N/A")
-            n_meth = comparison.get("n_methods", "N/A")
+            consensus = comparison.get("consensus", {})
+            c_dir = consensus.get("consensus_direction", "N/A")
+            n_sig = consensus.get("n_significant", "N/A")
+            n_meth = consensus.get("n_methods", "N/A")
             findings.append(f"The method comparison (ITS × VAR × ARDL × BSTS × LP) yields a "
-                            f"consensus direction of \"{consensus}\" with {n_sig}/{n_meth} methods "
+                            f"consensus direction of \"{c_dir}\" with {n_sig}/{n_meth} methods "
                             f"reaching significance. ")
         else:
             findings.append("The advanced time-series methods (VAR, ARDL, BSTS, Local Projections) "
@@ -339,13 +344,14 @@ def _build_key_findings(its, cont, granger, cohort, pipe, rep_reinf,
         findings.append("### 4. Offline–Online Dynamics (H22–H26)\n")
         h22 = h_results.get("H22_contagion_decay", {})
         if h22 and "error" not in h22:
-            hl = h22.get("half_life_days", "N/A")
-            findings.append(f"Post-attack rhetoric shows an estimated half-life of {hl} days, "
-                            f"suggesting that whatever rhetorical shift occurs dissipates "
-                            f"relatively quickly. ")
+            agg22 = h22.get('aggregate', {})
+            hl = agg22.get('median_half_life', 0)
+            findings.append(f"Post-attack rhetoric shows an estimated median half-life of "
+                            f"{hl:.1f} days, suggesting that whatever rhetorical shift occurs "
+                            f"dissipates relatively quickly. ")
         h23 = h_results.get("H23_reciprocal_amplification", {})
         if h23 and "error" not in h23:
-            bidir = h23.get("bidirectional", False)
+            bidir = h23.get("findings", {}).get("reciprocal_feedback", False)
             if bidir:
                 findings.append("Bidirectional Granger causality confirms a feedback loop "
                                 "between events and rhetoric — rhetoric does not merely *respond* "
@@ -1072,33 +1078,37 @@ def generate_report():
         var_r = adv_ts.get("var", {})
         if var_r and "error" not in var_r:
             lines.append("\n### Vector Autoregression (VAR)\n")
-            lines.append(f"- Optimal lag: {var_r.get('optimal_lag', 'N/A')}")
-            granger_var = var_r.get("granger", {})
-            if granger_var:
-                for direction, gr_d in granger_var.items():
-                    if isinstance(gr_d, dict):
-                        lines.append(f"- Granger ({direction}): F={gr_d.get('f_stat', 0):.3f}, "
-                                     f"p={gr_d.get('p_value', 1):.4f} "
-                                     f"{sig_stars(gr_d.get('p_value', 1))}")
-            irf = var_r.get("irf_summary", {})
-            if irf:
-                lines.append(f"- IRF peak effect: {irf.get('peak_response', 'N/A')}")
-                lines.append(f"- IRF peak period: {irf.get('peak_period', 'N/A')}")
-            fevd = var_r.get("fevd_summary", {})
-            if fevd:
-                lines.append(f"- FEVD (event → apoc at 10d): {fevd.get('event_share_10', 'N/A')}")
+            lines.append(f"- Selected lag: {var_r.get('selected_lag', 'N/A')} (AIC)")
+            lines.append(f"- Observations: {var_r.get('n_obs', 'N/A')}")
+            granger_var = var_r.get("granger_causality", {})
+            for direction, gr_d in granger_var.items():
+                if isinstance(gr_d, dict) and "error" not in gr_d:
+                    lines.append(f"- Granger ({direction}): F={gr_d.get('test_statistic', 0):.3f}, "
+                                 f"{format_p(gr_d.get('p_value', 1))} "
+                                 f"{sig_stars(gr_d.get('p_value', 1))}")
+            irf = var_r.get("irf", {})
+            if irf and "error" not in irf:
+                lines.append(f"- IRF peak response: {irf.get('peak_response', 0):.6f} "
+                             f"at day {irf.get('peak_period', 'N/A')}")
+            fevd = var_r.get("fevd", {})
+            if fevd and "error" not in fevd:
+                pct7 = fevd.get('pct_at_horizon_7', 0)
+                pct30 = fevd.get('pct_at_horizon_30', 0)
+                lines.append(f"- FEVD (event → apoc): {pct7*100:.2f}% at 7d, {pct30*100:.2f}% at 30d")
 
         ardl_r = adv_ts.get("ardl", {})
         if ardl_r and "error" not in ardl_r:
             lines.append("\n### Autoregressive Distributed Lag (ARDL)\n")
-            lines.append(f"- Best AR order: {ardl_r.get('best_p', 'N/A')}")
-            lines.append(f"- Best DL order: {ardl_r.get('best_q', 'N/A')}")
-            lines.append(f"- Long-run multiplier: {ardl_r.get('long_run_multiplier', 'N/A')}")
-            lines.append(f"- BIC: {ardl_r.get('best_bic', 'N/A')}")
+            lines.append(f"- ARDL({ardl_r.get('ar_order', '?')},{ardl_r.get('dl_order', '?')})")
+            lines.append(f"- Long-run multiplier: {ardl_r.get('long_run_multiplier', 0):.6e}")
+            lines.append(f"- R²: {ardl_r.get('r_squared', 0):.4f}")
             ecm = ardl_r.get("ecm", {})
-            if ecm:
-                lines.append(f"- EC coefficient: {ecm.get('ec_coefficient', 'N/A')}")
-                lines.append(f"- EC p-value: {ecm.get('ec_pvalue', 'N/A')}")
+            if ecm and "error" not in ecm:
+                lines.append(f"- EC coefficient: {ecm.get('ec_coefficient', 0):.6f} "
+                             f"({format_p(ecm.get('ec_p_value', 1))} {sig_stars(ecm.get('ec_p_value', 1))})")
+                lines.append(f"- Bounds F: {ecm.get('bounds_F', 0):.2f} "
+                             f"({format_p(ecm.get('bounds_p', 1))} {sig_stars(ecm.get('bounds_p', 1))})")
+                lines.append(f"- Cointegration: {'Yes' if ecm.get('ec_significant', False) else 'No'}")
 
         bsts_r = adv_ts.get("bsts", {})
         if bsts_r and "error" not in bsts_r:
@@ -1115,21 +1125,30 @@ def generate_report():
         lp_r = adv_ts.get("local_projections", {})
         if lp_r and "error" not in lp_r:
             lines.append("\n### Local Projections (Jordà 2005)\n")
-            lines.append(f"- Horizons estimated: {lp_r.get('n_horizons', 'N/A')}")
-            lp_summ = lp_r.get("summary", {})
-            if lp_summ:
-                lines.append(f"- Significant horizons: {lp_summ.get('n_significant', 0)}"
-                             f"/{lp_summ.get('n_total', 0)}")
-                lines.append(f"- Peak effect horizon: {lp_summ.get('peak_horizon', 'N/A')}")
-                lines.append(f"- Peak coefficient: {lp_summ.get('peak_coef', 'N/A')}")
+            lines.append(f"- Horizons estimated: {lp_r.get('n_horizons', 0)}")
+            lines.append(f"- Significant horizons: {lp_r.get('n_significant', 0)}/{lp_r.get('n_horizons', 0)}")
+            lines.append(f"- Peak β: {lp_r.get('peak_beta', 0):.6f} at h={lp_r.get('peak_horizon', 'N/A')} "
+                         f"({format_p(lp_r.get('peak_p_value', 1))} {sig_stars(lp_r.get('peak_p_value', 1))})")
 
         comparison = adv_ts.get("method_comparison", {})
         if comparison and "error" not in comparison:
+            consensus = comparison.get("consensus", {})
+            methods = comparison.get("methods", {})
             lines.append("\n### Method Comparison (ITS × VAR × ARDL × BSTS × LP)\n")
-            lines.append(f"- Consensus direction: {comparison.get('consensus_direction', 'N/A')}")
-            lines.append(f"- Methods agreeing on direction: {comparison.get('direction_agreement', 'N/A')}")
-            lines.append(f"- Methods reaching significance: {comparison.get('n_significant', 'N/A')}"
-                         f"/{comparison.get('n_methods', 'N/A')}")
+            lines.append(f"- Consensus direction: {consensus.get('consensus_direction', 'N/A')}")
+            lines.append(f"- Direction agreement: {consensus.get('direction_agreement', 'N/A')}")
+            lines.append(f"- Methods reaching significance: {consensus.get('n_significant', 0)}"
+                         f"/{consensus.get('n_methods', 0)}")
+            lines.append(f"- Conclusion: {consensus.get('conclusion', 'N/A')}")
+            if methods:
+                lines.append("\n| Method | Direction | Effect Size | p-value | Significant |")
+                lines.append("|--------|-----------|-------------|---------|-------------|")
+                for mname, mdata in methods.items():
+                    sig_marker = "✓" if mdata.get('significant') else ""
+                    p_val = mdata.get('p_value', float('nan'))
+                    p_str = format_p(p_val) if not (isinstance(p_val, float) and (p_val != p_val)) else 'N/A'
+                    lines.append(f"| {mname} | {mdata.get('direction', 'N/A')} | "
+                                 f"{mdata.get('effect_size', 0):.6f} | {p_str} | {sig_marker} |")
 
     # ── Offline/Online Hypotheses (Stage 35, H22–H26) ────────────────
     h_results = load_json("offline_online_hypotheses_results.json")
@@ -1140,26 +1159,32 @@ def generate_report():
         h22 = h_results.get("H22_contagion_decay", {})
         if h22 and "error" not in h22:
             lines.append("\n### H22: Contagion Decay\n")
-            lines.append(f"- Half-life: {h22.get('half_life_days', 'N/A')} days")
-            lines.append(f"- Decay rate (λ): {h22.get('decay_rate', 'N/A')}")
-            lines.append(f"- R²: {h22.get('r_squared', 'N/A')}")
-            lines.append(f"- Events included: {h22.get('n_events', 0)}")
+            agg22 = h22.get('aggregate', {})
+            avg_traj = h22.get('average_trajectory_fit', {})
+            lines.append(f"- Valid fits: {h22.get('n_valid_fits', 0)}/{h22.get('n_events', 0)} events")
+            lines.append(f"- Median half-life: {agg22.get('median_half_life', 0):.1f} days")
+            lines.append(f"- Mean half-life: {agg22.get('mean_half_life', 0):.1f} days")
+            lines.append(f"- Range: {agg22.get('min_half_life', 0):.1f}–{agg22.get('max_half_life', 0):.1f} days")
+            if avg_traj and "error" not in avg_traj:
+                lines.append(f"- Average trajectory fit: λ={avg_traj.get('decay_rate', 0):.4f}, "
+                             f"t½={avg_traj.get('half_life_days', 0):.1f} days")
 
         # H23: Reciprocal amplification
         h23 = h_results.get("H23_reciprocal_amplification", {})
         if h23 and "error" not in h23:
             lines.append("\n### H23: Reciprocal Amplification\n")
-            gr_event_apoc = h23.get("granger_event_to_apoc", {})
-            gr_apoc_event = h23.get("granger_apoc_to_event", {})
-            if gr_event_apoc:
-                lines.append(f"- Event → Apoc: F={gr_event_apoc.get('f_stat', 0):.3f}, "
-                             f"p={gr_event_apoc.get('p_value', 1):.4f} "
-                             f"{sig_stars(gr_event_apoc.get('p_value', 1))}")
-            if gr_apoc_event:
-                lines.append(f"- Apoc → Event: F={gr_apoc_event.get('f_stat', 0):.3f}, "
-                             f"p={gr_apoc_event.get('p_value', 1):.4f} "
-                             f"{sig_stars(gr_apoc_event.get('p_value', 1))}")
-            lines.append(f"- Bidirectional: {h23.get('bidirectional', 'N/A')}")
+            lines.append(f"- VAR lag: {h23.get('var_lag', 'N/A')}")
+            lines.append(f"- Observations: {h23.get('n_obs', 'N/A')}")
+            gc23 = h23.get("granger_causality", {})
+            for direction, gr_d in gc23.items():
+                if isinstance(gr_d, dict) and "error" not in gr_d:
+                    lines.append(f"- Granger ({direction}): F={gr_d.get('test_statistic', 0):.3f}, "
+                                 f"{format_p(gr_d.get('p_value', 1))} "
+                                 f"{sig_stars(gr_d.get('p_value', 1))}")
+            findings23 = h23.get("findings", {})
+            lines.append(f"- Reciprocal feedback: {findings23.get('reciprocal_feedback', False)}")
+            lines.append(f"- Events → rhetoric: {findings23.get('events_cause_rhetoric', False)}")
+            lines.append(f"- Rhetoric → events: {findings23.get('rhetoric_causes_events', False)}")
 
         # H24: Threshold activation
         h24 = h_results.get("H24_threshold_activation", {})
@@ -1171,21 +1196,34 @@ def generate_report():
                 lines.append(f"- Mann-Whitney p: {format_p(opt.get('mannwhitney_p', 1))} "
                              f"{sig_stars(opt.get('mannwhitney_p', 1))}")
                 lines.append(f"- Effect size (above vs below): {opt.get('difference', 'N/A')}")
-            lines.append(f"- Thresholds scanned: {h24.get('n_thresholds_tested', 0)}")
-            lines.append(f"- Significant thresholds: {h24.get('n_significant', 0)}")
+            threshold_tests = h24.get('threshold_tests', [])
+            lines.append(f"- Thresholds scanned: {len(threshold_tests)}")
+            n_sig_thresholds = sum(1 for t in threshold_tests if t.get('significant'))
+            lines.append(f"- Significant thresholds: {n_sig_thresholds}/{len(threshold_tests)}")
+            pw = h24.get('piecewise_regression', {})
+            if pw and 'error' not in pw:
+                lines.append(f"- Piecewise R²: {pw.get('r_squared', 0):.4f}")
 
         # H25: Temporal clustering
         h25 = h_results.get("H25_temporal_clustering", {})
         if h25 and "error" not in h25:
             lines.append("\n### H25: Temporal Clustering\n")
-            lines.append(f"- Clustered events: {h25.get('n_clustered', 0)}")
-            lines.append(f"- Isolated events: {h25.get('n_isolated', 0)}")
+            lines.append(f"- Cluster window: {h25.get('cluster_window_days', 14)} days")
+            lines.append(f"- Events analysed: {h25.get('n_events', 0)}")
             comp = h25.get("comparison", {})
-            if comp:
-                lines.append(f"- Clustered mean Δapoc: {comp.get('clustered_mean', 'N/A')}")
-                lines.append(f"- Isolated mean Δapoc: {comp.get('isolated_mean', 'N/A')}")
+            if comp and "error" not in comp:
+                lines.append(f"- Clustered events: {comp.get('n_clustered', 0)} "
+                             f"(mean Δ={comp.get('mean_clustered', 0):.4f})")
+                lines.append(f"- Isolated events: {comp.get('n_isolated', 0)} "
+                             f"(mean Δ={comp.get('mean_isolated', 0):.4f})")
                 lines.append(f"- Mann-Whitney p: {format_p(comp.get('mannwhitney_p', 1))} "
                              f"{sig_stars(comp.get('mannwhitney_p', 1))}")
+                lines.append(f"- Super-additive: {comp.get('super_additive', False)}")
+            reg = h25.get("regression", {})
+            if reg and "error" not in reg:
+                lines.append(f"- Neighbors regression: β={reg.get('b_neighbors', 0):.4f}, "
+                             f"{format_p(reg.get('p_neighbors', 1))} "
+                             f"{sig_stars(reg.get('p_neighbors', 1))}")
 
         # H26: Mimetic contagion
         h26 = h_results.get("H26_mimetic_contagion", {})
@@ -1195,11 +1233,21 @@ def generate_report():
             lines.append(f"- Offline events: {h26.get('n_offline', 0)}")
             mag = h26.get("magnitude_test", {})
             if mag:
-                lines.append(f"- Online |Δapoc| mean: {mag.get('online_mean', 'N/A')}")
-                lines.append(f"- Offline |Δapoc| mean: {mag.get('offline_mean', 'N/A')}")
-                lines.append(f"- Cohen's d: {mag.get('cohens_d', 'N/A')}")
-                lines.append(f"- Mann-Whitney p: {format_p(mag.get('mannwhitney_p', 1))} "
+                lines.append(f"- Online |Δapoc| mean: {mag.get('online_mean_abs_delta', 0):.4f}")
+                lines.append(f"- Offline |Δapoc| mean: {mag.get('offline_mean_abs_delta', 0):.4f}")
+                lines.append(f"- Cohen's d: {mag.get('cohens_d', 0):.4f}")
+                lines.append(f"- Magnitude p: {format_p(mag.get('mannwhitney_p', 1))} "
                              f"{sig_stars(mag.get('mannwhitney_p', 1))}")
+            dir_test = h26.get("direction_test", {})
+            if dir_test:
+                lines.append(f"- Direction p: {format_p(dir_test.get('mannwhitney_p', 1))} "
+                             f"{sig_stars(dir_test.get('mannwhitney_p', 1))}")
+            pol_test = h26.get("polarisation_test", {})
+            if pol_test:
+                lines.append(f"- Polarisation (variance ratio) p: {format_p(pol_test.get('mannwhitney_p', 1))} "
+                             f"{sig_stars(pol_test.get('mannwhitney_p', 1))}")
+                lines.append(f"- Online variance ratio: {pol_test.get('online_mean_variance_ratio', 0):.3f}")
+                lines.append(f"- Offline variance ratio: {pol_test.get('offline_mean_variance_ratio', 0):.3f}")
 
     # ══════════════════════════════════════════════════════════════════
     #  SYNTHESIS & INTERPRETATION

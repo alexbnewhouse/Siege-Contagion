@@ -201,7 +201,7 @@ def run_var_analysis(
         granger["event_causes_apoc"] = {
             "test_statistic": float(gc_event_to_apoc.test_statistic),
             "p_value": float(gc_event_to_apoc.pvalue),
-            "df": int(gc_event_to_apoc.df_num),
+            "df": int(gc_event_to_apoc.df[0]),
             "significant_at_05": bool(gc_event_to_apoc.pvalue < 0.05),
         }
     except Exception as e:
@@ -212,7 +212,7 @@ def run_var_analysis(
         granger["apoc_causes_event"] = {
             "test_statistic": float(gc_apoc_to_event.test_statistic),
             "p_value": float(gc_apoc_to_event.pvalue),
-            "df": int(gc_apoc_to_event.df_num),
+            "df": int(gc_apoc_to_event.df[0]),
             "significant_at_05": bool(gc_apoc_to_event.pvalue < 0.05),
         }
     except Exception as e:
@@ -224,8 +224,6 @@ def run_var_analysis(
         irf = fitted.irf(irf_periods)
         # Response of apoc_mean to event_occurred shock
         irf_apoc = irf.irfs[:, 0, 1]  # response of var 0 to shock in var 1
-        irf_lower = irf.ci[:, 0, 1, 0] if irf.ci is not None else None
-        irf_upper = irf.ci[:, 0, 1, 1] if irf.ci is not None else None
 
         irf_result = {
             "response_of_apoc_to_event": [float(x) for x in irf_apoc],
@@ -233,9 +231,14 @@ def run_var_analysis(
             "peak_response": float(np.max(np.abs(irf_apoc))),
             "peak_period": int(np.argmax(np.abs(irf_apoc))),
         }
-        if irf_lower is not None:
-            irf_result["ci_lower"] = [float(x) for x in irf_lower]
-            irf_result["ci_upper"] = [float(x) for x in irf_upper]
+
+        # Monte Carlo confidence intervals
+        try:
+            mc_lower, mc_upper = irf.errband_mc(repl=500, signif=0.05)
+            irf_result["ci_lower"] = [float(x) for x in mc_lower[:, 0, 1]]
+            irf_result["ci_upper"] = [float(x) for x in mc_upper[:, 0, 1]]
+        except Exception:
+            pass  # CIs are optional
     except Exception as e:
         irf_result = {"error": str(e)}
 

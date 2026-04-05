@@ -1,0 +1,2512 @@
+{
+  "H22_contagion_decay": {
+    "hypothesis": "H22",
+    "description": "Post-attack apocalyptic rhetoric decays exponentially",
+    "n_events": 87,
+    "n_valid_fits": 87,
+    "per_event": [
+      {
+        "event": "Russian annexation of Crimea",
+        "amplitude": 4.186398877633444e-11,
+        "decay_rate": 2.1942133076399768e-06,
+        "half_life_days": 315897.8109131384,
+        "baseline": 0.33433376396427134,
+        "r_squared": -1.2434497875801753e-14,
+        "n_post_days": 31
+      },
+      {
+        "event": "Fort Hood shooting (2014)",
+        "amplitude": 1.5619457618190112e-13,
+        "decay_rate": 5.1463695555100893e-08,
+        "half_life_days": 13468663.163099313,
+        "baseline": 0.3384580666747823,
+        "r_squared": -4.440892098500626e-16,
+        "n_post_days": 31
+      },
+      {
+        "event": "Overland Park Jewish center shooting",
+        "amplitude": 2.492352984135345e-12,
+        "decay_rate": 1.8376442509160853,
+        "half_life_days": 0.3771933442582284,
+        "baseline": 0.34279841619659573,
+        "r_squared": -4.976241640974877e-12,
+        "n_post_days": 31
+      },
+      {
+        "event": "Isla Vista attack",
+        "amplitude": 1.395612677603187e-11,
+        "decay_rate": 7.436187845078903,
+        "half_life_days": 0.09321270454708241,
+        "baseline": 0.328990753638324,
+        "r_squared": -9.426237568277429e-12,
+        "n_post_days": 31
+      },
+      {
+        "event": "Jewish Museum of Belgium shooting",
+        "amplitude": 3.932750025807545e-09,
+        "decay_rate": 1.5036791095348514e-05,
+        "half_life_days": 46096.74871218792,
+        "baseline": 0.32831925123839134,
+        "r_squared": -1.6491474852387e-11,
+        "n_post_days": 31
+      },
+      {
+        "event": "Moncton shootings",
+        "amplitude": 2.888024707136933e-09,
+        "decay_rate": 1.2072602388449278e-05,
+        "half_life_days": 57414.89351319387,
+        "baseline": 0.32812520026582886,
+        "r_squared": -1.1341594330360749e-11,
+        "n_post_days": 31
+      },
+      {
+        "event": "Ottawa Parliament Hill shooting",
+        "amplitude": 0.01175901549785815,
+        "decay_rate": 9.999999994860453,
+        "half_life_days": 0.06931471809161915,
+        "baseline": 0.35404707320147955,
+        "r_squared": 0.019730579741510157,
+        "n_post_days": 31
+      },
+      {
+        "event": "Lindt Caf\u00e9 siege (Sydney)",
+        "amplitude": 2.3077210883859676e-10,
+        "decay_rate": 2.265781972994054e-06,
+        "half_life_days": 305919.6289941372,
+        "baseline": 0.3424849621821044,
+        "r_squared": -1.0635936575909e-13,
+        "n_post_days": 31
+      },
+      {
+        "event": "Charlie Hebdo attack",
+        "amplitude": 0.03340957820942931,
+        "decay_rate": 0.09502565678211641,
+        "half_life_days": 7.294316125057226,
+        "baseline": 0.33139172582749227,
+        "r_squared": 0.18986132154578528,
+        "n_post_days": 31
+      },
+      {
+        "event": "Hypercacher kosher market siege",
+        "amplitude": 1.969430035980534,
+        "decay_rate": 0.00036009694917088546,
+        "half_life_days": 1924.8904556284076,
+        "baseline": -1.6186232478022748,
+        "r_squared": 0.09740426988991446,
+        "n_post_days": 31
+      },
+      {
+        "event": "Copenhagen shootings",
+        "amplitude": 2.835520357210773e-17,
+        "decay_rate": 2.564557407138653,
+        "half_life_days": 0.2702794558743407,
+        "baseline": 0.3512014751567883,
+        "r_squared": -1.1524114995609125e-13,
+        "n_post_days": 31
+      },
+      {
+        "event": "Curtis Culwell Center attack (Garland)",
+        "amplitude": 3.6473984748681514,
+        "decay_rate": 4.736079584660552e-05,
+        "half_life_days": 14635.463111830817,
+        "baseline": -3.2817114174637436,
+        "r_squared": 0.005200992863760301,
+        "n_post_days": 31
+      },
+      {
+        "event": "Trump announces presidential run",
+        "amplitude": 0.020462429483592164,
+        "decay_rate": 0.08468680066752719,
+        "half_life_days": 8.184831344393078,
+        "baseline": 0.3545297655860268,
+        "r_squared": 0.19207175642117658,
+        "n_post_days": 31
+      },
+      {
+        "event": "Charleston church shooting",
+        "amplitude": 0.029372455382873062,
+        "decay_rate": 0.14848023239528327,
+        "half_life_days": 4.668279200389804,
+        "baseline": 0.35439193509863376,
+        "r_squared": 0.3274818474374005,
+        "n_post_days": 31
+      },
+      {
+        "event": "Chattanooga recruiting center shooting",
+        "amplitude": 3.1506419093126537e-12,
+        "decay_rate": 7.233541167488475,
+        "half_life_days": 0.09582404585949288,
+        "baseline": 0.35270114792193724,
+        "r_squared": -5.264677582772492e-13,
+        "n_post_days": 31
+      },
+      {
+        "event": "Lafayette Grand Theatre shooting",
+        "amplitude": 1.2263459444423132e-12,
+        "decay_rate": 1.2102826905817667,
+        "half_life_days": 0.5727151069365114,
+        "baseline": 0.35526253122992885,
+        "r_squared": -5.131450819817474e-13,
+        "n_post_days": 31
+      },
+      {
+        "event": "Thalys train attack",
+        "amplitude": 33.77695805851111,
+        "decay_rate": 2.676016499909008e-05,
+        "half_life_days": 25902.20129747011,
+        "baseline": -33.38929509952457,
+        "r_squared": 0.2039687608859032,
+        "n_post_days": 31
+      },
+      {
+        "event": "Black Monday 2015 stock market crash",
+        "amplitude": 59.31836447662846,
+        "decay_rate": 2.5634282552937958e-05,
+        "half_life_days": 27039.850993625852,
+        "baseline": -58.923984467127454,
+        "r_squared": 0.4137362282924777,
+        "n_post_days": 31
+      },
+      {
+        "event": "Umpqua Community College shooting",
+        "amplitude": 5.096476498513394e-09,
+        "decay_rate": 9.076495702219458e-06,
+        "half_life_days": 76367.26808458152,
+        "baseline": 0.3411639982027299,
+        "r_squared": -3.104871915127205e-11,
+        "n_post_days": 31
+      },
+      {
+        "event": "Ankara peace rally bombings",
+        "amplitude": 0.021400365321844486,
+        "decay_rate": 8.561604080637384e-05,
+        "half_life_days": 8095.996661741718,
+        "baseline": 0.32016993369331326,
+        "r_squared": 1.9229068881632116e-06,
+        "n_post_days": 31
+      },
+      {
+        "event": "Paris attacks (Bataclan)",
+        "amplitude": 0.10143451243847022,
+        "decay_rate": 0.016649401934749175,
+        "half_life_days": 41.63195670790247,
+        "baseline": 0.2763010252709255,
+        "r_squared": 0.49803885383708624,
+        "n_post_days": 31
+      },
+      {
+        "event": "Colorado Springs Planned Parenthood shooting",
+        "amplitude": 0.01515411486206944,
+        "decay_rate": 0.2730579625898214,
+        "half_life_days": 2.5384617023645193,
+        "baseline": 0.34506373668778345,
+        "r_squared": 0.08862497753535103,
+        "n_post_days": 31
+      },
+      {
+        "event": "San Bernardino attack",
+        "amplitude": 0.0068414251201885014,
+        "decay_rate": 0.8812854640535438,
+        "half_life_days": 0.7865183403476993,
+        "baseline": 0.3441425107109537,
+        "r_squared": 0.011219625195942218,
+        "n_post_days": 31
+      },
+      {
+        "event": "Brussels bombings",
+        "amplitude": 20.935218037120773,
+        "decay_rate": 2.9063352598027798e-05,
+        "half_life_days": 23849.525901116493,
+        "baseline": -20.57360150614798,
+        "r_squared": 0.14395709900704334,
+        "n_post_days": 31
+      },
+      {
+        "event": "Orlando Pulse nightclub shooting",
+        "amplitude": 1.5288606146150293e-14,
+        "decay_rate": 2.3735516617480314,
+        "half_life_days": 0.29202953183225366,
+        "baseline": 0.35816539874807746,
+        "r_squared": -6.017408793468348e-14,
+        "n_post_days": 31
+      },
+      {
+        "event": "Jo Cox assassination",
+        "amplitude": 1.0906093933106574e-17,
+        "decay_rate": 2.738699194561036,
+        "half_life_days": 0.2530935788554333,
+        "baseline": 0.36220602594862783,
+        "r_squared": -7.882583474838611e-14,
+        "n_post_days": 31
+      },
+      {
+        "event": "Brexit referendum",
+        "amplitude": 7.166551580367024e-10,
+        "decay_rate": 1.1034071994191075e-06,
+        "half_life_days": 628188.0170120831,
+        "baseline": 0.36560876959375316,
+        "r_squared": -4.369837824924616e-13,
+        "n_post_days": 31
+      },
+      {
+        "event": "Istanbul Atat\u00fcrk airport attack",
+        "amplitude": 1.340845091170148e-07,
+        "decay_rate": 0.0011221258009650483,
+        "half_life_days": 617.7089769826398,
+        "baseline": 0.3693897925831171,
+        "r_squared": 2.2879298455791286e-10,
+        "n_post_days": 31
+      },
+      {
+        "event": "Dallas police shooting",
+        "amplitude": 0.055182561912451945,
+        "decay_rate": 0.1420252210929151,
+        "half_life_days": 4.880451339741113,
+        "baseline": 0.3585220163540571,
+        "r_squared": 0.6609191506518766,
+        "n_post_days": 31
+      },
+      {
+        "event": "Nice truck attack",
+        "amplitude": 12.543441145254956,
+        "decay_rate": 6.454712063918789e-05,
+        "half_life_days": 10738.62278744501,
+        "baseline": -12.17099566243409,
+        "r_squared": 0.3006229036175939,
+        "n_post_days": 31
+      },
+      {
+        "event": "W\u00fcrzburg train attack",
+        "amplitude": 0.9920013168156073,
+        "decay_rate": 0.0002992739420249196,
+        "half_life_days": 2316.0960017769576,
+        "baseline": -0.6288949950718383,
+        "r_squared": 0.05156204848269874,
+        "n_post_days": 31
+      },
+      {
+        "event": "Munich shooting",
+        "amplitude": 7.523038792276208,
+        "decay_rate": 5.4685620408409036e-05,
+        "half_life_days": 12675.126941658684,
+        "baseline": -7.160253797614752,
+        "r_squared": 0.09342597559796217,
+        "n_post_days": 31
+      },
+      {
+        "event": "Ansbach bombing",
+        "amplitude": 2.7591748390045097,
+        "decay_rate": 0.0002554157855894802,
+        "half_life_days": 2713.7993016375804,
+        "baseline": -2.3923208738923853,
+        "r_squared": 0.26172602303890025,
+        "n_post_days": 31
+      },
+      {
+        "event": "Sagamihara stabbing",
+        "amplitude": 3.619295005566991,
+        "decay_rate": 0.00024954717622606605,
+        "half_life_days": 2777.619811381956,
+        "baseline": -3.2510734634351666,
+        "r_squared": 0.36823063588212124,
+        "n_post_days": 31
+      },
+      {
+        "event": "Trump wins US presidential election",
+        "amplitude": 1.1296953924264689e-09,
+        "decay_rate": 3.201100689391413,
+        "half_life_days": 0.21653401370880496,
+        "baseline": 0.3523723858146388,
+        "r_squared": -8.696449560474662e-09,
+        "n_post_days": 31
+      },
+      {
+        "event": "Berlin Christmas market attack",
+        "amplitude": 6.012999313807746e-09,
+        "decay_rate": 1.339560311865997e-05,
+        "half_life_days": 51744.38018355416,
+        "baseline": 0.3532962400409799,
+        "r_squared": -4.766054217952842e-11,
+        "n_post_days": 31
+      },
+      {
+        "event": "Istanbul Reina nightclub attack",
+        "amplitude": 0.07027939985909878,
+        "decay_rate": 0.022585353383732912,
+        "half_life_days": 30.69011889179401,
+        "baseline": 0.3017386800324058,
+        "r_squared": 0.3616952331270442,
+        "n_post_days": 31
+      },
+      {
+        "event": "Fort Lauderdale airport shooting",
+        "amplitude": 0.02688304676590813,
+        "decay_rate": 0.20539667423256963,
+        "half_life_days": 3.3746757738399316,
+        "baseline": 0.34390674856857223,
+        "r_squared": 0.36449184783770094,
+        "n_post_days": 31
+      },
+      {
+        "event": "Quebec City mosque shooting",
+        "amplitude": 2.505501604448871e-09,
+        "decay_rate": 1.62052106657736e-05,
+        "half_life_days": 42773.10519781854,
+        "baseline": 0.3535865456313595,
+        "r_squared": -5.45918865668682e-12,
+        "n_post_days": 31
+      },
+      {
+        "event": "London Westminster Bridge attack",
+        "amplitude": 1.6365873090285417,
+        "decay_rate": 0.00019056635833104418,
+        "half_life_days": 3637.300867951929,
+        "baseline": -1.2733705640909445,
+        "r_squared": 0.12592306437458478,
+        "n_post_days": 31
+      },
+      {
+        "event": "Stockholm truck attack",
+        "amplitude": 5.740273987375118e-14,
+        "decay_rate": 2.9436441615349196e-06,
+        "half_life_days": 235472.47646893366,
+        "baseline": 0.3567413591621172,
+        "r_squared": -1.1102230246251565e-15,
+        "n_post_days": 31
+      },
+      {
+        "event": "Paris Champs-\u00c9lys\u00e9es shooting",
+        "amplitude": 6.116375858051156e-19,
+        "decay_rate": 7.526735922272356,
+        "half_life_days": 0.0920913378279759,
+        "baseline": 0.36155179274639404,
+        "r_squared": -2.220446049250313e-16,
+        "n_post_days": 31
+      },
+      {
+        "event": "Manchester Arena bombing",
+        "amplitude": 3.733617258771367e-18,
+        "decay_rate": 1.2266176039531564,
+        "half_life_days": 0.5650882380344641,
+        "baseline": 0.36569817064823096,
+        "r_squared": -1.5765166949677223e-14,
+        "n_post_days": 31
+      },
+      {
+        "event": "London Bridge attack (2017)",
+        "amplitude": 2.3505731363654307,
+        "decay_rate": 4.234381405780821e-05,
+        "half_life_days": 16369.5027475242,
+        "baseline": -1.984200341565742,
+        "r_squared": 0.006066623959781636,
+        "n_post_days": 31
+      },
+      {
+        "event": "Congressional baseball shooting",
+        "amplitude": 0.00021994794304227466,
+        "decay_rate": 0.25638711513147394,
+        "half_life_days": 2.7035179993522807,
+        "baseline": 0.36917752851372504,
+        "r_squared": 1.715608713326322e-05,
+        "n_post_days": 31
+      },
+      {
+        "event": "Finsbury Park mosque attack",
+        "amplitude": 0.014776873928445067,
+        "decay_rate": 1.3961354549176088,
+        "half_life_days": 0.49647559491342513,
+        "baseline": 0.3699696685187285,
+        "r_squared": 0.04936679702372726,
+        "n_post_days": 31
+      },
+      {
+        "event": "Charlottesville car attack",
+        "amplitude": 0.059798697099655455,
+        "decay_rate": 0.06469380307610756,
+        "half_life_days": 10.714274746601433,
+        "baseline": 0.34707756240577986,
+        "r_squared": 0.803542073896433,
+        "n_post_days": 31
+      },
+      {
+        "event": "Barcelona Las Ramblas attack",
+        "amplitude": 0.029413671693080647,
+        "decay_rate": 0.21532894384733076,
+        "half_life_days": 3.2190153732950546,
+        "baseline": 0.36456894398623835,
+        "r_squared": 0.42419304853667816,
+        "n_post_days": 31
+      },
+      {
+        "event": "Hurricane Harvey",
+        "amplitude": 0.0009419035654719957,
+        "decay_rate": 0.8822376373703462,
+        "half_life_days": 0.7856694740727498,
+        "baseline": 0.37028494592572236,
+        "r_squared": 0.0002202488955560522,
+        "n_post_days": 31
+      },
+      {
+        "event": "Parsons Green bombing",
+        "amplitude": 0.01240781698514875,
+        "decay_rate": 0.09314085600760952,
+        "half_life_days": 7.441924095085789,
+        "baseline": 0.37233546256168426,
+        "r_squared": 0.050119384565659675,
+        "n_post_days": 31
+      },
+      {
+        "event": "Hurricane Maria",
+        "amplitude": 0.0067940914924790674,
+        "decay_rate": 0.22053039932943164,
+        "half_life_days": 3.143091304725348,
+        "baseline": 0.3756930728541711,
+        "r_squared": 0.01283220677828878,
+        "n_post_days": 31
+      },
+      {
+        "event": "Las Vegas shooting",
+        "amplitude": 5.2363868555164375e-09,
+        "decay_rate": 6.032820859902043e-06,
+        "half_life_days": 114896.03232992404,
+        "baseline": 0.37609074064647074,
+        "r_squared": -3.205569143460707e-11,
+        "n_post_days": 31
+      },
+      {
+        "event": "NYC truck attack",
+        "amplitude": 0.01921559700784909,
+        "decay_rate": 0.26983299815785117,
+        "half_life_days": 2.568800648149257,
+        "baseline": 0.3653748780909285,
+        "r_squared": 0.11979591461764161,
+        "n_post_days": 31
+      },
+      {
+        "event": "Sutherland Springs church shooting",
+        "amplitude": 3.020171773751913e-13,
+        "decay_rate": 7.962033934346027,
+        "half_life_days": 0.08705654689185621,
+        "baseline": 0.367874100992326,
+        "r_squared": -2.8184121703134224e-12,
+        "n_post_days": 31
+      },
+      {
+        "event": "Parkland school shooting",
+        "amplitude": 0.04406267640151317,
+        "decay_rate": 9.999999999831303,
+        "half_life_days": 0.06931471805716385,
+        "baseline": 0.37557777475280585,
+        "r_squared": 0.32489824350683116,
+        "n_post_days": 31
+      },
+      {
+        "event": "Tr\u00e8bes / Carcassonne attack",
+        "amplitude": 0.8982047958378583,
+        "decay_rate": 7.179050411503085e-05,
+        "half_life_days": 9655.137390445214,
+        "baseline": -0.5273881171482089,
+        "r_squared": 0.0018133053058365656,
+        "n_post_days": 31
+      },
+      {
+        "event": "Toronto van attack",
+        "amplitude": 3.102453632466311e-12,
+        "decay_rate": 1.222246958313228e-07,
+        "half_life_days": 5671089.429557909,
+        "baseline": 0.3728433138052119,
+        "r_squared": -4.440892098500626e-16,
+        "n_post_days": 31
+      },
+      {
+        "event": "Santa Fe High School shooting",
+        "amplitude": 1.6953276753011544e-09,
+        "decay_rate": 4.883195710583035e-06,
+        "half_life_days": 141945.40248668144,
+        "baseline": 0.377411077382588,
+        "r_squared": -2.9742874829707944e-12,
+        "n_post_days": 31
+      },
+      {
+        "event": "Annapolis Capital Gazette shooting",
+        "amplitude": 0.33352857345751313,
+        "decay_rate": 0.00010864102276108844,
+        "half_life_days": 6380.160669917839,
+        "baseline": 0.04114543272784214,
+        "r_squared": 0.00048384337239648634,
+        "n_post_days": 31
+      },
+      {
+        "event": "Pittsburgh synagogue shooting",
+        "amplitude": 0.0012816390883918572,
+        "decay_rate": 9.999999935849937,
+        "half_life_days": 0.06931471850064888,
+        "baseline": 0.3675240038872084,
+        "r_squared": 0.00039888956391509467,
+        "n_post_days": 31
+      },
+      {
+        "event": "Thousand Oaks Borderline Bar shooting",
+        "amplitude": 20.551424545702858,
+        "decay_rate": 3.164573136586111e-05,
+        "half_life_days": 21903.338954197818,
+        "baseline": -20.17742045137392,
+        "r_squared": 0.2805861468616687,
+        "n_post_days": 31
+      },
+      {
+        "event": "Camp Fire (Paradise, CA)",
+        "amplitude": 19.002460503689203,
+        "decay_rate": 3.003143152036494e-05,
+        "half_life_days": 23080.72394384223,
+        "baseline": -18.63060755485892,
+        "r_squared": 0.24035666755396456,
+        "n_post_days": 31
+      },
+      {
+        "event": "Strasbourg Christmas market attack",
+        "amplitude": 6.37117977175366e-10,
+        "decay_rate": 2.421498185384858e-06,
+        "half_life_days": 286247.2434394085,
+        "baseline": 0.3547329567136304,
+        "r_squared": -1.0866862965031032e-12,
+        "n_post_days": 31
+      },
+      {
+        "event": "Christchurch mosque shootings",
+        "amplitude": 0.029706983143256076,
+        "decay_rate": 0.2628407206881101,
+        "half_life_days": 2.6371377263968236,
+        "baseline": 0.37863363137415573,
+        "r_squared": 0.33312885757323896,
+        "n_post_days": 31
+      },
+      {
+        "event": "Utrecht tram shooting",
+        "amplitude": 0.0226704697380046,
+        "decay_rate": 0.5823906855848971,
+        "half_life_days": 1.1901755946934744,
+        "baseline": 0.37974177712980217,
+        "r_squared": 0.16192542038257862,
+        "n_post_days": 31
+      },
+      {
+        "event": "Sri Lanka Easter bombings",
+        "amplitude": 0.020890058485098666,
+        "decay_rate": 0.6091427285761817,
+        "half_life_days": 1.1379060243895822,
+        "baseline": 0.37038696995217757,
+        "r_squared": 0.23209522944459393,
+        "n_post_days": 31
+      },
+      {
+        "event": "Poway synagogue shooting",
+        "amplitude": 1.1989824551121365e-15,
+        "decay_rate": 9.117492690456078,
+        "half_life_days": 0.07602388113625923,
+        "baseline": 0.3727269390613042,
+        "r_squared": -6.217248937900877e-15,
+        "n_post_days": 31
+      },
+      {
+        "event": "STEM School Highlands Ranch shooting",
+        "amplitude": 16.393273154109963,
+        "decay_rate": 2.075678926156616e-05,
+        "half_life_days": 33393.75718591486,
+        "baseline": -16.015809889351466,
+        "r_squared": 0.040323777851656084,
+        "n_post_days": 31
+      },
+      {
+        "event": "Virginia Beach municipal building shooting",
+        "amplitude": 0.05502213433410058,
+        "decay_rate": 0.9192793125192124,
+        "half_life_days": 0.7540115078413221,
+        "baseline": 0.3493420235241269,
+        "r_squared": 0.4957002197447248,
+        "n_post_days": 31
+      },
+      {
+        "event": "El Paso Walmart shooting",
+        "amplitude": 25.823241625857055,
+        "decay_rate": 3.489887721097605e-05,
+        "half_life_days": 19861.589711600907,
+        "baseline": -25.45414784451206,
+        "r_squared": 0.4513205780163254,
+        "n_post_days": 31
+      },
+      {
+        "event": "Dayton shooting",
+        "amplitude": 24.271101564190815,
+        "decay_rate": 3.878596174922529e-05,
+        "half_life_days": 17871.084003061755,
+        "baseline": -23.901936802955582,
+        "r_squared": 0.4810022756413983,
+        "n_post_days": 31
+      },
+      {
+        "event": "B\u00e6rum mosque shooting",
+        "amplitude": 18.034860152047102,
+        "decay_rate": 5.1158459306002005e-05,
+        "half_life_days": 13549.023758004847,
+        "baseline": -17.671386690189234,
+        "r_squared": 0.4719043962480385,
+        "n_post_days": 31
+      },
+      {
+        "event": "Halle synagogue shooting",
+        "amplitude": 0.013972380408794198,
+        "decay_rate": 0.11593446599945131,
+        "half_life_days": 5.978784432950472,
+        "baseline": 0.3432002063801987,
+        "r_squared": 0.09674477426625927,
+        "n_post_days": 31
+      },
+      {
+        "event": "London Bridge attack (2019)",
+        "amplitude": 0.01927988150527388,
+        "decay_rate": 0.11934000182927962,
+        "half_life_days": 5.808171358598758,
+        "baseline": 0.3359711704016437,
+        "r_squared": 0.1807395781621619,
+        "n_post_days": 31
+      },
+      {
+        "event": "Jersey City kosher market shooting",
+        "amplitude": 0.002523750664202254,
+        "decay_rate": 1.87128944436723,
+        "half_life_days": 0.3704115270068926,
+        "baseline": 0.33975409163582465,
+        "r_squared": 0.0014343232123338323,
+        "n_post_days": 31
+      },
+      {
+        "event": "WHO declares COVID-19 PHEIC",
+        "amplitude": 0.017164126837184705,
+        "decay_rate": 0.2944095056801053,
+        "half_life_days": 2.3543641329064076,
+        "baseline": 0.33397485019778506,
+        "r_squared": 0.2914192289968276,
+        "n_post_days": 31
+      },
+      {
+        "event": "Hanau shootings",
+        "amplitude": 0.01621040459430642,
+        "decay_rate": 0.06640759412568799,
+        "half_life_days": 10.437769801568823,
+        "baseline": 0.3229490897251115,
+        "r_squared": 0.20411049965816386,
+        "n_post_days": 31
+      },
+      {
+        "event": "WHO declares COVID-19 pandemic",
+        "amplitude": 1.972832826229538e-09,
+        "decay_rate": 1.5595650052945251,
+        "half_life_days": 0.4444490471425036,
+        "baseline": 0.33130895539007393,
+        "r_squared": -8.407947671429383e-09,
+        "n_post_days": 31
+      },
+      {
+        "event": "COVID-19 stock market crash (Black Monday)",
+        "amplitude": 1.0300613084427757e-16,
+        "decay_rate": 2.49914332966995,
+        "half_life_days": 0.2773539125711073,
+        "baseline": 0.33438618572446116,
+        "r_squared": -5.016875803676157e-12,
+        "n_post_days": 31
+      },
+      {
+        "event": "Nova Scotia rampage",
+        "amplitude": 1.533020661743151e-12,
+        "decay_rate": 5.418182564858903,
+        "half_life_days": 0.12792983113111395,
+        "baseline": 0.3522197053437829,
+        "r_squared": -1.2083667400020204e-12,
+        "n_post_days": 31
+      },
+      {
+        "event": "George Floyd killing / BLM protests",
+        "amplitude": 0.012120142789980174,
+        "decay_rate": 0.07596113220110606,
+        "half_life_days": 9.125024344356106,
+        "baseline": 0.35120807720668235,
+        "r_squared": 0.04506287122478525,
+        "n_post_days": 31
+      },
+      {
+        "event": "Reading stabbings",
+        "amplitude": 22.23279016090664,
+        "decay_rate": 4.4160828467216844e-05,
+        "half_life_days": 15695.973210160875,
+        "baseline": -21.874845000580976,
+        "r_squared": 0.5026113173369786,
+        "n_post_days": 31
+      },
+      {
+        "event": "Samuel Paty beheading",
+        "amplitude": 0.017957059627562933,
+        "decay_rate": 0.17089893661276276,
+        "half_life_days": 4.055889371216725,
+        "baseline": 0.3217401832499179,
+        "r_squared": 0.2263890404238228,
+        "n_post_days": 31
+      },
+      {
+        "event": "Nice basilica stabbing",
+        "amplitude": 0.01811586715383915,
+        "decay_rate": 9.999999998490436,
+        "half_life_days": 0.06931471806645803,
+        "baseline": 0.32993036254307784,
+        "r_squared": 0.0507079255328331,
+        "n_post_days": 31
+      },
+      {
+        "event": "Vienna shooting",
+        "amplitude": 3.0906018333558425e-19,
+        "decay_rate": 2.815402792556939,
+        "half_life_days": 0.24619822868415622,
+        "baseline": 0.3314337647780768,
+        "r_squared": 0.0,
+        "n_post_days": 31
+      },
+      {
+        "event": "U.S. Capitol storming",
+        "amplitude": 2.3462974637304004e-14,
+        "decay_rate": 4.336996289233422,
+        "half_life_days": 0.1598219445750232,
+        "baseline": 0.32048766528919925,
+        "r_squared": -1.993027964886096e-11,
+        "n_post_days": 31
+      },
+      {
+        "event": "GameStop / WallStreetBets short squeeze",
+        "amplitude": 2.5797681487778757e-09,
+        "decay_rate": 5.243771407955624e-06,
+        "half_life_days": 132184.85830795986,
+        "baseline": 0.3275986948971304,
+        "r_squared": -7.685407865665184e-12,
+        "n_post_days": 19
+      }
+    ],
+    "aggregate": {
+      "mean_half_life": 251606.53389843507,
+      "median_half_life": 8.184831344393078,
+      "std_half_life": 1549403.806779677,
+      "min_half_life": 0.06931471805716385,
+      "max_half_life": 13468663.163099313
+    },
+    "average_trajectory_fit": {
+      "amplitude": 0.0020407454359781295,
+      "decay_rate": 0.028681429051210447,
+      "half_life_days": 24.1671075497088,
+      "baseline": -0.0028580176327435676
+    },
+    "supported": "True"
+  },
+  "H23_reciprocal_amplification": {
+    "hypothesis": "H23",
+    "description": "Reciprocal amplification: bidirectional feedback between violence and rhetoric",
+    "n_obs": 2636,
+    "var_lag": 11,
+    "granger_causality": {
+      "event_occurred_causes_apoc_mean": {
+        "test_statistic": 0.35417988353676094,
+        "p_value": 0.972809305085284,
+        "df": 11,
+        "significant": false
+      },
+      "apoc_mean_causes_event_occurred": {
+        "test_statistic": 0.6015219952909178,
+        "p_value": 0.8291022162448489,
+        "df": 11,
+        "significant": false
+      }
+    },
+    "irf": {
+      "event_to_apoc": {
+        "response": [
+          0.0,
+          -0.001978045968122043,
+          -0.0003606911300871231,
+          0.0005433166245655841,
+          -0.0017419560182081089,
+          -0.0009847538226729227,
+          0.000164263841782036,
+          -0.000146286784166094,
+          -0.0010013544378167285,
+          0.0001935165360057976,
+          9.53156418198237e-06,
+          -0.00040614151168241286,
+          -0.0005660658231033391,
+          -0.00041009706657695185,
+          -0.00011754636905770204,
+          -0.0004147632567011605,
+          -0.0003949254683900304,
+          -0.0002503084783988078,
+          -0.00022636791522760778,
+          -0.0003163433865748034,
+          -0.0002301097074031378,
+          -0.00021889818966432215,
+          -0.0002383674442835414,
+          -0.0002505546084864524,
+          -0.00024313689743983439,
+          -0.00020203429374383738,
+          -0.00021731033739392879,
+          -0.00021387166881430954,
+          -0.00019864172365384146,
+          -0.00018859472682079346,
+          -0.00018849614149328412
+        ],
+        "cumulative": [
+          0.0,
+          -0.001978045968122043,
+          -0.002338737098209166,
+          -0.001795420473643582,
+          -0.003537376491851691,
+          -0.004522130314524614,
+          -0.004357866472742578,
+          -0.004504153256908672,
+          -0.0055055076947254,
+          -0.005311991158719603,
+          -0.00530245959453762,
+          -0.005708601106220033,
+          -0.0062746669293233725,
+          -0.006684763995900325,
+          -0.006802310364958027,
+          -0.007217073621659188,
+          -0.0076119990900492185,
+          -0.007862307568448025,
+          -0.008088675483675633,
+          -0.008405018870250436,
+          -0.008635128577653573,
+          -0.008854026767317896,
+          -0.009092394211601438,
+          -0.00934294882008789,
+          -0.009586085717527724,
+          -0.009788120011271561,
+          -0.01000543034866549,
+          -0.0102193020174798,
+          -0.010417943741133641,
+          -0.010606538467954434,
+          -0.010795034609447718
+        ],
+        "peak": 0.001978045968122043,
+        "peak_day": 1
+      },
+      "apoc_to_event": {
+        "response": [
+          0.0,
+          0.0723796348436719,
+          -0.013061150870145973,
+          -0.1709014169394503,
+          0.3018644090501306,
+          0.07105316905932865,
+          -0.09419333009639551,
+          0.10515727102108442,
+          -0.009898156700766186,
+          -0.21562761444705794,
+          0.12024196746249308,
+          0.2570620511824532,
+          0.12577236771546096,
+          0.0627451943092656,
+          0.03026523204115638,
+          0.11740554592814163,
+          0.08626725194075781,
+          0.0435001852348409,
+          0.06489710556621159,
+          0.06395715670181333,
+          0.04268021828605428,
+          0.06186750607637955,
+          0.07479736605246583,
+          0.06604531248809029,
+          0.057906493173870525,
+          0.05024140679439031,
+          0.05698598192971988,
+          0.054339804930530866,
+          0.048675474617144596,
+          0.048365846009410456,
+          0.047198589835810205
+        ],
+        "cumulative": [
+          0.0,
+          0.0723796348436719,
+          0.05931848397352592,
+          -0.11158293296592438,
+          0.19028147608420626,
+          0.2613346451435349,
+          0.16714131504713936,
+          0.27229858606822377,
+          0.26240042936745755,
+          0.046772814920399614,
+          0.1670147823828927,
+          0.42407683356534587,
+          0.5498492012808068,
+          0.6125943955900724,
+          0.6428596276312288,
+          0.7602651735593705,
+          0.8465324255001283,
+          0.8900326107349692,
+          0.9549297163011807,
+          1.018886873002994,
+          1.0615670912890485,
+          1.123434597365428,
+          1.198231963417894,
+          1.2642772759059842,
+          1.3221837690798546,
+          1.372425175874245,
+          1.4294111578039648,
+          1.4837509627344956,
+          1.53242643735164,
+          1.5807922833610506,
+          1.6279908731968609
+        ],
+        "peak": 0.3018644090501306,
+        "peak_day": 4
+      }
+    },
+    "findings": {
+      "events_cause_rhetoric": false,
+      "rhetoric_causes_events": false,
+      "reciprocal_feedback": false,
+      "unidirectional_event_to_rhetoric": false,
+      "unidirectional_rhetoric_to_event": false,
+      "no_causal_link": true
+    },
+    "supported": false
+  },
+  "H24_threshold_activation": {
+    "hypothesis": "H24",
+    "description": "Threshold activation: rhetoric responds only above casualty threshold",
+    "n_events": 74,
+    "threshold_tests": [
+      {
+        "threshold": 3,
+        "n_above": 55,
+        "n_below": 19,
+        "mean_above": -0.0031276493688528646,
+        "mean_below": 9.928543994762378e-05,
+        "difference": -0.0032269348088004883,
+        "mannwhitney_U": 449.0,
+        "mannwhitney_p": 0.3663747571358773,
+        "welch_t": -1.0136585449046982,
+        "welch_p": 0.31829572137552203,
+        "significant": false
+      },
+      {
+        "threshold": 5,
+        "n_above": 42,
+        "n_below": 32,
+        "mean_above": -0.002204330180612018,
+        "mean_below": -0.002423513260693686,
+        "difference": 0.00021918308008166782,
+        "mannwhitney_U": 671.0,
+        "mannwhitney_p": 0.9956472044535016,
+        "welch_t": 0.07739289068903363,
+        "welch_p": 0.9385324255765072,
+        "significant": false
+      },
+      {
+        "threshold": 10,
+        "n_above": 26,
+        "n_below": 48,
+        "mean_above": -0.0012592227601241025,
+        "mean_below": -0.002862385420097417,
+        "difference": 0.0016031626599733147,
+        "mannwhitney_U": 683.0,
+        "mannwhitney_p": 0.5077263949330457,
+        "welch_t": 0.5341742462620526,
+        "welch_p": 0.595586937031396,
+        "significant": false
+      },
+      {
+        "threshold": 15,
+        "n_above": 17,
+        "n_below": 57,
+        "mean_above": -2.59712784488396e-05,
+        "mean_below": -0.0029770663191977615,
+        "difference": 0.002951095040748922,
+        "mannwhitney_U": 528.0,
+        "mannwhitney_p": 0.5805759665050496,
+        "welch_t": 0.8379783219555581,
+        "welch_p": 0.4101004622908082,
+        "significant": false
+      },
+      {
+        "threshold": 20,
+        "n_above": 14,
+        "n_below": 60,
+        "mean_above": 0.0011604134791370663,
+        "mean_below": -0.0031063346772636936,
+        "difference": 0.004266748156400759,
+        "mannwhitney_U": 485.0,
+        "mannwhitney_p": 0.3733667876332577,
+        "welch_t": 1.0573155735526802,
+        "welch_p": 0.30479430302189403,
+        "significant": false
+      },
+      {
+        "threshold": 30,
+        "n_above": 10,
+        "n_below": 64,
+        "mean_above": 0.003013046303445055,
+        "mean_below": -0.0031291367962867694,
+        "difference": 0.006142183099731824,
+        "mannwhitney_U": 380.0,
+        "mannwhitney_p": 0.34681884029944154,
+        "welch_t": 1.1842975555715125,
+        "welch_p": 0.2623503116646482,
+        "significant": false
+      },
+      {
+        "threshold": 50,
+        "n_above": 6,
+        "n_below": 68,
+        "mean_above": -0.0002628512318811245,
+        "mean_below": -0.00247878212553847,
+        "difference": 0.0022159308936573452,
+        "mannwhitney_U": 220.0,
+        "mannwhitney_p": 0.7646596867880496,
+        "welch_t": 0.3672359027415083,
+        "welch_p": 0.7268252728678964,
+        "significant": false
+      }
+    ],
+    "optimal_threshold": {
+      "threshold": 30,
+      "n_above": 10,
+      "n_below": 64,
+      "mean_above": 0.003013046303445055,
+      "mean_below": -0.0031291367962867694,
+      "difference": 0.006142183099731824,
+      "mannwhitney_U": 380.0,
+      "mannwhitney_p": 0.34681884029944154,
+      "welch_t": 1.1842975555715125,
+      "welch_p": 0.2623503116646482,
+      "significant": false
+    },
+    "piecewise_regression": {
+      "threshold_used": 30,
+      "b_killed": -0.00019420649184275813,
+      "b_above_threshold": 0.009667024324495007,
+      "b_killed_above": 0.000138904640078453,
+      "p_killed": 0.312508865789195,
+      "p_above_threshold": 0.19411291799284047,
+      "p_killed_above": 0.4808774865485962,
+      "r_squared": 0.05206920946599081
+    },
+    "supported": false
+  },
+  "H25_temporal_clustering": {
+    "hypothesis": "H25",
+    "description": "Temporal clustering: sequential attacks produce compounding rhetoric effects",
+    "cluster_window_days": 14,
+    "n_events": 74,
+    "per_event": [
+      {
+        "event": "Fort Hood shooting (2014)",
+        "date": "2014-04-02",
+        "min_distance_days": 11,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": -0.0005548695333484899
+      },
+      {
+        "event": "Overland Park Jewish center shooting",
+        "date": "2014-04-13",
+        "min_distance_days": 11,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": 0.009049144569598211
+      },
+      {
+        "event": "Isla Vista attack",
+        "date": "2014-05-23",
+        "min_distance_days": 1,
+        "is_clustered": true,
+        "n_neighbors": 2,
+        "delta_apoc": -0.017297473038987488
+      },
+      {
+        "event": "Jewish Museum of Belgium shooting",
+        "date": "2014-05-24",
+        "min_distance_days": 1,
+        "is_clustered": true,
+        "n_neighbors": 2,
+        "delta_apoc": -0.015877216186436838
+      },
+      {
+        "event": "Moncton shootings",
+        "date": "2014-06-04",
+        "min_distance_days": 11,
+        "is_clustered": true,
+        "n_neighbors": 2,
+        "delta_apoc": 0.0009118964911974392
+      },
+      {
+        "event": "Ottawa Parliament Hill shooting",
+        "date": "2014-10-22",
+        "min_distance_days": 54,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": -0.010831416797752513
+      },
+      {
+        "event": "Lindt Caf\u00e9 siege (Sydney)",
+        "date": "2014-12-15",
+        "min_distance_days": 23,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": -0.020223588285476046
+      },
+      {
+        "event": "Charlie Hebdo attack",
+        "date": "2015-01-07",
+        "min_distance_days": 2,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": 0.012986047405473267
+      },
+      {
+        "event": "Hypercacher kosher market siege",
+        "date": "2015-01-09",
+        "min_distance_days": 2,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": 0.00869780389244379
+      },
+      {
+        "event": "Copenhagen shootings",
+        "date": "2015-02-14",
+        "min_distance_days": 36,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": 0.011294169283084077
+      },
+      {
+        "event": "Curtis Culwell Center attack (Garland)",
+        "date": "2015-05-03",
+        "min_distance_days": 45,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": -0.008920730926121334
+      },
+      {
+        "event": "Charleston church shooting",
+        "date": "2015-06-17",
+        "min_distance_days": 29,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": 0.0029580703169587164
+      },
+      {
+        "event": "Chattanooga recruiting center shooting",
+        "date": "2015-07-16",
+        "min_distance_days": 7,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": -0.013603432101699175
+      },
+      {
+        "event": "Lafayette Grand Theatre shooting",
+        "date": "2015-07-23",
+        "min_distance_days": 7,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": -0.006353150721959078
+      },
+      {
+        "event": "Thalys train attack",
+        "date": "2015-08-21",
+        "min_distance_days": 29,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": 0.023883467721296958
+      },
+      {
+        "event": "Umpqua Community College shooting",
+        "date": "2015-10-01",
+        "min_distance_days": 9,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": -0.01132529033593721
+      },
+      {
+        "event": "Ankara peace rally bombings",
+        "date": "2015-10-10",
+        "min_distance_days": 9,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": 0.0034819744282537646
+      },
+      {
+        "event": "Paris attacks (Bataclan)",
+        "date": "2015-11-13",
+        "min_distance_days": 14,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": 0.0204900033254517
+      },
+      {
+        "event": "Colorado Springs Planned Parenthood shooting",
+        "date": "2015-11-27",
+        "min_distance_days": 5,
+        "is_clustered": true,
+        "n_neighbors": 2,
+        "delta_apoc": -0.02267812913310302
+      },
+      {
+        "event": "San Bernardino attack",
+        "date": "2015-12-02",
+        "min_distance_days": 5,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": -0.02023907246612977
+      },
+      {
+        "event": "Brussels bombings",
+        "date": "2016-03-22",
+        "min_distance_days": 82,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": -0.005040140777294033
+      },
+      {
+        "event": "Orlando Pulse nightclub shooting",
+        "date": "2016-06-12",
+        "min_distance_days": 4,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": -0.010695808545840957
+      },
+      {
+        "event": "Jo Cox assassination",
+        "date": "2016-06-16",
+        "min_distance_days": 4,
+        "is_clustered": true,
+        "n_neighbors": 2,
+        "delta_apoc": -0.006359712774311299
+      },
+      {
+        "event": "Istanbul Atat\u00fcrk airport attack",
+        "date": "2016-06-28",
+        "min_distance_days": 9,
+        "is_clustered": true,
+        "n_neighbors": 2,
+        "delta_apoc": 0.02786606821291887
+      },
+      {
+        "event": "Dallas police shooting",
+        "date": "2016-07-07",
+        "min_distance_days": 7,
+        "is_clustered": true,
+        "n_neighbors": 3,
+        "delta_apoc": 0.033827197199506664
+      },
+      {
+        "event": "Nice truck attack",
+        "date": "2016-07-14",
+        "min_distance_days": 4,
+        "is_clustered": true,
+        "n_neighbors": 5,
+        "delta_apoc": -0.010832906849790935
+      },
+      {
+        "event": "W\u00fcrzburg train attack",
+        "date": "2016-07-18",
+        "min_distance_days": 4,
+        "is_clustered": true,
+        "n_neighbors": 5,
+        "delta_apoc": -0.020704918243566572
+      },
+      {
+        "event": "Munich shooting",
+        "date": "2016-07-22",
+        "min_distance_days": 2,
+        "is_clustered": true,
+        "n_neighbors": 4,
+        "delta_apoc": -0.020865533324040064
+      },
+      {
+        "event": "Ansbach bombing",
+        "date": "2016-07-24",
+        "min_distance_days": 2,
+        "is_clustered": true,
+        "n_neighbors": 4,
+        "delta_apoc": -0.011206840454249523
+      },
+      {
+        "event": "Sagamihara stabbing",
+        "date": "2016-07-26",
+        "min_distance_days": 2,
+        "is_clustered": true,
+        "n_neighbors": 4,
+        "delta_apoc": -0.006683542220570882
+      },
+      {
+        "event": "Berlin Christmas market attack",
+        "date": "2016-12-19",
+        "min_distance_days": 13,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": -0.0035549888778136918
+      },
+      {
+        "event": "Istanbul Reina nightclub attack",
+        "date": "2017-01-01",
+        "min_distance_days": 5,
+        "is_clustered": true,
+        "n_neighbors": 2,
+        "delta_apoc": 0.019577451535953416
+      },
+      {
+        "event": "Fort Lauderdale airport shooting",
+        "date": "2017-01-06",
+        "min_distance_days": 5,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": -0.0009865547020637133
+      },
+      {
+        "event": "Quebec City mosque shooting",
+        "date": "2017-01-29",
+        "min_distance_days": 23,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": 0.010866282283313211
+      },
+      {
+        "event": "London Westminster Bridge attack",
+        "date": "2017-03-22",
+        "min_distance_days": 16,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": -0.005104710852265049
+      },
+      {
+        "event": "Stockholm truck attack",
+        "date": "2017-04-07",
+        "min_distance_days": 13,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": -0.005567207763332305
+      },
+      {
+        "event": "Paris Champs-\u00c9lys\u00e9es shooting",
+        "date": "2017-04-20",
+        "min_distance_days": 13,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": -0.0004445255411574811
+      },
+      {
+        "event": "Manchester Arena bombing",
+        "date": "2017-05-22",
+        "min_distance_days": 12,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": -0.0018360631853823195
+      },
+      {
+        "event": "London Bridge attack (2017)",
+        "date": "2017-06-03",
+        "min_distance_days": 11,
+        "is_clustered": true,
+        "n_neighbors": 2,
+        "delta_apoc": 0.001444891605117904
+      },
+      {
+        "event": "Congressional baseball shooting",
+        "date": "2017-06-14",
+        "min_distance_days": 5,
+        "is_clustered": true,
+        "n_neighbors": 2,
+        "delta_apoc": 0.0035502880833568895
+      },
+      {
+        "event": "Finsbury Park mosque attack",
+        "date": "2017-06-19",
+        "min_distance_days": 5,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": -0.0013286894251642312
+      },
+      {
+        "event": "Charlottesville car attack",
+        "date": "2017-08-12",
+        "min_distance_days": 5,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": 0.01607382737957891
+      },
+      {
+        "event": "Barcelona Las Ramblas attack",
+        "date": "2017-08-17",
+        "min_distance_days": 5,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": -0.008827463916298961
+      },
+      {
+        "event": "Parsons Green bombing",
+        "date": "2017-09-15",
+        "min_distance_days": 16,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": 0.020102475641543938
+      },
+      {
+        "event": "Las Vegas shooting",
+        "date": "2017-10-01",
+        "min_distance_days": 16,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": -0.014841641413885942
+      },
+      {
+        "event": "NYC truck attack",
+        "date": "2017-10-31",
+        "min_distance_days": 5,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": -0.011252985966327067
+      },
+      {
+        "event": "Sutherland Springs church shooting",
+        "date": "2017-11-05",
+        "min_distance_days": 5,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": -0.015150143830894192
+      },
+      {
+        "event": "Parkland school shooting",
+        "date": "2018-02-14",
+        "min_distance_days": 37,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": -0.0011762943046793595
+      },
+      {
+        "event": "Tr\u00e8bes / Carcassonne attack",
+        "date": "2018-03-23",
+        "min_distance_days": 31,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": -0.004328796479057928
+      },
+      {
+        "event": "Toronto van attack",
+        "date": "2018-04-23",
+        "min_distance_days": 25,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": 0.002145999234247964
+      },
+      {
+        "event": "Santa Fe High School shooting",
+        "date": "2018-05-18",
+        "min_distance_days": 25,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": -0.003149273691229748
+      },
+      {
+        "event": "Annapolis Capital Gazette shooting",
+        "date": "2018-06-28",
+        "min_distance_days": 41,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": -0.0024206511422226185
+      },
+      {
+        "event": "Pittsburgh synagogue shooting",
+        "date": "2018-10-27",
+        "min_distance_days": 11,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": 0.001869374584989869
+      },
+      {
+        "event": "Thousand Oaks Borderline Bar shooting",
+        "date": "2018-11-07",
+        "min_distance_days": 11,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": 0.0015519510030578276
+      },
+      {
+        "event": "Strasbourg Christmas market attack",
+        "date": "2018-12-11",
+        "min_distance_days": 34,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": -0.004724102886111248
+      },
+      {
+        "event": "Christchurch mosque shootings",
+        "date": "2019-03-15",
+        "min_distance_days": 3,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": 0.01144491175432083
+      },
+      {
+        "event": "Utrecht tram shooting",
+        "date": "2019-03-18",
+        "min_distance_days": 3,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": -0.00018297820976703738
+      },
+      {
+        "event": "Sri Lanka Easter bombings",
+        "date": "2019-04-21",
+        "min_distance_days": 6,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": -0.011319448635636165
+      },
+      {
+        "event": "Poway synagogue shooting",
+        "date": "2019-04-27",
+        "min_distance_days": 6,
+        "is_clustered": true,
+        "n_neighbors": 2,
+        "delta_apoc": -0.012856107469792377
+      },
+      {
+        "event": "STEM School Highlands Ranch shooting",
+        "date": "2019-05-07",
+        "min_distance_days": 10,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": 0.004326368031299543
+      },
+      {
+        "event": "Virginia Beach municipal building shooting",
+        "date": "2019-05-31",
+        "min_distance_days": 24,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": -0.024795717553721286
+      },
+      {
+        "event": "El Paso Walmart shooting",
+        "date": "2019-08-03",
+        "min_distance_days": 1,
+        "is_clustered": true,
+        "n_neighbors": 2,
+        "delta_apoc": 0.0030417438997189516
+      },
+      {
+        "event": "Dayton shooting",
+        "date": "2019-08-04",
+        "min_distance_days": 1,
+        "is_clustered": true,
+        "n_neighbors": 2,
+        "delta_apoc": 0.003817762139442349
+      },
+      {
+        "event": "B\u00e6rum mosque shooting",
+        "date": "2019-08-10",
+        "min_distance_days": 6,
+        "is_clustered": true,
+        "n_neighbors": 2,
+        "delta_apoc": -0.004079883406214624
+      },
+      {
+        "event": "Halle synagogue shooting",
+        "date": "2019-10-09",
+        "min_distance_days": 51,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": 0.010590209221160718
+      },
+      {
+        "event": "London Bridge attack (2019)",
+        "date": "2019-11-29",
+        "min_distance_days": 11,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": -0.0035027969128963443
+      },
+      {
+        "event": "Jersey City kosher market shooting",
+        "date": "2019-12-10",
+        "min_distance_days": 11,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": -0.017936964072718498
+      },
+      {
+        "event": "Hanau shootings",
+        "date": "2020-02-19",
+        "min_distance_days": 59,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": 0.0008874003315291756
+      },
+      {
+        "event": "Nova Scotia rampage",
+        "date": "2020-04-18",
+        "min_distance_days": 59,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": 5.978879002593862e-05
+      },
+      {
+        "event": "Reading stabbings",
+        "date": "2020-06-20",
+        "min_distance_days": 63,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": -0.0022786580392160083
+      },
+      {
+        "event": "Samuel Paty beheading",
+        "date": "2020-10-16",
+        "min_distance_days": 13,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": -0.0013456093291308036
+      },
+      {
+        "event": "Nice basilica stabbing",
+        "date": "2020-10-29",
+        "min_distance_days": 4,
+        "is_clustered": true,
+        "n_neighbors": 2,
+        "delta_apoc": -0.007815228017140685
+      },
+      {
+        "event": "Vienna shooting",
+        "date": "2020-11-02",
+        "min_distance_days": 4,
+        "is_clustered": true,
+        "n_neighbors": 1,
+        "delta_apoc": -0.0062212646981776865
+      },
+      {
+        "event": "U.S. Capitol storming",
+        "date": "2021-01-06",
+        "min_distance_days": 65,
+        "is_clustered": false,
+        "n_neighbors": 0,
+        "delta_apoc": -0.019608337253830987
+      }
+    ],
+    "comparison": {
+      "n_isolated": 23,
+      "n_clustered": 51,
+      "mean_isolated": -0.0019415738078131916,
+      "mean_clustered": -0.0024603547911411627,
+      "mannwhitney_U": 558.0,
+      "mannwhitney_p": 0.6325803042512101,
+      "significant": false,
+      "super_additive": false
+    },
+    "regression": {
+      "b_neighbors": -0.0013570483301355535,
+      "p_neighbors": 0.29703238918755237,
+      "r_squared": 0.016857735344456892,
+      "n_obs": 74
+    },
+    "supported": false
+  },
+  "H26_mimetic_contagion": {
+    "hypothesis": "H26",
+    "description": "Mimetic contagion: online-nexus attacks trigger distinctive rhetoric shifts",
+    "n_online": 23,
+    "n_offline": 51,
+    "online_events": [
+      {
+        "event": "Isla Vista attack",
+        "ideology": "incel",
+        "killed": 6,
+        "delta_apoc": -0.017297473038987488,
+        "abs_delta": 0.017297473038987488,
+        "pre_variance": 0.0004187348003884822,
+        "post_variance": 0.00022283655152801124,
+        "variance_ratio": 0.5321663050725044
+      },
+      {
+        "event": "Moncton shootings",
+        "ideology": "other",
+        "killed": 3,
+        "delta_apoc": 0.0009118964911974392,
+        "abs_delta": 0.0009118964911974392,
+        "pre_variance": 0.00019043750426508762,
+        "post_variance": 0.0002120713281973181,
+        "variance_ratio": 1.1136006482321694
+      },
+      {
+        "event": "Curtis Culwell Center attack (Garland)",
+        "ideology": "islamist",
+        "killed": 0,
+        "delta_apoc": -0.008920730926121334,
+        "abs_delta": 0.008920730926121334,
+        "pre_variance": 0.0004462819263893774,
+        "post_variance": 0.0006664060479915888,
+        "variance_ratio": 1.4932400542928437
+      },
+      {
+        "event": "Charleston church shooting",
+        "ideology": "far_right",
+        "killed": 9,
+        "delta_apoc": 0.0029580703169587164,
+        "abs_delta": 0.0029580703169587164,
+        "pre_variance": 0.00020002599455255698,
+        "post_variance": 0.00018656786264144664,
+        "variance_ratio": 0.9327180852607925
+      },
+      {
+        "event": "Lafayette Grand Theatre shooting",
+        "ideology": "far_right",
+        "killed": 2,
+        "delta_apoc": -0.006353150721959078,
+        "abs_delta": 0.006353150721959078,
+        "pre_variance": 0.00015668793632866898,
+        "post_variance": 0.0008054250019560525,
+        "variance_ratio": 5.1403127823867125
+      },
+      {
+        "event": "Umpqua Community College shooting",
+        "ideology": "other",
+        "killed": 9,
+        "delta_apoc": -0.01132529033593721,
+        "abs_delta": 0.01132529033593721,
+        "pre_variance": 0.0003239149842629356,
+        "post_variance": 0.00024154507206118253,
+        "variance_ratio": 0.7457051504141288
+      },
+      {
+        "event": "Jo Cox assassination",
+        "ideology": "far_right",
+        "killed": 1,
+        "delta_apoc": -0.006359712774311299,
+        "abs_delta": 0.006359712774311299,
+        "pre_variance": 0.0002917764514364894,
+        "post_variance": 9.820626363974036e-05,
+        "variance_ratio": 0.3365804990644243
+      },
+      {
+        "event": "Munich shooting",
+        "ideology": "far_right",
+        "killed": 9,
+        "delta_apoc": -0.020865533324040064,
+        "abs_delta": 0.020865533324040064,
+        "pre_variance": 0.0003368392854815397,
+        "post_variance": 0.00012386470198952725,
+        "variance_ratio": 0.3677264123525627
+      },
+      {
+        "event": "Quebec City mosque shooting",
+        "ideology": "far_right",
+        "killed": 6,
+        "delta_apoc": 0.010866282283313211,
+        "abs_delta": 0.010866282283313211,
+        "pre_variance": 0.00010344530493285042,
+        "post_variance": 0.00021664657048554425,
+        "variance_ratio": 2.0943103278218023
+      },
+      {
+        "event": "Charlottesville car attack",
+        "ideology": "far_right",
+        "killed": 1,
+        "delta_apoc": 0.01607382737957891,
+        "abs_delta": 0.01607382737957891,
+        "pre_variance": 0.00014637735330503578,
+        "post_variance": 0.00021217433387856998,
+        "variance_ratio": 1.4495024611930225
+      },
+      {
+        "event": "Parkland school shooting",
+        "ideology": "school_shooting",
+        "killed": 17,
+        "delta_apoc": -0.0011762943046793595,
+        "abs_delta": 0.0011762943046793595,
+        "pre_variance": 8.8826200033972e-05,
+        "post_variance": 0.00024370297404754937,
+        "variance_ratio": 2.7435933762149456
+      },
+      {
+        "event": "Toronto van attack",
+        "ideology": "incel",
+        "killed": 10,
+        "delta_apoc": 0.002145999234247964,
+        "abs_delta": 0.002145999234247964,
+        "pre_variance": 0.00017834075828488928,
+        "post_variance": 0.00012969287894720844,
+        "variance_ratio": 0.7272195105284424
+      },
+      {
+        "event": "Pittsburgh synagogue shooting",
+        "ideology": "far_right",
+        "killed": 11,
+        "delta_apoc": 0.001869374584989869,
+        "abs_delta": 0.001869374584989869,
+        "pre_variance": 6.633142331238861e-05,
+        "post_variance": 0.00024656612600163435,
+        "variance_ratio": 3.7171843100731956
+      },
+      {
+        "event": "Christchurch mosque shootings",
+        "ideology": "far_right",
+        "killed": 51,
+        "delta_apoc": 0.01144491175432083,
+        "abs_delta": 0.01144491175432083,
+        "pre_variance": 8.559854514308955e-05,
+        "post_variance": 0.00023928634327966903,
+        "variance_ratio": 2.7954487179620813
+      },
+      {
+        "event": "Poway synagogue shooting",
+        "ideology": "far_right",
+        "killed": 1,
+        "delta_apoc": -0.012856107469792377,
+        "abs_delta": 0.012856107469792377,
+        "pre_variance": 0.00012182768983173917,
+        "post_variance": 2.5167392650875445e-05,
+        "variance_ratio": 0.20658187548032045
+      },
+      {
+        "event": "El Paso Walmart shooting",
+        "ideology": "far_right",
+        "killed": 23,
+        "delta_apoc": 0.0030417438997189516,
+        "abs_delta": 0.0030417438997189516,
+        "pre_variance": 2.9419676389546834e-05,
+        "post_variance": 5.400110629277421e-05,
+        "variance_ratio": 1.8355438577142695
+      },
+      {
+        "event": "B\u00e6rum mosque shooting",
+        "ideology": "far_right",
+        "killed": 0,
+        "delta_apoc": -0.004079883406214624,
+        "abs_delta": 0.004079883406214624,
+        "pre_variance": 2.3806305478268426e-05,
+        "post_variance": 7.499321951666276e-05,
+        "variance_ratio": 3.150141023987123
+      },
+      {
+        "event": "Halle synagogue shooting",
+        "ideology": "far_right",
+        "killed": 2,
+        "delta_apoc": 0.010590209221160718,
+        "abs_delta": 0.010590209221160718,
+        "pre_variance": 0.00013026915095958673,
+        "post_variance": 0.00015151623418355607,
+        "variance_ratio": 1.1631014178526489
+      },
+      {
+        "event": "Jersey City kosher market shooting",
+        "ideology": "far_right",
+        "killed": 4,
+        "delta_apoc": -0.017936964072718498,
+        "abs_delta": 0.017936964072718498,
+        "pre_variance": 6.318662932901726e-05,
+        "post_variance": 0.00010297456322288675,
+        "variance_ratio": 1.6296891338623383
+      },
+      {
+        "event": "Hanau shootings",
+        "ideology": "far_right",
+        "killed": 10,
+        "delta_apoc": 0.0008874003315291756,
+        "abs_delta": 0.0008874003315291756,
+        "pre_variance": 5.122854208055475e-05,
+        "post_variance": 4.006671943058931e-05,
+        "variance_ratio": 0.7821171129091682
+      },
+      {
+        "event": "Samuel Paty beheading",
+        "ideology": "islamist",
+        "killed": 1,
+        "delta_apoc": -0.0013456093291308036,
+        "abs_delta": 0.0013456093291308036,
+        "pre_variance": 6.044146343352061e-05,
+        "post_variance": 8.556498981398536e-05,
+        "variance_ratio": 1.4156670760974879
+      },
+      {
+        "event": "Vienna shooting",
+        "ideology": "islamist",
+        "killed": 4,
+        "delta_apoc": -0.0062212646981776865,
+        "abs_delta": 0.0062212646981776865,
+        "pre_variance": 6.802486383218895e-05,
+        "post_variance": 0.00010184793025044388,
+        "variance_ratio": 1.497216231137093
+      },
+      {
+        "event": "U.S. Capitol storming",
+        "ideology": "far_right",
+        "killed": 5,
+        "delta_apoc": -0.019608337253830987,
+        "abs_delta": 0.019608337253830987,
+        "pre_variance": 0.00017099080026006906,
+        "post_variance": 4.049271308959929e-05,
+        "variance_ratio": 0.23681223216694555
+      }
+    ],
+    "offline_events": [
+      {
+        "event": "Fort Hood shooting (2014)",
+        "ideology": "other",
+        "killed": 3,
+        "delta_apoc": -0.0005548695333484899,
+        "abs_delta": 0.0005548695333484899,
+        "pre_variance": 0.0005342816728733308,
+        "post_variance": 0.00017821655597712898,
+        "variance_ratio": 0.3335629220045905
+      },
+      {
+        "event": "Overland Park Jewish center shooting",
+        "ideology": "far_right",
+        "killed": 3,
+        "delta_apoc": 0.009049144569598211,
+        "abs_delta": 0.009049144569598211,
+        "pre_variance": 0.00022762346480659985,
+        "post_variance": 0.00019874306166728947,
+        "variance_ratio": 0.8731220299987587
+      },
+      {
+        "event": "Jewish Museum of Belgium shooting",
+        "ideology": "islamist",
+        "killed": 4,
+        "delta_apoc": -0.015877216186436838,
+        "abs_delta": 0.015877216186436838,
+        "pre_variance": 0.0004332263799306785,
+        "post_variance": 0.0002256692560577827,
+        "variance_ratio": 0.5209037734357094
+      },
+      {
+        "event": "Ottawa Parliament Hill shooting",
+        "ideology": "islamist",
+        "killed": 1,
+        "delta_apoc": -0.010831416797752513,
+        "abs_delta": 0.010831416797752513,
+        "pre_variance": 0.00026075017585417646,
+        "post_variance": 0.00014482405357302096,
+        "variance_ratio": 0.5554130619417617
+      },
+      {
+        "event": "Lindt Caf\u00e9 siege (Sydney)",
+        "ideology": "islamist",
+        "killed": 3,
+        "delta_apoc": -0.020223588285476046,
+        "abs_delta": 0.020223588285476046,
+        "pre_variance": 0.00011018414106114543,
+        "post_variance": 0.0004725340946894127,
+        "variance_ratio": 4.288585363906275
+      },
+      {
+        "event": "Charlie Hebdo attack",
+        "ideology": "islamist",
+        "killed": 12,
+        "delta_apoc": 0.012986047405473267,
+        "abs_delta": 0.012986047405473267,
+        "pre_variance": 0.00041085594180408823,
+        "post_variance": 0.00035010078467412185,
+        "variance_ratio": 0.8521254022439408
+      },
+      {
+        "event": "Hypercacher kosher market siege",
+        "ideology": "islamist",
+        "killed": 4,
+        "delta_apoc": 0.00869780389244379,
+        "abs_delta": 0.00869780389244379,
+        "pre_variance": 0.0005530284151217856,
+        "post_variance": 0.000308526294626406,
+        "variance_ratio": 0.5578850673675848
+      },
+      {
+        "event": "Copenhagen shootings",
+        "ideology": "islamist",
+        "killed": 2,
+        "delta_apoc": 0.011294169283084077,
+        "abs_delta": 0.011294169283084077,
+        "pre_variance": 0.00030437787635717264,
+        "post_variance": 0.0003417357950049184,
+        "variance_ratio": 1.1227353285161503
+      },
+      {
+        "event": "Chattanooga recruiting center shooting",
+        "ideology": "islamist",
+        "killed": 5,
+        "delta_apoc": -0.013603432101699175,
+        "abs_delta": 0.013603432101699175,
+        "pre_variance": 0.00010567431808510249,
+        "post_variance": 0.0005496829717760141,
+        "variance_ratio": 5.201670393873173
+      },
+      {
+        "event": "Thalys train attack",
+        "ideology": "islamist",
+        "killed": 0,
+        "delta_apoc": 0.023883467721296958,
+        "abs_delta": 0.023883467721296958,
+        "pre_variance": 0.00034921629782413223,
+        "post_variance": 0.0002552723419684284,
+        "variance_ratio": 0.7309863358582003
+      },
+      {
+        "event": "Ankara peace rally bombings",
+        "ideology": "islamist",
+        "killed": 103,
+        "delta_apoc": 0.0034819744282537646,
+        "abs_delta": 0.0034819744282537646,
+        "pre_variance": 0.0002789109113673194,
+        "post_variance": 0.00017108639973042956,
+        "variance_ratio": 0.6134087723269909
+      },
+      {
+        "event": "Paris attacks (Bataclan)",
+        "ideology": "islamist",
+        "killed": 130,
+        "delta_apoc": 0.0204900033254517,
+        "abs_delta": 0.0204900033254517,
+        "pre_variance": 0.0004953004516681325,
+        "post_variance": 0.00018985915024665871,
+        "variance_ratio": 0.38332117325398796
+      },
+      {
+        "event": "Colorado Springs Planned Parenthood shooting",
+        "ideology": "far_right",
+        "killed": 3,
+        "delta_apoc": -0.02267812913310302,
+        "abs_delta": 0.02267812913310302,
+        "pre_variance": 0.00019413561684320115,
+        "post_variance": 0.00017462613267539323,
+        "variance_ratio": 0.8995058996126132
+      },
+      {
+        "event": "San Bernardino attack",
+        "ideology": "islamist",
+        "killed": 14,
+        "delta_apoc": -0.02023907246612977,
+        "abs_delta": 0.02023907246612977,
+        "pre_variance": 7.916413467129324e-05,
+        "post_variance": 0.00013080898801907335,
+        "variance_ratio": 1.6523769073232568
+      },
+      {
+        "event": "Brussels bombings",
+        "ideology": "islamist",
+        "killed": 32,
+        "delta_apoc": -0.005040140777294033,
+        "abs_delta": 0.005040140777294033,
+        "pre_variance": 0.0006831364752275146,
+        "post_variance": 0.0001405277020114478,
+        "variance_ratio": 0.20570955747114203
+      },
+      {
+        "event": "Orlando Pulse nightclub shooting",
+        "ideology": "islamist",
+        "killed": 49,
+        "delta_apoc": -0.010695808545840957,
+        "abs_delta": 0.010695808545840957,
+        "pre_variance": 0.00030905387483653687,
+        "post_variance": 0.00010278838456870012,
+        "variance_ratio": 0.33259050585619226
+      },
+      {
+        "event": "Istanbul Atat\u00fcrk airport attack",
+        "ideology": "islamist",
+        "killed": 45,
+        "delta_apoc": 0.02786606821291887,
+        "abs_delta": 0.02786606821291887,
+        "pre_variance": 9.072338475244428e-05,
+        "post_variance": 0.0006432240402329594,
+        "variance_ratio": 7.0899475585938125
+      },
+      {
+        "event": "Dallas police shooting",
+        "ideology": "far_left",
+        "killed": 5,
+        "delta_apoc": 0.033827197199506664,
+        "abs_delta": 0.033827197199506664,
+        "pre_variance": 0.00011131575191751153,
+        "post_variance": 0.0003449394272237243,
+        "variance_ratio": 3.098747673009793
+      },
+      {
+        "event": "Nice truck attack",
+        "ideology": "islamist",
+        "killed": 86,
+        "delta_apoc": -0.010832906849790935,
+        "abs_delta": 0.010832906849790935,
+        "pre_variance": 0.0006459913127853512,
+        "post_variance": 0.00016360821640444009,
+        "variance_ratio": 0.2532668987435804
+      },
+      {
+        "event": "W\u00fcrzburg train attack",
+        "ideology": "islamist",
+        "killed": 0,
+        "delta_apoc": -0.020704918243566572,
+        "abs_delta": 0.020704918243566572,
+        "pre_variance": 0.00038004385299941843,
+        "post_variance": 0.00012070634341884159,
+        "variance_ratio": 0.3176116189386868
+      },
+      {
+        "event": "Ansbach bombing",
+        "ideology": "islamist",
+        "killed": 0,
+        "delta_apoc": -0.011206840454249523,
+        "abs_delta": 0.011206840454249523,
+        "pre_variance": 0.0003906920575190518,
+        "post_variance": 9.083036988482479e-05,
+        "variance_ratio": 0.2324858367011864
+      },
+      {
+        "event": "Sagamihara stabbing",
+        "ideology": "other",
+        "killed": 19,
+        "delta_apoc": -0.006683542220570882,
+        "abs_delta": 0.006683542220570882,
+        "pre_variance": 0.00025496417923404687,
+        "post_variance": 0.00011290595759536855,
+        "variance_ratio": 0.44283066717276165
+      },
+      {
+        "event": "Berlin Christmas market attack",
+        "ideology": "islamist",
+        "killed": 12,
+        "delta_apoc": -0.0035549888778136918,
+        "abs_delta": 0.0035549888778136918,
+        "pre_variance": 0.00017033504129540308,
+        "post_variance": 7.600482768502933e-05,
+        "variance_ratio": 0.44620782140310267
+      },
+      {
+        "event": "Istanbul Reina nightclub attack",
+        "ideology": "islamist",
+        "killed": 39,
+        "delta_apoc": 0.019577451535953416,
+        "abs_delta": 0.019577451535953416,
+        "pre_variance": 8.201362324144907e-05,
+        "post_variance": 0.0003559069189982829,
+        "variance_ratio": 4.339607310732862
+      },
+      {
+        "event": "Fort Lauderdale airport shooting",
+        "ideology": "other",
+        "killed": 5,
+        "delta_apoc": -0.0009865547020637133,
+        "abs_delta": 0.0009865547020637133,
+        "pre_variance": 0.0004829336172525491,
+        "post_variance": 0.00010621447639415048,
+        "variance_ratio": 0.21993597587679603
+      },
+      {
+        "event": "London Westminster Bridge attack",
+        "ideology": "islamist",
+        "killed": 5,
+        "delta_apoc": -0.005104710852265049,
+        "abs_delta": 0.005104710852265049,
+        "pre_variance": 0.00013618357420919642,
+        "post_variance": 6.505889790982772e-05,
+        "variance_ratio": 0.4777294052356743
+      },
+      {
+        "event": "Stockholm truck attack",
+        "ideology": "islamist",
+        "killed": 5,
+        "delta_apoc": -0.005567207763332305,
+        "abs_delta": 0.005567207763332305,
+        "pre_variance": 6.193879370137218e-05,
+        "post_variance": 4.8284093542962866e-05,
+        "variance_ratio": 0.7795452681199568
+      },
+      {
+        "event": "Paris Champs-\u00c9lys\u00e9es shooting",
+        "ideology": "islamist",
+        "killed": 1,
+        "delta_apoc": -0.0004445255411574811,
+        "abs_delta": 0.0004445255411574811,
+        "pre_variance": 5.323800911887092e-05,
+        "post_variance": 4.979658388262817e-05,
+        "variance_ratio": 0.9353577398328576
+      },
+      {
+        "event": "Manchester Arena bombing",
+        "ideology": "islamist",
+        "killed": 22,
+        "delta_apoc": -0.0018360631853823195,
+        "abs_delta": 0.0018360631853823195,
+        "pre_variance": 0.000109672392411615,
+        "post_variance": 9.15600461176917e-05,
+        "variance_ratio": 0.8348504496378152
+      },
+      {
+        "event": "London Bridge attack (2017)",
+        "ideology": "islamist",
+        "killed": 8,
+        "delta_apoc": 0.001444891605117904,
+        "abs_delta": 0.001444891605117904,
+        "pre_variance": 0.00011083111449130673,
+        "post_variance": 0.00015928589593802774,
+        "variance_ratio": 1.4371947504914937
+      },
+      {
+        "event": "Congressional baseball shooting",
+        "ideology": "far_left",
+        "killed": 0,
+        "delta_apoc": 0.0035502880833568895,
+        "abs_delta": 0.0035502880833568895,
+        "pre_variance": 9.656523203194495e-05,
+        "post_variance": 0.00020353901623730873,
+        "variance_ratio": 2.1077877819418025
+      },
+      {
+        "event": "Finsbury Park mosque attack",
+        "ideology": "far_right",
+        "killed": 1,
+        "delta_apoc": -0.0013286894251642312,
+        "abs_delta": 0.0013286894251642312,
+        "pre_variance": 0.00018742223216603436,
+        "post_variance": 9.74579071668571e-05,
+        "variance_ratio": 0.5199911773568073
+      },
+      {
+        "event": "Barcelona Las Ramblas attack",
+        "ideology": "islamist",
+        "killed": 16,
+        "delta_apoc": -0.008827463916298961,
+        "abs_delta": 0.008827463916298961,
+        "pre_variance": 0.00030260004825901195,
+        "post_variance": 0.00011865123035085635,
+        "variance_ratio": 0.3921057879319843
+      },
+      {
+        "event": "Parsons Green bombing",
+        "ideology": "islamist",
+        "killed": 0,
+        "delta_apoc": 0.020102475641543938,
+        "abs_delta": 0.020102475641543938,
+        "pre_variance": 0.00010944612186503116,
+        "post_variance": 5.466612428378199e-05,
+        "variance_ratio": 0.49947977463464804
+      },
+      {
+        "event": "Las Vegas shooting",
+        "ideology": "other",
+        "killed": 60,
+        "delta_apoc": -0.014841641413885942,
+        "abs_delta": 0.014841641413885942,
+        "pre_variance": 5.3925242710647603e-05,
+        "post_variance": 0.0003246364096199182,
+        "variance_ratio": 6.020119582249342
+      },
+      {
+        "event": "NYC truck attack",
+        "ideology": "islamist",
+        "killed": 8,
+        "delta_apoc": -0.011252985966327067,
+        "abs_delta": 0.011252985966327067,
+        "pre_variance": 0.00014943159132834295,
+        "post_variance": 0.00013967256113384157,
+        "variance_ratio": 0.9346923223680456
+      },
+      {
+        "event": "Sutherland Springs church shooting",
+        "ideology": "other",
+        "killed": 26,
+        "delta_apoc": -0.015150143830894192,
+        "abs_delta": 0.015150143830894192,
+        "pre_variance": 0.00013270219241028443,
+        "post_variance": 0.0001438421863630612,
+        "variance_ratio": 1.0839473240828945
+      },
+      {
+        "event": "Tr\u00e8bes / Carcassonne attack",
+        "ideology": "islamist",
+        "killed": 4,
+        "delta_apoc": -0.004328796479057928,
+        "abs_delta": 0.004328796479057928,
+        "pre_variance": 0.0001206637440079858,
+        "post_variance": 0.00022072261986158049,
+        "variance_ratio": 1.82923728810348
+      },
+      {
+        "event": "Santa Fe High School shooting",
+        "ideology": "school_shooting",
+        "killed": 10,
+        "delta_apoc": -0.003149273691229748,
+        "abs_delta": 0.003149273691229748,
+        "pre_variance": 0.00018744391441840352,
+        "post_variance": 0.00022786808647616796,
+        "variance_ratio": 1.215660093224107
+      },
+      {
+        "event": "Annapolis Capital Gazette shooting",
+        "ideology": "other",
+        "killed": 5,
+        "delta_apoc": -0.0024206511422226185,
+        "abs_delta": 0.0024206511422226185,
+        "pre_variance": 0.00016904100055678613,
+        "post_variance": 0.00018885900029110703,
+        "variance_ratio": 1.1172378279177508
+      },
+      {
+        "event": "Thousand Oaks Borderline Bar shooting",
+        "ideology": "other",
+        "killed": 12,
+        "delta_apoc": 0.0015519510030578276,
+        "abs_delta": 0.0015519510030578276,
+        "pre_variance": 0.00022718198277469628,
+        "post_variance": 5.84641287817448e-05,
+        "variance_ratio": 0.257344918235552
+      },
+      {
+        "event": "Strasbourg Christmas market attack",
+        "ideology": "islamist",
+        "killed": 5,
+        "delta_apoc": -0.004724102886111248,
+        "abs_delta": 0.004724102886111248,
+        "pre_variance": 0.0001252926340205769,
+        "post_variance": 0.0001208727864924567,
+        "variance_ratio": 0.9647238038958115
+      },
+      {
+        "event": "Utrecht tram shooting",
+        "ideology": "islamist",
+        "killed": 4,
+        "delta_apoc": -0.00018297820976703738,
+        "abs_delta": 0.00018297820976703738,
+        "pre_variance": 0.00021220869216090753,
+        "post_variance": 0.00018670375433199997,
+        "variance_ratio": 0.879812002189013
+      },
+      {
+        "event": "Sri Lanka Easter bombings",
+        "ideology": "islamist",
+        "killed": 269,
+        "delta_apoc": -0.011319448635636165,
+        "abs_delta": 0.011319448635636165,
+        "pre_variance": 0.00010556322348636438,
+        "post_variance": 7.383254803691745e-05,
+        "variance_ratio": 0.699415436536517
+      },
+      {
+        "event": "STEM School Highlands Ranch shooting",
+        "ideology": "school_shooting",
+        "killed": 1,
+        "delta_apoc": 0.004326368031299543,
+        "abs_delta": 0.004326368031299543,
+        "pre_variance": 3.9988860736316834e-05,
+        "post_variance": 8.906578604292148e-05,
+        "variance_ratio": 2.2272649033493037
+      },
+      {
+        "event": "Virginia Beach municipal building shooting",
+        "ideology": "other",
+        "killed": 12,
+        "delta_apoc": -0.024795717553721286,
+        "abs_delta": 0.024795717553721286,
+        "pre_variance": 3.7131781746132286e-05,
+        "post_variance": 0.0003332888001203716,
+        "variance_ratio": 8.975836451884984
+      },
+      {
+        "event": "Dayton shooting",
+        "ideology": "other",
+        "killed": 9,
+        "delta_apoc": 0.003817762139442349,
+        "abs_delta": 0.003817762139442349,
+        "pre_variance": 2.9516074301047892e-05,
+        "post_variance": 6.17958339511635e-05,
+        "variance_ratio": 2.0936332291645434
+      },
+      {
+        "event": "London Bridge attack (2019)",
+        "ideology": "islamist",
+        "killed": 2,
+        "delta_apoc": -0.0035027969128963443,
+        "abs_delta": 0.0035027969128963443,
+        "pre_variance": 0.00022154933647411433,
+        "post_variance": 0.00012161245976297819,
+        "variance_ratio": 0.5489181854407734
+      },
+      {
+        "event": "Nova Scotia rampage",
+        "ideology": "other",
+        "killed": 22,
+        "delta_apoc": 5.978879002593862e-05,
+        "abs_delta": 5.978879002593862e-05,
+        "pre_variance": 7.746005258250894e-05,
+        "post_variance": 0.00013048732848193887,
+        "variance_ratio": 1.6845757797923815
+      },
+      {
+        "event": "Reading stabbings",
+        "ideology": "islamist",
+        "killed": 3,
+        "delta_apoc": -0.0022786580392160083,
+        "abs_delta": 0.0022786580392160083,
+        "pre_variance": 0.00013911192371453504,
+        "post_variance": 0.00010555963410621861,
+        "variance_ratio": 0.7588108286305674
+      },
+      {
+        "event": "Nice basilica stabbing",
+        "ideology": "islamist",
+        "killed": 3,
+        "delta_apoc": -0.007815228017140685,
+        "abs_delta": 0.007815228017140685,
+        "pre_variance": 6.125104911606661e-05,
+        "post_variance": 0.00011099192934035003,
+        "variance_ratio": 1.8120820939740607
+      }
+    ],
+    "magnitude_test": {
+      "online_mean_abs_delta": 0.008484176832735503,
+      "offline_mean_abs_delta": 0.009972379637346427,
+      "mannwhitney_U": 543.0,
+      "mannwhitney_p": 0.6963328594600081,
+      "cohens_d": -0.18950477422908651,
+      "significant": false
+    },
+    "direction_test": {
+      "online_mean_delta": -0.0031981146156036967,
+      "offline_mean_delta": -0.0018936795248826993,
+      "mannwhitney_U": 579.0,
+      "mannwhitney_p": 0.9348423340622778,
+      "significant": false
+    },
+    "polarisation_test": {
+      "online_mean_variance_ratio": 1.5698338522642183,
+      "offline_mean_variance_ratio": 1.5029783933800998,
+      "mannwhitney_U": 692.0,
+      "mannwhitney_p": 0.11004101206302541,
+      "significant": false
+    },
+    "supported": false
+  },
+  "summary": {
+    "H22": {
+      "supported": "True",
+      "description": "Post-attack apocalyptic rhetoric decays exponentially"
+    },
+    "H23": {
+      "supported": false,
+      "description": "Reciprocal amplification: bidirectional feedback between violence and rhetoric"
+    },
+    "H24": {
+      "supported": false,
+      "description": "Threshold activation: rhetoric responds only above casualty threshold"
+    },
+    "H25": {
+      "supported": false,
+      "description": "Temporal clustering: sequential attacks produce compounding rhetoric effects"
+    },
+    "H26": {
+      "supported": false,
+      "description": "Mimetic contagion: online-nexus attacks trigger distinctive rhetoric shifts"
+    }
+  }
+}
