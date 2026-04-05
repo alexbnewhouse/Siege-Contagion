@@ -314,5 +314,147 @@
       }
     }
   },
-  "significant_predictors": []
+  "significant_predictors": [],
+  "per_category": {
+    "siegist_traditionalist": {
+      "n_events": 77,
+      "severity_correlations": {
+        "killed": {
+          "n": 77,
+          "pearson_r": -0.0794748415627592,
+          "pearson_p": 0.4920385479121177,
+          "spearman_rho": -0.01850147698043906,
+          "spearman_p": 0.8731111082640454
+        },
+        "injured": {
+          "n": 77,
+          "pearson_r": 0.004234883457603755,
+          "pearson_p": 0.9708411900177925,
+          "spearman_rho": 0.05999739698698414,
+          "spearman_p": 0.6042272576366581
+        },
+        "total_casualties": {
+          "n": 77,
+          "pearson_r": -0.07319674314710825,
+          "pearson_p": 0.5269670438356523,
+          "spearman_rho": -0.013537964908656932,
+          "spearman_p": 0.9069730323997304
+        }
+      },
+      "multiple_regression": {
+        "n_obs": 66,
+        "r_squared": 0.21853200268505335,
+        "adj_r_squared": 0.1088522837636573,
+        "f_pvalue": 1.2034564379442372e-10,
+        "coefficients": {
+          "const": {
+            "coef": -0.005494461963971404,
+            "se": 0.003690356966786246,
+            "p": 0.13652159145725268
+          },
+          "log_killed": {
+            "coef": -0.0010330686899189141,
+            "se": 0.0007098078359593876,
+            "p": 0.145552956867545
+          },
+          "domestic_int": {
+            "coef": 0.0009291127631922722,
+            "se": 0.002571236091226711,
+            "p": 0.7178388084246575
+          },
+          "nexus_int": {
+            "coef": 0.0050853113090902425,
+            "se": 0.0038592064014102306,
+            "p": 0.18760105446377284
+          },
+          "ideo_far_right": {
+            "coef": 0.00011605706008177238,
+            "se": 0.004196367710780719,
+            "p": 0.977936077244222
+          },
+          "ideo_incel": {
+            "coef": 0.009696265942330168,
+            "se": 0.004456963941215177,
+            "p": 0.029590301944419597
+          },
+          "ideo_islamist": {
+            "coef": 0.009429074191265641,
+            "se": 0.0043475945501203015,
+            "p": 0.03009767679147443
+          },
+          "ideo_other": {
+            "coef": 0.007279436357155931,
+            "se": 0.0036800261284811093,
+            "p": 0.04791814155825334
+          },
+          "ideo_school_shooting": {
+            "coef": 0.006808084852816062,
+            "se": 0.003755070679124943,
+            "p": 0.06982600087616468
+          }
+        }
+      }
+    },
+    "rapture_christian": {
+      "n_events": 5,
+      "severity_correlations": {
+        "killed": {
+          "n": 5,
+          "pearson_r": -0.7391327417373592,
+          "pearson_p": 0.1535299999863974,
+          "spearman_rho": -0.051298917604257706,
+          "spearman_p": 0.934712848108234
+        },
+        "injured": {
+          "n": 5,
+          "pearson_r": -0.8099085224427626,
+          "pearson_p": 0.09660279377114576,
+          "spearman_rho": -0.20519567041703082,
+          "spearman_p": 0.7405819415910723
+        },
+        "total_casualties": {
+          "n": 5,
+          "pearson_r": -0.7865336197509839,
+          "pearson_p": 0.11452717740141176,
+          "spearman_rho": -0.09999999999999999,
+          "spearman_p": 0.8728885715695384
+        }
+      },
+      "multiple_regression": {
+        "error": "too few observations for regression"
+      }
+    },
+    "prepper": {
+      "error": "no per-event ITS results"
+    },
+    "general_collapsist": {
+      "n_events": 8,
+      "severity_correlations": {
+        "killed": {
+          "n": 8,
+          "pearson_r": -0.5029166134498549,
+          "pearson_p": 0.20396710439157276,
+          "spearman_rho": -0.6099375455928333,
+          "spearman_p": 0.10835006276860826
+        },
+        "injured": {
+          "n": 8,
+          "pearson_r": -0.4907100711312397,
+          "pearson_p": 0.21695032763333003,
+          "spearman_rho": -0.6343350474165467,
+          "spearman_p": 0.09116266392027378
+        },
+        "total_casualties": {
+          "n": 8,
+          "pearson_r": -0.4956732480666179,
+          "pearson_p": 0.21162092163928709,
+          "spearman_rho": -0.6666666666666669,
+          "spearman_p": 0.07098765432098755
+        }
+      },
+      "multiple_regression": {
+        "error": "too few observations for regression"
+      }
+    }
+  }
 }

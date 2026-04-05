@@ -591,6 +591,77 @@ def main():
 
     print(f"\n✓ Apocalypticism ITS analysis complete. Saved to {out_path.name}")
 
+    # ══════════════════════════════════════════════════════════════════
+    # Per-category disaggregated ITS
+    # ══════════════════════════════════════════════════════════════════
+    from importlib import import_module as _im
+    _s30 = _im("30_pol_apocalypticism")
+    APOC_CATEGORIES = _s30.APOC_CATEGORIES
+
+    if "apoc_category" in pol.columns:
+        print("\n" + "=" * 60)
+        print("  Per-Category Disaggregated ITS")
+        print("=" * 60)
+
+        cat_results: dict = {}
+        for cat in APOC_CATEGORIES:
+            print(f"\n  ── Category: {cat} ──")
+            cat_pol = pol.filter(
+                (pl.col("apoc_binary") == 1) & (pl.col("apoc_category") == cat)
+            )
+            if cat_pol.height < 50:
+                print(f"    Skipping (only {cat_pol.height} posts)")
+                cat_results[cat] = {"error": "insufficient posts",
+                                     "n_posts": cat_pol.height}
+                continue
+
+            cat_daily = build_daily_series(cat_pol, primary_measure)
+            print(f"    Posts: {cat_pol.height:,}, Days: {cat_daily.height}")
+
+            # Pooled ITS
+            cat_pooled = run_pooled_its(cat_daily, events, primary_measure)
+            if "error" not in cat_pooled:
+                print(f"    Pooled β₂={cat_pooled['b_level']:.6f} "
+                      f"(p={cat_pooled['p_level']:.4f})")
+
+            # Per-event
+            cat_per_event = []
+            for row in events.iter_rows(named=True):
+                window = build_event_window(cat_daily, row["event_date"])
+                if window is None:
+                    continue
+                r = run_its_regression(window, row["event_name"])
+                r["event_date"] = str(row["event_date"])
+                cat_per_event.append(r)
+
+            sig = [r for r in cat_per_event
+                   if "error" not in r and r.get("p_level", 1) < 0.05]
+            valid = [r for r in cat_per_event if "error" not in r]
+            print(f"    Significant: {len(sig)}/{len(valid)} events")
+
+            cat_results[cat] = {
+                "n_posts": cat_pol.height,
+                "n_days": cat_daily.height,
+                "pooled": cat_pooled,
+                "per_event": cat_per_event,
+                "n_significant_005": len(sig),
+                "n_valid_events": len(valid),
+            }
+
+            # Plot
+            plot_average_response(
+                cat_daily, events, primary_measure,
+                f"apoc_its_category_{cat}",
+            )
+
+        results["per_category"] = cat_results
+
+        # Re-save with per-category results
+        with open(out_path, "w") as f:
+            json.dump(results, f, indent=2, default=str)
+
+        print(f"\n✓ Per-category ITS complete. Updated {out_path.name}")
+
 
 if __name__ == "__main__":
     main()

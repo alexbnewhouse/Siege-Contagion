@@ -264,6 +264,149 @@ class TestSeedData:
         )
 
 
+class TestCategorySeeds:
+    """Validate the 4-category disaggregation seeds."""
+
+    def test_has_four_categories(self):
+        assert len(_apoc.APOC_CATEGORIES) == 4
+        for cat in _apoc.APOC_CATEGORIES:
+            assert cat in _apoc.CATEGORY_SEEDS
+
+    def test_category_seeds_not_empty(self):
+        for cat, texts in _apoc.CATEGORY_SEEDS.items():
+            assert len(texts) >= 15, f"Category '{cat}' has only {len(texts)} seeds"
+
+    def test_category_names(self):
+        expected = {"siegist_traditionalist", "rapture_christian",
+                    "prepper", "general_collapsist"}
+        assert set(_apoc.APOC_CATEGORIES) == expected
+
+    def test_subtheme_to_category_mapping(self):
+        for subtheme in _apoc.POSITIVE_SEEDS:
+            assert subtheme in _apoc.SUBTHEME_TO_CATEGORY, (
+                f"Sub-theme '{subtheme}' not mapped to any category"
+            )
+
+
+class TestBuildCategoryCentroids:
+    def test_category_centroid_shapes(self):
+        try:
+            from sentence_transformers import SentenceTransformer
+            model = SentenceTransformer("all-MiniLM-L6-v2")
+        except Exception:
+            pytest.skip("sentence-transformers not available")
+
+        cat_centroids = _apoc.build_category_centroids(model)
+        assert len(cat_centroids) == 4
+        for name, c in cat_centroids.items():
+            assert c.shape == (384,), f"Category '{name}' wrong shape"
+            assert abs(np.linalg.norm(c) - 1.0) < 1e-5, f"'{name}' not normalised"
+
+    def test_category_centroids_distinct(self):
+        try:
+            from sentence_transformers import SentenceTransformer
+            model = SentenceTransformer("all-MiniLM-L6-v2")
+        except Exception:
+            pytest.skip("sentence-transformers not available")
+
+        cat_centroids = _apoc.build_category_centroids(model)
+        names = list(cat_centroids.keys())
+        from sklearn.metrics.pairwise import cosine_similarity
+        for i in range(len(names)):
+            for j in range(i + 1, len(names)):
+                sim = cosine_similarity(
+                    cat_centroids[names[i]].reshape(1, -1),
+                    cat_centroids[names[j]].reshape(1, -1),
+                )[0, 0]
+                assert sim < 0.95, (
+                    f"Categories '{names[i]}' and '{names[j]}' too similar: {sim:.3f}"
+                )
+
+
+class TestScoreEmbeddingsWithCategories:
+    def test_category_columns_present(self):
+        try:
+            from sentence_transformers import SentenceTransformer
+            model = SentenceTransformer("all-MiniLM-L6-v2")
+        except Exception:
+            pytest.skip("sentence-transformers not available")
+
+        lr = _apoc.train_classifier(model)
+        pos, neg, subs = _apoc.build_centroids(model)
+        cat_centroids = _apoc.build_category_centroids(model)
+
+        texts = [
+            "Read Siege. The day of the rope is coming. Accelerate.",
+            "The rapture is near. Christ will return for the faithful.",
+            "Stock up on ammo and water. SHTF is coming soon.",
+            "Western civilization is in terminal decline. Collapse is inevitable.",
+        ]
+        embs = model.encode(texts, normalize_embeddings=True)
+
+        scores = _apoc.score_embeddings(
+            embs, lr, pos, neg, subs,
+            category_centroids=cat_centroids,
+        )
+
+        assert "apoc_category" in scores
+        assert "apoc_category_sim" in scores
+        assert len(scores["apoc_category"]) == 4
+        assert len(scores["apoc_category_sim"]) == 4
+
+        # Check per-category similarity columns
+        for cat in _apoc.APOC_CATEGORIES:
+            assert f"apoc_cat_sim_{cat}" in scores
+
+    def test_category_assignment_reasonable(self):
+        try:
+            from sentence_transformers import SentenceTransformer
+            model = SentenceTransformer("all-MiniLM-L6-v2")
+        except Exception:
+            pytest.skip("sentence-transformers not available")
+
+        lr = _apoc.train_classifier(model)
+        pos, neg, subs = _apoc.build_centroids(model)
+        cat_centroids = _apoc.build_category_centroids(model)
+
+        texts = [
+            "Read Siege by James Mason. Accelerate the collapse now.",
+            "The rapture is imminent. Armageddon approaches.",
+            "Bug out bag ready. Six months of food stockpiled.",
+            "The financial system will collapse. Late stage capitalism.",
+        ]
+        embs = model.encode(texts, normalize_embeddings=True)
+
+        scores = _apoc.score_embeddings(
+            embs, lr, pos, neg, subs,
+            category_centroids=cat_centroids,
+        )
+
+        # Verify reasonable assignments
+        cats = scores["apoc_category"]
+        assert cats[0] == "siegist_traditionalist", f"Siege text → {cats[0]}"
+        assert cats[1] == "rapture_christian", f"Rapture text → {cats[1]}"
+        assert cats[2] == "prepper", f"Prepper text → {cats[2]}"
+        assert cats[3] == "general_collapsist", f"Collapsist text → {cats[3]}"
+
+    def test_backward_compat_no_categories(self):
+        """score_embeddings still works without category_centroids."""
+        try:
+            from sentence_transformers import SentenceTransformer
+            model = SentenceTransformer("all-MiniLM-L6-v2")
+        except Exception:
+            pytest.skip("sentence-transformers not available")
+
+        lr = _apoc.train_classifier(model)
+        pos, neg, subs = _apoc.build_centroids(model)
+
+        embs = model.encode(["test text"], normalize_embeddings=True)
+        scores = _apoc.score_embeddings(embs, lr, pos, neg, subs)
+
+        assert "apoc_category" not in scores
+        assert "apoc_lr_prob" in scores
+        assert "apoc_subtheme" in scores
+
+
 class TestBuildCentroids:
     def test_centroid_shapes(self):
         try:

@@ -431,7 +431,7 @@ def plot_ideology_boxplot(df: pd.DataFrame, filename: str):
     labels = sorted(groups.keys(), key=lambda k: np.median(groups[k]))
     data = [groups[k] for k in labels]
 
-    bp = ax.boxplot(data, labels=labels, patch_artist=True, widths=0.6)
+    bp = ax.boxplot(data, tick_labels=labels, patch_artist=True, widths=0.6)
     for patch, color in zip(bp["boxes"],
                             [CB_PALETTE[i % len(CB_PALETTE)] for i in range(len(labels))]):
         patch.set_facecolor(color)
@@ -459,7 +459,7 @@ def plot_domestic_comparison(df: pd.DataFrame, filename: str):
 
     fig, ax = plt.subplots(figsize=(8, 6))
     bp = ax.boxplot([domestic, international],
-                    labels=["Domestic (US)", "International"],
+                    tick_labels=["Domestic (US)", "International"],
                     patch_artist=True, widths=0.5)
     bp["boxes"][0].set_facecolor(CB_PALETTE[0])
     bp["boxes"][1].set_facecolor(CB_PALETTE[2])
@@ -655,6 +655,50 @@ def main():
 
     print(f"\n✓ Attack-characteristic correlations complete. "
           f"Saved to {out_path.name}")
+
+    # ══════════════════════════════════════════════════════════════════
+    # Per-category disaggregated attack correlations
+    # ══════════════════════════════════════════════════════════════════
+    its_cat = its_results.get("per_category", {})
+    if its_cat:
+        print("\n" + "=" * 60)
+        print("  Per-Category Disaggregated Attack Correlations")
+        print("=" * 60)
+
+        cat_corr: dict = {}
+        for cat, cat_its in its_cat.items():
+            print(f"\n  ── Category: {cat} ──")
+            cat_per_event = cat_its.get("per_event", [])
+            if not cat_per_event:
+                cat_corr[cat] = {"error": "no per-event ITS results"}
+                continue
+
+            cat_df = build_event_beta_df(cat_per_event, events)
+            if cat_df.empty or len(cat_df) < 5:
+                cat_corr[cat] = {"error": "insufficient events with betas",
+                                  "n_events": len(cat_df)}
+                continue
+
+            print(f"    Events with valid β₂: {len(cat_df)}")
+
+            cat_sev = severity_correlations(cat_df)
+            cat_reg = multiple_regression(cat_df)
+
+            cat_corr[cat] = {
+                "n_events": len(cat_df),
+                "severity_correlations": cat_sev,
+                "multiple_regression": cat_reg,
+            }
+
+            for col, r in cat_sev.items():
+                if "error" not in r:
+                    print(f"    {col}: ρ={r['spearman_rho']:.4f} "
+                          f"(p={r['spearman_p']:.4f})")
+
+        results["per_category"] = cat_corr
+        with open(out_path, "w") as f:
+            json.dump(results, f, indent=2, default=str)
+        print(f"\n✓ Per-category correlations complete. Updated {out_path.name}")
 
 
 if __name__ == "__main__":

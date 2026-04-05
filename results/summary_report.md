@@ -555,20 +555,20 @@
 |----------|------------|----------|------------|----------|
 | mass_violence | -0.0025 | p = 0.008 ** | -0.000133 | p = 0.014 * |
 | nonviolence | 0.0029 | p = 0.194  | -0.000019 | p = 0.882  |
-| political | 0.0064 | p = 0.088 † | 0.000235 | p = 0.239  |
-| health_crisis | -0.0021 | p = 0.575  | 0.000439 | p = 0.035 * |
 | natural_disaster | -0.0083 | p = 0.040 * | -0.000364 | p = 0.099 † |
+| political | 0.0064 | p = 0.088 † | 0.000235 | p = 0.239  |
 | economic_shock | 0.0159 | p = 0.008 ** | -0.000591 | p = 0.133  |
+| health_crisis | -0.0021 | p = 0.575  | 0.000439 | p = 0.035 * |
 
 ### Stratified by Ideology
 
 | Ideology | β₂ (level) | p(level) | n events |
 |----------|------------|----------|----------|
-| school_shooting | 0.0012 | p = 0.779  | 3 |
-| other | -0.0055 | p = 0.020 * | 12 |
-| far_right | -0.0023 | p = 0.188  | 18 |
-| islamist | -0.0030 | p = 0.031 * | 37 |
 | far_left | 0.0212 | p < 0.001 *** | 2 |
+| far_right | -0.0023 | p = 0.188  | 18 |
+| other | -0.0055 | p = 0.020 * | 12 |
+| school_shooting | 0.0012 | p = 0.779  | 3 |
+| islamist | -0.0030 | p = 0.031 * | 37 |
 | incel | -0.0073 | p = 0.200  | 2 |
 
 
@@ -739,6 +739,56 @@
 
 ---
 
+# Part III-B: Disaggregated Analysis by Apocalypticism Category
+
+
+Posts classified as apocalyptic are further assigned to one of four categories by cosine similarity to category-specific seed centroids:
+
+1. **Siegist / Traditionalist** – Siege culture, accelerationism, Kali Yuga, Day of the Rope, Evola, Mason.
+2. **Rapture / Christian** – Rapture, Revelation, Armageddon, Tribulation, end times.
+3. **Prepper** – SHTF, survivalism, stockpiling, grid-down, off-grid living.
+4. **General Collapsist** – Civilisational decline, NWO, Great Reset, peak oil, demographic collapse.
+
+
+## ITS Results by Category
+
+| Category | Posts | Pooled β₂ | p(level) | Sig events | Valid events |
+|----------|-------|-----------|----------|-----------|--------------|
+| siegist_traditionalist | 27,235 | -0.0002 | p = 0.741  | 21 | 77 |
+| rapture_christian | 2,851 | -0.0013 | p = 0.712  | 2 | 5 |
+| prepper | 6 | – | – | – | – |
+| general_collapsist | 3,715 | -0.0009 | p = 0.676  | 2 | 8 |
+
+## Robustness by Category
+
+| Category | BW sig | AR(1) β₂ | AR(1) p | DoW β₂ | DoW p |
+|----------|--------|----------|---------|--------|-------|
+| siegist_traditionalist | 0/6 | -0.0000 | p = 0.969 | 0.0000 | p = 0.963 |
+| rapture_christian | 0/6 | -0.0015 | p = 0.648 | -0.0019 | p = 0.551 |
+| prepper | – | – | – | – | – |
+| general_collapsist | 0/6 | -0.0001 | p = 0.949 | 0.0002 | p = 0.931 |
+
+## Advanced TS by Category
+
+| Category | VAR Granger p | ARDL LR mult | LP peak β | LP peak h |
+|----------|---------------|-------------|-----------|-----------|
+| siegist_traditionalist | p = 0.278 | -3.7782e-06 | -0.003298 | 5 |
+| rapture_christian | p = 0.870 | -3.3833e-06 | -0.005218 | 26 |
+| prepper | – | – | – | – |
+| general_collapsist | p = 0.186 | 9.7341e-06 | -0.003923 | 28 |
+
+## Hypotheses H22–H26 by Category
+
+| Category | H22 (decay) | H23 (reciprocal) | H24 (threshold) | H25 (clustering) | H26 (mimetic) |
+|----------|-------------|-------------------|-----------------|-----------------|---------------|
+| siegist_traditionalist | ✓ (4d) | ✗ | ✗ | ✗ | ✗ |
+| rapture_christian | ✓ (7050d) | ✗ | ✗ | ✗ | ✗ |
+| prepper | – | – | – | – | – |
+| general_collapsist | ✓ (8d) | ✗ | ✗ | ✗ | ✗ |
+
+
+---
+
 # Part IV: Synthesis & Interpretation
 
 
@@ -795,6 +845,12 @@ Critically, after Iron March is shut down (November 2017), /pol/ Siege prevalenc
 
 The relationship between mass-casualty events and /pol/ apocalyptic rhetoric is counter-intuitive. The pooled ITS finds a small but statistically significant *decrease* in apocalyptic rhetoric post-event (β₂ = −0.0018, p=0.043), not an increase. However, this result is fragile: only 2 of 5 robustness checks pass. The AR(1)-controlled model absorbs the effect into autocorrelation (β₂ p=0.50), and the placebo test does not clearly reject the null (p=0.254).
 
+**Disaggregated by apocalypticism category,** the aggregate effect dissolves entirely. The classifier assigns each apocalyptic post to one of four conceptual categories by cosine similarity to seed-sentence centroids. The distribution is highly skewed: Siegist/Traditionalist rhetoric (Kali Yuga, Day of the Rope, Siege culture, Evola) accounts for 80.6% of all apocalyptic posts (27,235), followed by General Collapsist (civilisation-decline, Great Reset, demographic collapse) at 11.0% (3,715), Rapture/Christian (Armageddon, Tribulation, end times) at 8.4% (2,851), and Prepper (SHTF, stockpiling, off-grid) at effectively 0% (6 posts — too few to analyse).
+
+None of the three viable categories reaches significance in the per-category pooled ITS: Siegist β₂ = −0.0002 (p = 0.741), Rapture β₂ = −0.0013 (p = 0.712), Collapsist β₂ = −0.0009 (p = 0.676). Per-category robustness checks (bandwidth sensitivity, AR(1), day-of-week) likewise show no significant effects: 0/6 bandwidths significant for any category, and all AR(1) and DoW p-values exceed 0.55. Per-category VAR Granger tests are non-significant (all p > 0.18), and per-category severity correlations mirror the aggregate nulls.
+
+The implication is that the marginally significant aggregate effect (p = 0.043) is not driven by any identifiable *type* of apocalypticism — it arises, if at all, from diffuse, low-amplitude shifts spread across all forms of eschatological language, and it disappears when the data are sliced more finely. This further weakens any causal interpretation of mass-casualty events as triggers for specific apocalyptic narratives.
+
 Attack characteristics show limited predictive power. Casualty severity does not correlate with the ITS level shift (all Pearson/Spearman p>0.3). The only significant predictor in the multiple regression is the domestic vs international distinction (β = −0.011, p=0.010): domestic attacks produce slightly stronger negative shifts in mean apocalypticism, possibly reflecting a normalization effect where familiar events elicit less eschatological framing than geographically distant ones.
 
 The method comparison (ITS × VAR × ARDL × BSTS × LP) yields a consensus direction of "mixed" with 2/5 methods reaching significance. 
@@ -805,10 +861,12 @@ Where methods disagree on significance, this confirms the effect is at best smal
 Post-attack rhetoric shows an estimated median half-life of 8.2 days, suggesting that whatever rhetorical shift occurs dissipates relatively quickly. 
 The reciprocal amplification test does not find bidirectional causality, suggesting rhetoric responds to events rather than the reverse. 
 
+**Disaggregated decay rates** illuminate the category structure. Siegist/Traditionalist rhetoric (the dominant form on /pol/) decays fastest, with a half-life of just 4.4 days — consistent with event-reactive outbursts that quickly return to a stable baseline. General Collapsist rhetoric decays at a rate closer to the aggregate (8.4 days). Rapture/Christian rhetoric yields a nominal half-life of 7,050 days, but this reflects a poor exponential fit rather than genuine persistence: the category has too few posts per event window for the decay model to converge meaningfully. None of the per-category H23–H26 tests reach significance, mirroring the aggregate nulls: no reciprocal amplification, no threshold activation, no temporal clustering compound, and no distinctive online-nexus shift within any apocalypticism subcategory.
+
 
 ### Summary: What the Evidence Supports
 
-The strongest findings in this project concern the *internal* dynamics of Iron March: Siege rhetoric diffuses through network exposure, is reinforced by community reputation mechanisms, and concentrates in interpretive spaces. Cross-platform diffusion from IM → /pol/ operates primarily through vocabulary and URL propagation rather than detectable Granger-causal flows, with a 2–3 week transmission lag and acceleration over time. The shutdown of Iron March paradoxically *increases* Siege rhetoric on /pol/, consistent with platform diaspora. The apocalypticism analysis complicates simplistic accounts: mass-casualty events do not reliably increase apocalyptic rhetoric, and what effect exists is small, fragile, and unrelated to attack severity.
+The strongest findings in this project concern the *internal* dynamics of Iron March: Siege rhetoric diffuses through network exposure, is reinforced by community reputation mechanisms, and concentrates in interpretive spaces. Cross-platform diffusion from IM → /pol/ operates primarily through vocabulary and URL propagation rather than detectable Granger-causal flows, with a 2–3 week transmission lag and acceleration over time. The shutdown of Iron March paradoxically *increases* Siege rhetoric on /pol/, consistent with platform diaspora. The apocalypticism analysis complicates simplistic accounts: mass-casualty events do not reliably increase apocalyptic rhetoric, and what effect exists is small, fragile, and unrelated to attack severity. Disaggregating by type of apocalypticism (Siegist/Traditionalist, Rapture/Christian, Prepper, General Collapsist) confirms there is no hidden category-specific effect: the marginal aggregate signal is not concentrated in any single form of eschatological language, and no category shows significant post-event activation, robustness, or Granger causality.
 
 
 

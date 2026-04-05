@@ -1037,6 +1037,75 @@ def main():
 
     print(f"\n✓ Offline-online hypothesis tests complete. Saved to {out_path.name}")
 
+    # ══════════════════════════════════════════════════════════════════
+    # Per-category disaggregated hypothesis tests
+    # ══════════════════════════════════════════════════════════════════
+    _s30 = importlib.import_module("30_pol_apocalypticism")
+    APOC_CATEGORIES = _s30.APOC_CATEGORIES
+
+    if "apoc_category" in pol.columns:
+        print("\n" + "=" * 60)
+        print("  Per-Category Disaggregated Hypothesis Tests")
+        print("=" * 60)
+
+        cat_hyp: dict = {}
+        for cat in APOC_CATEGORIES:
+            print(f"\n  ── Category: {cat} ──")
+            cat_pol = pol.filter(
+                (pl.col("apoc_binary") == 1) & (pl.col("apoc_category") == cat)
+            )
+            if cat_pol.height < 50:
+                print(f"    Skipping (only {cat_pol.height} posts)")
+                cat_hyp[cat] = {"error": "insufficient posts",
+                                 "n_posts": cat_pol.height}
+                continue
+
+            cat_daily = build_daily_series(cat_pol, primary_measure)
+            cat_ts_df = build_event_series(cat_daily, events)
+            print(f"    Posts: {cat_pol.height:,}, Days: {cat_daily.height}")
+
+            # H22: Decay half-life
+            cat_h22 = estimate_decay_halflife(cat_daily, events)
+            if "error" not in cat_h22:
+                agg = cat_h22.get("aggregate", {})
+                print(f"    H22 median half-life: "
+                      f"{agg.get('median_half_life', 'N/A'):.1f}d")
+
+            # H23: Reciprocal amplification
+            cat_h23 = test_reciprocal_amplification(cat_ts_df)
+            if "error" not in cat_h23:
+                f23 = cat_h23.get("findings", {})
+                print(f"    H23 reciprocal: {f23.get('reciprocal_feedback', 'N/A')}")
+
+            # H24: Threshold activation
+            cat_h24 = test_threshold_activation(cat_daily, events)
+            if "error" not in cat_h24:
+                print(f"    H24 supported: {cat_h24.get('supported', 'N/A')}")
+
+            # H25: Temporal clustering
+            cat_h25 = test_temporal_clustering(cat_daily, events)
+            if "error" not in cat_h25:
+                print(f"    H25 supported: {cat_h25.get('supported', 'N/A')}")
+
+            # H26: Mimetic contagion
+            cat_h26 = test_mimetic_contagion(cat_daily, events)
+            if "error" not in cat_h26:
+                print(f"    H26 supported: {cat_h26.get('supported', 'N/A')}")
+
+            cat_hyp[cat] = {
+                "n_posts": cat_pol.height,
+                "H22_contagion_decay": cat_h22,
+                "H23_reciprocal_amplification": cat_h23,
+                "H24_threshold_activation": cat_h24,
+                "H25_temporal_clustering": cat_h25,
+                "H26_mimetic_contagion": cat_h26,
+            }
+
+        results["per_category"] = cat_hyp
+        with open(out_path, "w") as f:
+            json.dump(results, f, indent=2, default=str)
+        print(f"\n✓ Per-category hypothesis tests complete. Updated {out_path.name}")
+
 
 if __name__ == "__main__":
     main()

@@ -1086,6 +1086,65 @@ def main():
 
     print(f"\n✓ Advanced time-series analysis complete. Saved to {out_path.name}")
 
+    # ══════════════════════════════════════════════════════════════════
+    # Per-category disaggregated advanced TS
+    # ══════════════════════════════════════════════════════════════════
+    _s30 = importlib.import_module("30_pol_apocalypticism")
+    APOC_CATEGORIES = _s30.APOC_CATEGORIES
+
+    if "apoc_category" in pol.columns:
+        print("\n" + "=" * 60)
+        print("  Per-Category Disaggregated Advanced TS")
+        print("=" * 60)
+
+        cat_ts: dict = {}
+        for cat in APOC_CATEGORIES:
+            print(f"\n  ── Category: {cat} ──")
+            cat_pol = pol.filter(
+                (pl.col("apoc_binary") == 1) & (pl.col("apoc_category") == cat)
+            )
+            if cat_pol.height < 50:
+                print(f"    Skipping (only {cat_pol.height} posts)")
+                cat_ts[cat] = {"error": "insufficient posts",
+                                "n_posts": cat_pol.height}
+                continue
+
+            cat_daily = build_daily_series(cat_pol, primary_measure)
+            cat_ts_df = build_event_series(cat_daily, events)
+            print(f"    Posts: {cat_pol.height:,}, Days: {len(cat_ts_df)}")
+
+            # VAR
+            cat_var = run_var_analysis(cat_ts_df)
+            if "error" not in cat_var:
+                gc = cat_var.get("granger_causality", {}).get(
+                    "event_causes_apoc", {}
+                )
+                print(f"    VAR Granger p={gc.get('p_value', 'N/A')}")
+
+            # ARDL
+            cat_ardl = run_ardl_analysis(cat_ts_df)
+            if "error" not in cat_ardl:
+                print(f"    ARDL LR multiplier: "
+                      f"{cat_ardl.get('long_run_multiplier', 'N/A')}")
+
+            # Local Projections
+            cat_lp = run_local_projections(cat_ts_df)
+            if "error" not in cat_lp:
+                print(f"    LP peak β={cat_lp['peak_beta']:.6f} "
+                      f"at h={cat_lp['peak_horizon']}")
+
+            cat_ts[cat] = {
+                "n_posts": cat_pol.height,
+                "var": cat_var,
+                "ardl": cat_ardl,
+                "local_projections": cat_lp,
+            }
+
+        results["per_category"] = cat_ts
+        with open(out_path, "w") as f:
+            json.dump(results, f, indent=2, default=str)
+        print(f"\n✓ Per-category advanced TS complete. Updated {out_path.name}")
+
 
 if __name__ == "__main__":
     main()

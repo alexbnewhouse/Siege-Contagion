@@ -729,6 +729,66 @@ def main():
 
     print(f"\n✓ Robustness checks complete. Saved to {out_path.name}")
 
+    # ══════════════════════════════════════════════════════════════════
+    # Per-category disaggregated robustness
+    # ══════════════════════════════════════════════════════════════════
+    from importlib import import_module as _im2
+    _s30 = _im2("30_pol_apocalypticism")
+    APOC_CATEGORIES = _s30.APOC_CATEGORIES
+
+    if "apoc_category" in pol.columns:
+        print("\n" + "=" * 60)
+        print("  Per-Category Disaggregated Robustness")
+        print("=" * 60)
+
+        cat_robustness: dict = {}
+        for cat in APOC_CATEGORIES:
+            print(f"\n  ── Category: {cat} ──")
+            cat_pol = pol.filter(
+                (pl.col("apoc_binary") == 1) & (pl.col("apoc_category") == cat)
+            )
+            if cat_pol.height < 50:
+                print(f"    Skipping (only {cat_pol.height} posts)")
+                cat_robustness[cat] = {"error": "insufficient posts"}
+                continue
+
+            cat_daily = build_daily_series(cat_pol, primary_measure)
+
+            # Bandwidth sensitivity
+            cat_bw = run_bandwidth_sensitivity(
+                cat_daily, violence_events, primary_measure
+            )
+            valid_bw_cat = [r for r in cat_bw
+                            if "error" not in r and r.get("p_level", 1) < 0.05]
+            print(f"    Bandwidth: {len(valid_bw_cat)}/{len(cat_bw)} significant")
+
+            # AR(1)
+            cat_ar1 = run_ar1_its(cat_daily, violence_events, primary_measure)
+            if "error" not in cat_ar1:
+                print(f"    AR(1): β₂={cat_ar1['b_level']:.6f} "
+                      f"(p={cat_ar1['p_level']:.4f})")
+
+            # DoW
+            cat_dow = run_dow_controlled_its(
+                cat_daily, violence_events, primary_measure
+            )
+            if "error" not in cat_dow:
+                print(f"    DoW: β₂={cat_dow['b_level']:.6f} "
+                      f"(p={cat_dow['p_level']:.4f})")
+
+            cat_robustness[cat] = {
+                "n_posts": cat_pol.height,
+                "bandwidth_sensitivity": cat_bw,
+                "ar1_controlled": cat_ar1,
+                "dow_controlled": cat_dow,
+            }
+
+        results["per_category"] = cat_robustness
+
+        with open(out_path, "w") as f:
+            json.dump(results, f, indent=2, default=str)
+        print(f"\n✓ Per-category robustness complete. Updated {out_path.name}")
+
 
 if __name__ == "__main__":
     main()

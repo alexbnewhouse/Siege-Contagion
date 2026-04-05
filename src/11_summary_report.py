@@ -1250,6 +1250,128 @@ def generate_report():
                 lines.append(f"- Offline variance ratio: {pol_test.get('offline_mean_variance_ratio', 0):.3f}")
 
     # ══════════════════════════════════════════════════════════════════
+    #  CATEGORY DISAGGREGATION
+    # ══════════════════════════════════════════════════════════════════
+
+    per_cat_its = apoc_its.get("per_category", {}) if "error" not in apoc_its else {}
+    per_cat_robust = robust.get("per_category", {}) if "error" not in robust else {}
+    per_cat_attack = attack.get("per_category", {}) if "error" not in attack else {}
+    per_cat_adv = adv_ts.get("per_category", {}) if "error" not in adv_ts else {}
+    per_cat_hyp = h_results.get("per_category", {}) if "error" not in h_results else {}
+
+    any_cat = per_cat_its or per_cat_robust or per_cat_adv or per_cat_hyp
+    if any_cat:
+        lines.append("\n\n---\n")
+        lines.append("# Part III-B: Disaggregated Analysis by Apocalypticism Category\n")
+        lines.append("\nPosts classified as apocalyptic are further assigned to one of "
+                     "four categories by cosine similarity to category-specific seed centroids:\n")
+        lines.append("1. **Siegist / Traditionalist** – Siege culture, accelerationism, "
+                     "Kali Yuga, Day of the Rope, Evola, Mason.")
+        lines.append("2. **Rapture / Christian** – Rapture, Revelation, Armageddon, "
+                     "Tribulation, end times.")
+        lines.append("3. **Prepper** – SHTF, survivalism, stockpiling, grid-down, "
+                     "off-grid living.")
+        lines.append("4. **General Collapsist** – Civilisational decline, NWO, Great Reset, "
+                     "peak oil, demographic collapse.\n")
+
+        # ── Per-category ITS summary table ────────────────────────────
+        if per_cat_its:
+            lines.append("\n## ITS Results by Category\n")
+            lines.append("| Category | Posts | Pooled β₂ | p(level) | "
+                         "Sig events | Valid events |")
+            lines.append("|----------|-------|-----------|----------|"
+                         "-----------|--------------|")
+            for cat, cdata in per_cat_its.items():
+                if "error" in cdata:
+                    lines.append(f"| {cat} | {cdata.get('n_posts', 0)} | – | – | – | – |")
+                    continue
+                pooled_c = cdata.get("pooled", {})
+                b2 = pooled_c.get("b_level", 0)
+                p2 = pooled_c.get("p_level", 1)
+                n_sig = cdata.get("n_significant_005", 0)
+                n_valid = cdata.get("n_valid_events", 0)
+                lines.append(f"| {cat} | {cdata.get('n_posts', 0):,} | "
+                             f"{b2:.4f} | {format_p(p2)} {sig_stars(p2)} | "
+                             f"{n_sig} | {n_valid} |")
+
+        # ── Per-category robustness ───────────────────────────────────
+        if per_cat_robust:
+            lines.append("\n## Robustness by Category\n")
+            lines.append("| Category | BW sig | AR(1) β₂ | AR(1) p | DoW β₂ | DoW p |")
+            lines.append("|----------|--------|----------|---------|--------|-------|")
+            for cat, cdata in per_cat_robust.items():
+                if "error" in cdata:
+                    lines.append(f"| {cat} | – | – | – | – | – |")
+                    continue
+                bw_list = cdata.get("bandwidth_sensitivity", [])
+                bw_sig = sum(1 for r in bw_list
+                             if "error" not in r and r.get("p_level", 1) < 0.05)
+                ar1_c = cdata.get("ar1_controlled", {})
+                dow_c = cdata.get("dow_controlled", {})
+                lines.append(
+                    f"| {cat} | {bw_sig}/{len(bw_list)} | "
+                    f"{ar1_c.get('b_level', 0):.4f} | "
+                    f"{format_p(ar1_c.get('p_level', 1))} | "
+                    f"{dow_c.get('b_level', 0):.4f} | "
+                    f"{format_p(dow_c.get('p_level', 1))} |"
+                )
+
+        # ── Per-category advanced TS ──────────────────────────────────
+        if per_cat_adv:
+            lines.append("\n## Advanced TS by Category\n")
+            lines.append("| Category | VAR Granger p | ARDL LR mult | LP peak β | LP peak h |")
+            lines.append("|----------|---------------|-------------|-----------|-----------|")
+            for cat, cdata in per_cat_adv.items():
+                if "error" in cdata:
+                    lines.append(f"| {cat} | – | – | – | – |")
+                    continue
+                var_c = cdata.get("var", {})
+                gc_p = var_c.get("granger_causality", {}).get(
+                    "event_causes_apoc", {}).get("p_value", float("nan"))
+                ardl_c = cdata.get("ardl", {})
+                lr_m = ardl_c.get("long_run_multiplier", float("nan"))
+                lp_c = cdata.get("local_projections", {})
+                lp_b = lp_c.get("peak_beta", float("nan"))
+                lp_h = lp_c.get("peak_horizon", "–")
+                gc_str = format_p(gc_p) if gc_p == gc_p else "–"
+                lr_str = f"{lr_m:.4e}" if lr_m == lr_m else "–"
+                lp_str = f"{lp_b:.6f}" if lp_b == lp_b else "–"
+                lines.append(f"| {cat} | {gc_str} | {lr_str} | {lp_str} | {lp_h} |")
+
+        # ── Per-category H22-H26 ─────────────────────────────────────
+        if per_cat_hyp:
+            lines.append("\n## Hypotheses H22–H26 by Category\n")
+            lines.append("| Category | H22 (decay) | H23 (reciprocal) | H24 (threshold) | "
+                         "H25 (clustering) | H26 (mimetic) |")
+            lines.append("|----------|-------------|-------------------|-----------------|"
+                         "-----------------|---------------|")
+            for cat, cdata in per_cat_hyp.items():
+                if "error" in cdata:
+                    lines.append(f"| {cat} | – | – | – | – | – |")
+                    continue
+                h22c = cdata.get("H22_contagion_decay", {})
+                h23c = cdata.get("H23_reciprocal_amplification", {})
+                h24c = cdata.get("H24_threshold_activation", {})
+                h25c = cdata.get("H25_temporal_clustering", {})
+                h26c = cdata.get("H26_mimetic_contagion", {})
+
+                def _supp(h):
+                    if "error" in h:
+                        return "err"
+                    s = h.get("supported")
+                    return "✓" if s else "✗"
+
+                h22_hl = ""
+                if "error" not in h22c:
+                    agg22 = h22c.get("aggregate", {})
+                    hl = agg22.get("median_half_life")
+                    if hl is not None:
+                        h22_hl = f" ({hl:.0f}d)"
+
+                lines.append(f"| {cat} | {_supp(h22c)}{h22_hl} | {_supp(h23c)} | "
+                             f"{_supp(h24c)} | {_supp(h25c)} | {_supp(h26c)} |")
+
+    # ══════════════════════════════════════════════════════════════════
     #  SYNTHESIS & INTERPRETATION
     # ══════════════════════════════════════════════════════════════════
 

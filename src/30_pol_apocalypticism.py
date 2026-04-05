@@ -62,6 +62,118 @@ LR_WEIGHT = 0.6
 CONTRASTIVE_WEIGHT = 0.4
 BINARY_THRESHOLD = 0.55  # on combined score
 
+# ══════════════════════════════════════════════════════════════════════
+# Apocalypticism category seeds (4-way disaggregation)
+# ══════════════════════════════════════════════════════════════════════
+# Each post classified as apocalyptic (apoc_binary == 1) is assigned
+# to the category whose centroid it is most similar to.
+
+APOC_CATEGORIES = ["siegist_traditionalist", "rapture_christian",
+                   "prepper", "general_collapsist"]
+
+CATEGORY_SEEDS: dict[str, list[str]] = {
+    "siegist_traditionalist": [
+        "Read Siege. Accelerate the collapse. The system cannot be reformed.",
+        "Kali Yuga is upon us. The age of darkness demands action not words.",
+        "The day of the rope is coming. Traitors will face the consequences.",
+        "We are at the end of the cycle. Kalki will bring the great renewal.",
+        "Siege culture understands that only total destruction brings rebirth.",
+        "Mason was right. The lone wolf strategy is the only viable path forward.",
+        "This is the iron age. After the collapse comes the golden age of our people.",
+        "RAHOWA is inevitable. The racial holy war will determine the future.",
+        "Spengler predicted the decline of the West. We are living through his prophecy.",
+        "The Traditionalist school teaches that civilizations die and are reborn through fire.",
+        "Evola understood that riding the tiger means accelerating the dissolution.",
+        "The age of wolves is upon us. Only the strong will survive the twilight.",
+        "Total racial war against the system. Saints will be remembered for their actions.",
+        "Blood and soil. The ethnostate can only be built on the ashes of the old order.",
+        "The Turner Diaries were prophetic. The system of racial annihilation must be destroyed.",
+        "Atomwaffen understands what must be done. Read Siege. Hail victory.",
+        "The Weimar Republic fell and so will this degenerate civilization.",
+        "White revolution is the only solution. No political path remains.",
+        "Leaderless resistance cells will bring down the corrupt system from within.",
+        "The great replacement demands a violent response. Our survival is at stake.",
+    ],
+    "rapture_christian": [
+        "The rapture is near. Christ will return and take the faithful to heaven.",
+        "The book of Revelation is unfolding. The seven seals are being opened.",
+        "The antichrist walks among us. The tribulation period has begun.",
+        "Armageddon approaches. The final battle between good and evil is at hand.",
+        "The four horsemen of the apocalypse ride across the earth today.",
+        "The mark of the beast is being implemented through digital currency systems.",
+        "Judgment day is coming. The wicked will face God's righteous wrath.",
+        "The signs of the times are clear. We are the terminal generation.",
+        "The great tribulation spoken of by the prophets is starting now.",
+        "Repent for the kingdom of heaven is at hand. The end of days approaches.",
+        "The whore of Babylon represents the corrupt world system that God will destroy.",
+        "The abomination of desolation stands in the holy place. Flee to the mountains.",
+        "Jesus is coming back soon. Every eye will see Him. Maranatha.",
+        "The beast system of Revelation is real. Refuse the mark at all costs.",
+        "The second coming of Christ will bring judgment on all nations.",
+        "Daniel's prophecy of the seventy weeks is being fulfilled right now.",
+        "The millennium approaches. Christ will reign for a thousand years.",
+        "The dragon and the beast wage war against the saints in these last days.",
+        "Born again believers will be taken up in the rapture before the tribulation.",
+        "God's wrath is being poured out on this wicked generation. Prepare your souls.",
+    ],
+    "prepper": [
+        "When SHTF you need at least six months of food and water stored.",
+        "Bug out bags should be packed and ready. Have a plan for when society collapses.",
+        "Grid down scenario: do you have solar panels and a water filtration system?",
+        "Stockpile ammunition and medical supplies. You cannot rely on the system.",
+        "Learn to grow your own food. Self-sufficiency is the only real security.",
+        "The supply chain is fragile. One disruption and the grocery stores empty in days.",
+        "Homesteading and off-grid living are the only ways to survive what is coming.",
+        "Every prepper needs a ham radio. When the internet goes down communication is survival.",
+        "Store seeds, not just food. Long term survival means growing your own.",
+        "The financial system will collapse. Have physical gold and silver as insurance.",
+        "Water purification is the number one survival priority. Everything else is secondary.",
+        "Build a community of like-minded people. You cannot survive alone when it all falls apart.",
+        "Faraday cages for your electronics. An EMP attack would send us back to the stone age.",
+        "The government will not save you. FEMA camps are for control not protection.",
+        "Tactical training and firearms proficiency are essential survival skills.",
+        "Get out of the cities now. Urban areas will be death traps when the collapse comes.",
+        "Canning preserving and dehydrating food are essential skills everyone should learn.",
+        "A generator fuel and medical supplies are the holy trinity of prepping.",
+        "The power grid is vulnerable. One well-placed attack could black out the entire country.",
+        "Survival groups need to train together regularly. Operational security is paramount.",
+    ],
+    "general_collapsist": [
+        "Western civilization is in terminal decline. The collapse is inevitable.",
+        "Society is falling apart. The institutions are rotten beyond repair.",
+        "The new world order is being assembled. Global governance will end all freedom.",
+        "Climate change will cause civilizational collapse within our lifetimes.",
+        "The financial bubble will burst and this time there will be no recovery.",
+        "Democracy is dying everywhere. Authoritarianism is the future of governance.",
+        "The great reset is their plan to restructure society after the engineered collapse.",
+        "Everything is going to fall apart eventually. History shows all empires decline.",
+        "Total societal collapse is coming. The signs are everywhere if you look.",
+        "The global elite are engineering the downfall of nations for their own benefit.",
+        "Late stage capitalism is consuming itself. The contradictions are unsustainable.",
+        "Peak oil, peak water, peak everything. This civilization has hit its limits.",
+        "Mass extinction events are accelerating. Ecological collapse will trigger social collapse.",
+        "The center cannot hold. Political polarization will tear this country apart.",
+        "Demographic collapse in the West guarantees economic and civilizational decline.",
+        "Hyperinflation is coming. The dollar will collapse like every fiat currency before it.",
+        "Nuclear war is more likely now than during the Cold War. Mutually assured destruction fails.",
+        "The surveillance state is building a prison planet. There will be no escape.",
+        "Social cohesion is gone. Without shared values and trust society cannot function.",
+        "The pandemic was just a preview. The real collapse will make COVID look like nothing.",
+    ],
+}
+
+
+# ══════════════════════════════════════════════════════════════════════
+# Mapping from 5 sub-themes → 4 categories (for reference / fallback)
+# ══════════════════════════════════════════════════════════════════════
+SUBTHEME_TO_CATEGORY: dict[str, str] = {
+    "accelerationist": "siegist_traditionalist",
+    "racial_apocalypse": "siegist_traditionalist",
+    "civilizational_collapse": "general_collapsist",
+    "eschatological": "rapture_christian",
+    "conspiratorial_apocalypse": "general_collapsist",
+}
+
 
 # ══════════════════════════════════════════════════════════════════════
 # Synthetic training data – Positive examples (apocalyptic rhetoric)
@@ -389,6 +501,25 @@ def build_centroids(
     return positive_centroid, negative_centroid, subtheme_centroids
 
 
+def build_category_centroids(
+    model: SentenceTransformer,
+) -> dict[str, np.ndarray]:
+    """Build centroid vectors for the 4 apocalypticism categories.
+
+    Returns dict mapping category name → (D,) normalised vector.
+    """
+    cat_centroids: dict[str, np.ndarray] = {}
+    for cat, texts in CATEGORY_SEEDS.items():
+        embs = model.encode(
+            texts, batch_size=32, show_progress_bar=False,
+            convert_to_numpy=True, normalize_embeddings=True,
+        )
+        centroid = embs.mean(axis=0)
+        centroid = centroid / np.linalg.norm(centroid)
+        cat_centroids[cat] = centroid
+    return cat_centroids
+
+
 # Keep old name for backward compatibility
 def build_centroid(model: SentenceTransformer) -> np.ndarray:
     """Build the positive-class centroid (backward-compatible API)."""
@@ -431,6 +562,7 @@ def score_embeddings(
     positive_centroid: np.ndarray,
     negative_centroid: np.ndarray,
     subtheme_centroids: dict[str, np.ndarray],
+    category_centroids: dict[str, np.ndarray] | None = None,
 ) -> dict[str, np.ndarray]:
     """Score post embeddings using LR + contrastive similarity.
 
@@ -463,9 +595,6 @@ def score_embeddings(
     dominant_theme_sim = theme_sims[np.arange(n), dominant_theme_idx]
 
     # 6. Normalise contrastive to [0, 1] using clip (raw scale)
-    #    Raw contrastive = pos_sim - neg_sim; typically in [-0.2, 0.5].
-    #    Clip to [0, 1] keeps the interpretable scale and avoids
-    #    min-max inflation that maps every batch to full [0, 1].
     contrastive_norm = np.clip(contrastive, 0.0, 1.0)
 
     # 7. Combined score
@@ -474,7 +603,7 @@ def score_embeddings(
     # 8. Binary
     binary = (combined >= BINARY_THRESHOLD).astype(np.int8)
 
-    return {
+    result = {
         "apoc_lr_prob": lr_probs,
         "apoc_similarity": pos_sim,
         "apoc_contrastive": contrastive,
@@ -483,6 +612,25 @@ def score_embeddings(
         "apoc_subtheme": dominant_theme,
         "apoc_subtheme_sim": dominant_theme_sim,
     }
+
+    # 9. Category identification (4-way disaggregation)
+    if category_centroids is not None:
+        cat_names = list(category_centroids.keys())
+        cat_centroid_matrix = np.vstack(
+            [category_centroids[c] for c in cat_names]
+        )
+        cat_sims = cosine_similarity(embeddings, cat_centroid_matrix)  # (N, 4)
+        dominant_cat_idx = cat_sims.argmax(axis=1)
+        dominant_cat = np.array([cat_names[i] for i in dominant_cat_idx])
+        dominant_cat_sim = cat_sims[np.arange(n), dominant_cat_idx]
+
+        # Per-category similarity columns for downstream analysis
+        result["apoc_category"] = dominant_cat
+        result["apoc_category_sim"] = dominant_cat_sim
+        for j, cname in enumerate(cat_names):
+            result[f"apoc_cat_sim_{cname}"] = cat_sims[:, j]
+
+    return result
 
 
 def _keyword_batch(texts: list[str]) -> list[dict]:
@@ -546,12 +694,14 @@ def main():
     # ── Build centroids ───────────────────────────────────────────────
     print("  Building apocalypticism centroids…")
     pos_centroid, neg_centroid, subtheme_centroids = build_centroids(model)
+    cat_centroids = build_category_centroids(model)
 
     # Save positive centroid (backward compat)
     centroid_path = DATA_PROCESSED / "apocalypticism_centroid.npy"
     np.save(centroid_path, pos_centroid)
     print(f"  Centroid saved: {centroid_path.name}")
     print(f"  Sub-themes: {list(subtheme_centroids.keys())}")
+    print(f"  Categories: {list(cat_centroids.keys())}")
 
     # ── 1. Diagnostic keyword scoring ─────────────────────────────────
     print("\n  Computing diagnostic keyword scores…")
@@ -588,6 +738,7 @@ def main():
     print("  Scoring with LR + contrastive similarity…")
     scores = score_embeddings(
         embeddings, lr, pos_centroid, neg_centroid, subtheme_centroids,
+        category_centroids=cat_centroids,
     )
 
     pol = pol.with_columns([
@@ -598,6 +749,8 @@ def main():
         pl.Series("apoc_binary", scores["apoc_binary"], dtype=pl.Int8),
         pl.Series("apoc_subtheme", scores["apoc_subtheme"], dtype=pl.Utf8),
         pl.Series("apoc_subtheme_sim", scores["apoc_subtheme_sim"], dtype=pl.Float64),
+        pl.Series("apoc_category", scores["apoc_category"], dtype=pl.Utf8),
+        pl.Series("apoc_category_sim", scores["apoc_category_sim"], dtype=pl.Float64),
     ])
 
     n_apoc = pol.filter(pl.col("apoc_binary") == 1).height
@@ -619,6 +772,11 @@ def main():
     if apoc_posts.height > 0:
         print(f"\n  Sub-theme distribution (apocalyptic posts):")
         for row in apoc_posts.group_by("apoc_subtheme").len().sort("len", descending=True).iter_rows():
+            print(f"    {row[0]:30s} {row[1]:6d} "
+                  f"({row[1]/apoc_posts.height*100:.1f}%)")
+
+        print(f"\n  Category distribution (apocalyptic posts):")
+        for row in apoc_posts.group_by("apoc_category").len().sort("len", descending=True).iter_rows():
             print(f"    {row[0]:30s} {row[1]:6d} "
                   f"({row[1]/apoc_posts.height*100:.1f}%)")
 
