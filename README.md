@@ -4,7 +4,7 @@ Analysis pipeline testing whether the publication of the "Iron March edition" of
 
 ## Research Overview
 
-This project implements a multi-method quantitative analysis of ideological diffusion on the Iron March (IM) neo-fascist forum (2011–2017) and 4chan's /pol/ board, using the leaked Iron March MySQL database and the 4plebs /pol/ archive (Asagi schema). The pipeline tests fourteen hypotheses spanning macro-temporal trends, network contagion, collective exegesis, spatial diffusion, and cross-platform contagion, plus an apocalypticism chapter examining post-attack rhetoric:
+This project implements a multi-method quantitative analysis of ideological diffusion on the Iron March (IM) neo-fascist forum (2011–2017) and 4chan's /pol/ board, using the leaked Iron March MySQL database and the 4plebs /pol/ archive (Asagi schema). The pipeline tests twenty-one hypotheses spanning macro-temporal trends, network contagion, collective exegesis, spatial diffusion, and cross-platform contagion, plus an apocalypticism chapter examining post-attack rhetoric:
 
 | # | Hypothesis | Method | Key Finding |
 |---|-----------|--------|-------------|
@@ -20,13 +20,20 @@ This project implements a multi-method quantitative analysis of ideological diff
 | H10 | Community develops shared Siege interpretation | Inter-user CV convergence (ITS) | Converging slope β₃=-0.054 (p=0.011\*) |
 | H11 | Siege rhetoric concentrates in ideological subforums | Herfindahl index, subforum mapping | Post-Siege HHI increases; books, strategy lead |
 
-### Cross-Platform Hypotheses (H12–H14)
+### Cross-Platform Hypotheses (H12–H21)
 
-| # | Hypothesis | Method |
-|---|-----------|--------|
-| H12 | Siege rhetoric shows a structural break on /pol/ after IM's T0 | Cross-platform ITS with prevalence correction |
-| H13 | Iron March Siege rhetoric Granger-causes /pol/ Siege rhetoric | Bidirectional Granger tests with stationarity checks |
-| H14 | Content bridges (URLs, phrases) propagate from IM → /pol/ | URL overlap, n-gram fingerprinting, temporal priority |
+| # | Hypothesis | Method | Key Finding |
+|---|-----------|--------|-------------|
+| H12 | Siege rhetoric shows a structural break on /pol/ after IM's T0 | Cross-platform ITS with prevalence correction | — |
+| H13 | Iron March Siege rhetoric Granger-causes /pol/ Siege rhetoric | Bidirectional Granger tests with stationarity checks | — |
+| H14 | Content bridges (URLs, phrases) propagate from IM → /pol/ | URL overlap, n-gram fingerprinting, temporal priority | — |
+| H15 | /pol/ Siege rhetoric increases after IM shutdown | ITS at T_shutdown + changepoint detection | Prevalence ↑ (p<0.001\*\*\*); keyword/volume n.s. |
+| H16 | Siege vocabulary appears on IM before /pol/ | Per-term first-appearance lag, OLS acceleration test | 84% IM-first, median lag 670d; lags shrink over time (p<0.001\*\*\*) |
+| H17 | Non-linear information flows from IM → /pol/ | Transfer entropy (Schreiber 2000) + shuffle surrogates | IM→/pol/ n.s.; /pol/→IM significant (p=0.03) |
+| H18 | /pol/ posts from IM-heavy countries show more Siege rhetoric | Country-level Mann-Whitney | Not significant (p=0.22) |
+| H19 | Higher IM Siege activity predicts elevated /pol/ activity | Dose-response: quartile binning, Kruskal-Wallis, Spearman | Significant at lags 2–3 weeks (ρ=0.14–0.19, p<0.05\*) |
+| H20 | Sub-themes diffuse differentially across platforms | Per-sub-theme weekly ITS + Granger | Accelerationism: β₂=−0.085 (p<0.001\*\*\*); others n.s. |
+| H21 | URL domains propagate from IM → /pol/ | Domain-level temporal priority, overlap coefficients | 1,046/1,326 shared domains IM-first (79%); 50 gateway domains |
 
 Additionally, H8 (thread escalation) and H10 (semantic convergence) are adapted for /pol/'s anonymous structure.
 
@@ -89,7 +96,7 @@ Rscript export_rda.R
 
 ## Running the Pipeline
 
-The pipeline has 17 Iron March stages plus 9 /pol/ and cross-platform stages plus 5 apocalypticism stages, orchestrated by `main.py`. Each stage is idempotent.
+The pipeline has 17 Iron March stages, 6 /pol/ stages, 10 cross-platform stages, and 5 apocalypticism stages (38 total), orchestrated by `main.py`. Each stage is idempotent.
 
 ```bash
 # Run the Iron March pipeline (default)
@@ -151,6 +158,13 @@ uv run python main.py --only 2 3
 | 17 | `17_cross_platform_its.py` | H12: Cross-platform ITS |
 | 18 | `18_cross_platform_granger.py` | H13: Cross-platform Granger causality |
 | 19 | `19_cross_platform_bridges.py` | H14: Content bridge detection |
+| 22 | `22_shutdown_its.py` | H15: Post-shutdown migration ITS |
+| 23 | `23_vocab_adoption_lags.py` | H16: Vocabulary adoption lag curves |
+| 24 | `24_transfer_entropy.py` | H17: Transfer entropy (IM ↔ /pol/) |
+| 25 | `25_country_correlation.py` | H18: Country-level correlation |
+| 26 | `26_dose_response.py` | H19: Dose-response at multiple lags |
+| 27 | `27_subtheme_diffusion.py` | H20: Sub-theme disaggregation |
+| 28 | `28_domain_diffusion.py` | H21: URL domain diffusion |
 
 ### Apocalypticism Chapter Stages (`--platform apoc`)
 
@@ -176,7 +190,7 @@ uv run pytest tests/ -v
 Siege-Contagion/
 ├── README.md
 ├── pyproject.toml
-├── main.py                   # Pipeline orchestrator (--platform im|pol|both)
+├── main.py                   # Pipeline orchestrator (--platform im|pol|both|apoc)
 ├── export_rda.R              # R helper to export .rda → CSV
 ├── siege_culture_agent_prompt.md  # Research design document
 ├── data/
@@ -212,6 +226,13 @@ Siege-Contagion/
 │   ├── 19_cross_platform_bridges.py # H14: Content bridges
 │   ├── 20_pol_thread_escalation.py # H8-pol: /pol/ thread escalation
 │   ├── 21_pol_semantic_convergence.py # H10-pol: /pol/ convergence
+│   ├── 22_shutdown_its.py         # H15: Post-shutdown ITS
+│   ├── 23_vocab_adoption_lags.py  # H16: Vocabulary adoption lags
+│   ├── 24_transfer_entropy.py     # H17: Transfer entropy
+│   ├── 25_country_correlation.py  # H18: Country-level correlation
+│   ├── 26_dose_response.py        # H19: Dose-response at multiple lags
+│   ├── 27_subtheme_diffusion.py   # H20: Sub-theme disaggregation
+│   ├── 28_domain_diffusion.py     # H21: URL domain diffusion
 │   ├── 29_mass_casualty_events.py # Apocalypticism: event dataset
 │   ├── 30_pol_apocalypticism.py   # Apocalypticism: LR+contrastive classifier
 │   ├── 31_apocalypticism_its.py   # Apocalypticism: ITS analysis
