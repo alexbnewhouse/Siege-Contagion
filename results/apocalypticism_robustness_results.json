@@ -1,0 +1,801 @@
+{
+  "placebo": {
+    "n_iter": 500,
+    "n_valid": 500,
+    "mean_null_level": 0.00012870448551048608,
+    "std_null_level": 0.0016127167835190811,
+    "mean_null_slope": -1.283593858766269e-06,
+    "std_null_slope": 0.00011503263578697024,
+    "observed_beta_level": -0.0017647706901018187,
+    "placebo_p_level": 0.254
+  },
+  "bandwidth_sensitivity": [
+    {
+      "label": "pooled_apoc_combined",
+      "n_obs": 1095,
+      "n_events": 73,
+      "b_time": -1.9870594877667818e-05,
+      "b_level": -0.00026551927763672153,
+      "b_slope": -0.0002665216783342019,
+      "se_level": 0.0017842788860405437,
+      "se_slope": 0.00042672538720228676,
+      "p_time": 0.9530804311149164,
+      "p_level": 0.881703233879545,
+      "p_slope": 0.5322505402319281,
+      "r_squared": 0.5727655900064628,
+      "ci_level_lo": -0.0037626416326514344,
+      "ci_level_hi": 0.0032316030773779916,
+      "bandwidth_days": 7
+    },
+    {
+      "label": "pooled_apoc_combined",
+      "n_obs": 2117,
+      "n_events": 73,
+      "b_time": -8.456446792970025e-05,
+      "b_level": -0.0004772042067264008,
+      "b_slope": -5.123005534138046e-05,
+      "se_level": 0.0013182902372378378,
+      "se_slope": 0.00015683358241088189,
+      "p_time": 0.46883567463706255,
+      "p_level": 0.7173615871852671,
+      "p_slope": 0.7439308580138845,
+      "r_squared": 0.5039309881878432,
+      "ci_level_lo": -0.0030610055928833265,
+      "ci_level_hi": 0.0021065971794305247,
+      "bandwidth_days": 14
+    },
+    {
+      "label": "pooled_apoc_combined",
+      "n_obs": 3139,
+      "n_events": 73,
+      "b_time": 1.6448653280715818e-05,
+      "b_level": -0.0015123793022591724,
+      "b_slope": -7.969647493737779e-05,
+      "se_level": 0.0011158998405179936,
+      "se_slope": 9.049616451707133e-05,
+      "p_time": 0.8030133408777009,
+      "p_level": 0.17532192412397873,
+      "p_slope": 0.37850113890409454,
+      "r_squared": 0.454285672602348,
+      "ci_level_lo": -0.00369950280002843,
+      "ci_level_hi": 0.0006747441955100852,
+      "bandwidth_days": 21
+    },
+    {
+      "label": "pooled_apoc_combined",
+      "n_obs": 4453,
+      "n_events": 73,
+      "b_time": 8.074206569020101e-05,
+      "b_level": -0.0021741756679744,
+      "b_slope": -0.00013820076795497286,
+      "se_level": 0.0009552328221949102,
+      "se_slope": 5.476887918191944e-05,
+      "p_time": 0.04030448944920135,
+      "p_level": 0.022841889318087262,
+      "p_slope": 0.011624435105706932,
+      "r_squared": 0.41707881942832337,
+      "ci_level_lo": -0.004046397596326978,
+      "ci_level_hi": -0.000301953739621823,
+      "bandwidth_days": 30
+    },
+    {
+      "label": "pooled_apoc_combined",
+      "n_obs": 6643,
+      "n_events": 73,
+      "b_time": 6.180737751083886e-05,
+      "b_level": -0.0024157169980739837,
+      "b_slope": -8.573699767486265e-05,
+      "se_level": 0.0008043055752196477,
+      "se_slope": 3.123921024380647e-05,
+      "p_time": 0.005713677364277495,
+      "p_level": 0.002669096857911966,
+      "p_slope": 0.006059733189999731,
+      "r_squared": 0.39507057279637814,
+      "ci_level_lo": -0.003992126958069265,
+      "ci_level_hi": -0.0008393070380787028,
+      "bandwidth_days": 45
+    },
+    {
+      "label": "pooled_apoc_combined",
+      "n_obs": 8833,
+      "n_events": 73,
+      "b_time": 8.463627027562479e-05,
+      "b_level": -0.002930538071172909,
+      "b_slope": -0.00010529829562062503,
+      "se_level": 0.0006927555482545588,
+      "se_slope": 1.9737864701722603e-05,
+      "p_time": 1.7898493324958046e-09,
+      "p_level": 2.3341838923334032e-05,
+      "p_slope": 9.563029796296302e-08,
+      "r_squared": 0.37486826588792277,
+      "ci_level_lo": -0.004288313995842143,
+      "ci_level_hi": -0.0015727621465036743,
+      "bandwidth_days": 60
+    }
+  ],
+  "dose_response": {
+    "n_obs": 4453,
+    "n_events": 73,
+    "b_level": -0.0024180134061609327,
+    "b_slope": -0.00013820076795464107,
+    "b_log_killed": 0.0010410289621825136,
+    "b_post_x_logkilled": 0.00012190053006519957,
+    "p_level": 0.13057768078759627,
+    "p_slope": 0.05091826684976399,
+    "p_log_killed": 0.002670037989165554,
+    "p_post_x_logkilled": 0.799239593583389,
+    "r_squared": 0.007367682762907335
+  },
+  "online_nexus": {
+    "online_nexus": {
+      "label": "pooled_apoc_combined",
+      "n_obs": 1342,
+      "n_events": 22,
+      "b_time": -8.662940145830272e-05,
+      "b_level": -0.001346336787809237,
+      "b_slope": 6.784436238062621e-05,
+      "se_level": 0.0016484488572600273,
+      "se_slope": 9.554227757887994e-05,
+      "p_time": 0.2011987332324887,
+      "p_level": 0.4140830369418197,
+      "p_slope": 0.47764348228479725,
+      "r_squared": 0.5187166293121841,
+      "ci_level_lo": -0.004577237178395099,
+      "ci_level_hi": 0.001884563602776625,
+      "group": "online_nexus",
+      "n_events_group": 22
+    },
+    "no_online_nexus": {
+      "label": "pooled_apoc_combined",
+      "n_obs": 3111,
+      "n_events": 51,
+      "b_time": 0.00015294152210713988,
+      "b_level": -0.00253128263588878,
+      "b_slope": -0.00022708298104079488,
+      "se_level": 0.0011662498671533646,
+      "se_slope": 6.653611514947194e-05,
+      "p_time": 0.0014361706071995242,
+      "p_level": 0.029973057285228658,
+      "p_slope": 0.0006426888187327076,
+      "r_squared": 0.36364770930495516,
+      "ci_level_lo": -0.004817090372483997,
+      "ci_level_hi": -0.0002454748992935631,
+      "group": "no_online_nexus",
+      "n_events_group": 51
+    }
+  },
+  "lag_structure": [
+    {
+      "label": "pooled_apoc_combined",
+      "n_obs": 4453,
+      "n_events": 73,
+      "b_time": 8.074206569020101e-05,
+      "b_level": -0.0021741756679744,
+      "b_slope": -0.00013820076795497286,
+      "se_level": 0.0009552328221949102,
+      "se_slope": 5.476887918191944e-05,
+      "p_time": 0.04030448944920135,
+      "p_level": 0.022841889318087262,
+      "p_slope": 0.011624435105706932,
+      "r_squared": 0.41707881942832337,
+      "ci_level_lo": -0.004046397596326978,
+      "ci_level_hi": -0.000301953739621823,
+      "lag_days": 0
+    },
+    {
+      "label": "pooled_apoc_combined",
+      "n_obs": 4453,
+      "n_events": 73,
+      "b_time": 7.049442879609747e-05,
+      "b_level": -0.0028120940574388217,
+      "b_slope": -9.246714055145983e-05,
+      "se_level": 0.0009522912947588967,
+      "se_slope": 5.448833588019912e-05,
+      "p_time": 0.0787389865352544,
+      "p_level": 0.0031472566120106164,
+      "p_slope": 0.0896951527326874,
+      "r_squared": 0.41985953129585885,
+      "ci_level_lo": -0.004678550697957276,
+      "ci_level_hi": -0.0009456374169203674,
+      "lag_days": 1
+    },
+    {
+      "label": "pooled_apoc_combined",
+      "n_obs": 4453,
+      "n_events": 73,
+      "b_time": 2.3499421941452538e-05,
+      "b_level": -0.002210024063797881,
+      "b_slope": -3.981225164147698e-05,
+      "se_level": 0.0009474494742790992,
+      "se_slope": 5.448207425115797e-05,
+      "p_time": 0.5583680265039601,
+      "p_level": 0.01966895931246868,
+      "p_slope": 0.46493774607689864,
+      "r_squared": 0.4208388538566632,
+      "ci_level_lo": -0.004066990910556324,
+      "ci_level_hi": -0.00035305721703943844,
+      "lag_days": 3
+    },
+    {
+      "label": "pooled_apoc_combined",
+      "n_obs": 4453,
+      "n_events": 73,
+      "b_time": -4.3609746391632964e-05,
+      "b_level": -0.001074019455677639,
+      "b_slope": 2.1888436340072213e-05,
+      "se_level": 0.0009324383461038193,
+      "se_slope": 5.381360784121103e-05,
+      "p_time": 0.2739442123703445,
+      "p_level": 0.249386972439952,
+      "p_slope": 0.6841950072316043,
+      "r_squared": 0.42611849321057127,
+      "ci_level_lo": -0.0029015650318452183,
+      "ci_level_hi": 0.0007535261204899407,
+      "lag_days": 7
+    },
+    {
+      "label": "pooled_apoc_combined",
+      "n_obs": 4453,
+      "n_events": 73,
+      "b_time": -0.0001360052368299041,
+      "b_level": 0.000593810421486683,
+      "b_slope": 0.00012015594134529309,
+      "se_level": 0.0009169361395948404,
+      "se_slope": 5.429551136692362e-05,
+      "p_time": 0.00045144796123447185,
+      "p_level": 0.5172418787230126,
+      "p_slope": 0.02689767778632324,
+      "r_squared": 0.4201247814903524,
+      "ci_level_lo": -0.0012033513882423956,
+      "ci_level_hi": 0.0023909722312157617,
+      "lag_days": 14
+    }
+  ],
+  "dow_controlled": {
+    "label": "pooled_dow_controlled",
+    "n_obs": 4453,
+    "b_level": -0.0021943359949381696,
+    "b_slope": -0.00013839762342480227,
+    "p_level": 0.08514079816212239,
+    "p_slope": 0.05123664027049462,
+    "r_squared": 0.006331386745884293
+  },
+  "bh_fdr": {
+    "n_tests": 86,
+    "n_significant_raw": 34,
+    "n_significant_bh": 21,
+    "per_event_bh": [
+      {
+        "label": "Russian annexation of Crimea",
+        "p_original": 0.5915166931991417,
+        "p_adjusted": 0.7164850086637491,
+        "significant_bh": false
+      },
+      {
+        "label": "Fort Hood shooting (2014)",
+        "p_original": 0.5766747877463549,
+        "p_adjusted": 0.7164850086637491,
+        "significant_bh": false
+      },
+      {
+        "label": "Overland Park Jewish center shooting",
+        "p_original": 0.3026282831053959,
+        "p_adjusted": 0.4765965725539365,
+        "significant_bh": false
+      },
+      {
+        "label": "Isla Vista attack",
+        "p_original": 0.11013620280852046,
+        "p_adjusted": 0.24286444721878872,
+        "significant_bh": false
+      },
+      {
+        "label": "Jewish Museum of Belgium shooting",
+        "p_original": 0.18409756945554245,
+        "p_adjusted": 0.34155195432265467,
+        "significant_bh": false
+      },
+      {
+        "label": "Moncton shootings",
+        "p_original": 0.8743231839105191,
+        "p_adjusted": 0.9100876800190123,
+        "significant_bh": false
+      },
+      {
+        "label": "Ottawa Parliament Hill shooting",
+        "p_original": 0.264163380361237,
+        "p_adjusted": 0.4286424662465355,
+        "significant_bh": false
+      },
+      {
+        "label": "Lindt Caf\u00e9 siege (Sydney)",
+        "p_original": 0.0001795938623560575,
+        "p_adjusted": 0.003089014432524189,
+        "significant_bh": true
+      },
+      {
+        "label": "Charlie Hebdo attack",
+        "p_original": 8.441694918401523e-08,
+        "p_adjusted": 2.419952543275103e-06,
+        "significant_bh": true
+      },
+      {
+        "label": "Hypercacher kosher market siege",
+        "p_original": 0.19063364892427237,
+        "p_adjusted": 0.34155195432265467,
+        "significant_bh": false
+      },
+      {
+        "label": "Copenhagen shootings",
+        "p_original": 0.12585188210258705,
+        "p_adjusted": 0.25870383273704334,
+        "significant_bh": false
+      },
+      {
+        "label": "Curtis Culwell Center attack (Garland)",
+        "p_original": 0.1549241351532673,
+        "p_adjusted": 0.3028062641632043,
+        "significant_bh": false
+      },
+      {
+        "label": "Trump announces presidential run",
+        "p_original": 0.3221004319679629,
+        "p_adjusted": 0.4775971922283588,
+        "significant_bh": false
+      },
+      {
+        "label": "Charleston church shooting",
+        "p_original": 0.11713227658257774,
+        "p_adjusted": 0.25183439465254215,
+        "significant_bh": false
+      },
+      {
+        "label": "Chattanooga recruiting center shooting",
+        "p_original": 0.4065307223022703,
+        "p_adjusted": 0.5826940352999207,
+        "significant_bh": false
+      },
+      {
+        "label": "Lafayette Grand Theatre shooting",
+        "p_original": 0.4173199219958301,
+        "p_adjusted": 0.588352676912154,
+        "significant_bh": false
+      },
+      {
+        "label": "Thalys train attack",
+        "p_original": 0.04380331874864768,
+        "p_adjusted": 0.11642152535028338,
+        "significant_bh": false
+      },
+      {
+        "label": "Black Monday 2015 stock market crash",
+        "p_original": 0.01676273367344659,
+        "p_adjusted": 0.0554459652275541,
+        "significant_bh": false
+      },
+      {
+        "label": "Umpqua Community College shooting",
+        "p_original": 0.630104026966285,
+        "p_adjusted": 0.7225192842546735,
+        "significant_bh": false
+      },
+      {
+        "label": "Ankara peace rally bombings",
+        "p_original": 0.31001390725451605,
+        "p_adjusted": 0.4765965725539365,
+        "significant_bh": false
+      },
+      {
+        "label": "Paris attacks (Bataclan)",
+        "p_original": 0.06020682518510212,
+        "p_adjusted": 0.14382741571996618,
+        "significant_bh": false
+      },
+      {
+        "label": "Colorado Springs Planned Parenthood shooting",
+        "p_original": 0.0011517315266136958,
+        "p_adjusted": 0.009828234996897714,
+        "significant_bh": true
+      },
+      {
+        "label": "San Bernardino attack",
+        "p_original": 0.0008376553904481459,
+        "p_adjusted": 0.008004262619837839,
+        "significant_bh": true
+      },
+      {
+        "label": "Brussels bombings",
+        "p_original": 0.8699083832178841,
+        "p_adjusted": 0.9100876800190123,
+        "significant_bh": false
+      },
+      {
+        "label": "Orlando Pulse nightclub shooting",
+        "p_original": 0.0050885785963440365,
+        "p_adjusted": 0.0257422211344463,
+        "significant_bh": true
+      },
+      {
+        "label": "Jo Cox assassination",
+        "p_original": 0.12634373226692816,
+        "p_adjusted": 0.25870383273704334,
+        "significant_bh": false
+      },
+      {
+        "label": "Brexit referendum",
+        "p_original": 0.4901228868601184,
+        "p_adjusted": 0.6540250154203223,
+        "significant_bh": false
+      },
+      {
+        "label": "Istanbul Atat\u00fcrk airport attack",
+        "p_original": 0.03607324636020583,
+        "p_adjusted": 0.1034099728992567,
+        "significant_bh": false
+      },
+      {
+        "label": "Dallas police shooting",
+        "p_original": 3.485555824420793e-08,
+        "p_adjusted": 2.419952543275103e-06,
+        "significant_bh": true
+      },
+      {
+        "label": "Nice truck attack",
+        "p_original": 0.09839177708149856,
+        "p_adjusted": 0.22267612707918094,
+        "significant_bh": false
+      },
+      {
+        "label": "W\u00fcrzburg train attack",
+        "p_original": 0.005024456565221678,
+        "p_adjusted": 0.0257422211344463,
+        "significant_bh": true
+      },
+      {
+        "label": "Munich shooting",
+        "p_original": 0.027882348690607916,
+        "p_adjusted": 0.08563864240686718,
+        "significant_bh": false
+      },
+      {
+        "label": "Ansbach bombing",
+        "p_original": 0.31034195422116795,
+        "p_adjusted": 0.4765965725539365,
+        "significant_bh": false
+      },
+      {
+        "label": "Sagamihara stabbing",
+        "p_original": 0.624125958109661,
+        "p_adjusted": 0.7225192842546735,
+        "significant_bh": false
+      },
+      {
+        "label": "Trump wins US presidential election",
+        "p_original": 0.04472333831750395,
+        "p_adjusted": 0.11642152535028338,
+        "significant_bh": false
+      },
+      {
+        "label": "Berlin Christmas market attack",
+        "p_original": 0.8783404353671863,
+        "p_adjusted": 0.9100876800190123,
+        "significant_bh": false
+      },
+      {
+        "label": "Istanbul Reina nightclub attack",
+        "p_original": 0.0014018032694178733,
+        "p_adjusted": 0.009828234996897714,
+        "significant_bh": true
+      },
+      {
+        "label": "Fort Lauderdale airport shooting",
+        "p_original": 0.9523145289441858,
+        "p_adjusted": 0.9635182292847055,
+        "significant_bh": false
+      },
+      {
+        "label": "Quebec City mosque shooting",
+        "p_original": 0.04602711467336785,
+        "p_adjusted": 0.11642152535028338,
+        "significant_bh": false
+      },
+      {
+        "label": "London Westminster Bridge attack",
+        "p_original": 0.008726633656506467,
+        "p_adjusted": 0.03679631006328379,
+        "significant_bh": true
+      },
+      {
+        "label": "Stockholm truck attack",
+        "p_original": 0.004574017542530492,
+        "p_adjusted": 0.0257422211344463,
+        "significant_bh": true
+      },
+      {
+        "label": "Paris Champs-\u00c9lys\u00e9es shooting",
+        "p_original": 0.4596507583788595,
+        "p_adjusted": 0.6359578426844513,
+        "significant_bh": false
+      },
+      {
+        "label": "Manchester Arena bombing",
+        "p_original": 0.00706479109320145,
+        "p_adjusted": 0.03375400188974026,
+        "significant_bh": true
+      },
+      {
+        "label": "London Bridge attack (2017)",
+        "p_original": 0.20081162390846063,
+        "p_adjusted": 0.3524448909413799,
+        "significant_bh": false
+      },
+      {
+        "label": "Congressional baseball shooting",
+        "p_original": 0.8454204818555779,
+        "p_adjusted": 0.9100876800190123,
+        "significant_bh": false
+      },
+      {
+        "label": "Finsbury Park mosque attack",
+        "p_original": 0.14563555132600775,
+        "p_adjusted": 0.2912711026520155,
+        "significant_bh": false
+      },
+      {
+        "label": "Charlottesville car attack",
+        "p_original": 6.387232634684123e-08,
+        "p_adjusted": 2.419952543275103e-06,
+        "significant_bh": true
+      },
+      {
+        "label": "Barcelona Las Ramblas attack",
+        "p_original": 0.18912453439794474,
+        "p_adjusted": 0.34155195432265467,
+        "significant_bh": false
+      },
+      {
+        "label": "Hurricane Harvey",
+        "p_original": 0.008985145480569298,
+        "p_adjusted": 0.03679631006328379,
+        "significant_bh": true
+      },
+      {
+        "label": "Parsons Green bombing",
+        "p_original": 0.001599945232053116,
+        "p_adjusted": 0.009828234996897714,
+        "significant_bh": true
+      },
+      {
+        "label": "Hurricane Maria",
+        "p_original": 0.8369774681911212,
+        "p_adjusted": 0.9100876800190123,
+        "significant_bh": false
+      },
+      {
+        "label": "Las Vegas shooting",
+        "p_original": 0.0002940011500444732,
+        "p_adjusted": 0.003612014129117814,
+        "significant_bh": true
+      },
+      {
+        "label": "NYC truck attack",
+        "p_original": 0.022828567389037692,
+        "p_adjusted": 0.0727132146465645,
+        "significant_bh": false
+      },
+      {
+        "label": "Sutherland Springs church shooting",
+        "p_original": 0.0013541212218110622,
+        "p_adjusted": 0.009828234996897714,
+        "significant_bh": true
+      },
+      {
+        "label": "Parkland school shooting",
+        "p_original": 0.6259869358494503,
+        "p_adjusted": 0.7225192842546735,
+        "significant_bh": false
+      },
+      {
+        "label": "Tr\u00e8bes / Carcassonne attack",
+        "p_original": 0.053393181571859884,
+        "p_adjusted": 0.13119467471942714,
+        "significant_bh": false
+      },
+      {
+        "label": "Toronto van attack",
+        "p_original": 0.58423562639382,
+        "p_adjusted": 0.7164850086637491,
+        "significant_bh": false
+      },
+      {
+        "label": "Santa Fe High School shooting",
+        "p_original": 0.20919082746901474,
+        "p_adjusted": 0.35980822324670536,
+        "significant_bh": false
+      },
+      {
+        "label": "Annapolis Capital Gazette shooting",
+        "p_original": 0.9645250925196236,
+        "p_adjusted": 0.9645250925196236,
+        "significant_bh": false
+      },
+      {
+        "label": "Pittsburgh synagogue shooting",
+        "p_original": 0.4658760940595399,
+        "p_adjusted": 0.6359578426844513,
+        "significant_bh": false
+      },
+      {
+        "label": "Thousand Oaks Borderline Bar shooting",
+        "p_original": 0.16676380233665633,
+        "p_adjusted": 0.318704155576721,
+        "significant_bh": false
+      },
+      {
+        "label": "Camp Fire (Paradise, CA)",
+        "p_original": 0.4943212325851274,
+        "p_adjusted": 0.6540250154203223,
+        "significant_bh": false
+      },
+      {
+        "label": "Strasbourg Christmas market attack",
+        "p_original": 0.5125778881482403,
+        "p_adjusted": 0.6679045209204344,
+        "significant_bh": false
+      },
+      {
+        "label": "Christchurch mosque shootings",
+        "p_original": 0.01631573328620516,
+        "p_adjusted": 0.0554459652275541,
+        "significant_bh": false
+      },
+      {
+        "label": "Utrecht tram shooting",
+        "p_original": 0.8192181787575626,
+        "p_adjusted": 0.9100876800190123,
+        "significant_bh": false
+      },
+      {
+        "label": "Sri Lanka Easter bombings",
+        "p_original": 0.24454442487952222,
+        "p_adjusted": 0.41236903018899823,
+        "significant_bh": false
+      },
+      {
+        "label": "Poway synagogue shooting",
+        "p_original": 0.0006551705231609555,
+        "p_adjusted": 0.007043083123980272,
+        "significant_bh": true
+      },
+      {
+        "label": "STEM School Highlands Ranch shooting",
+        "p_original": 0.0657415763937575,
+        "p_adjusted": 0.15280474513143633,
+        "significant_bh": false
+      },
+      {
+        "label": "Virginia Beach municipal building shooting",
+        "p_original": 0.015738725419071214,
+        "p_adjusted": 0.0554459652275541,
+        "significant_bh": false
+      },
+      {
+        "label": "El Paso Walmart shooting",
+        "p_original": 0.00752383312471615,
+        "p_adjusted": 0.03405524466976784,
+        "significant_bh": true
+      },
+      {
+        "label": "Dayton shooting",
+        "p_original": 0.014973927240262074,
+        "p_adjusted": 0.0554459652275541,
+        "significant_bh": false
+      },
+      {
+        "label": "B\u00e6rum mosque shooting",
+        "p_original": 0.914154569864298,
+        "p_adjusted": 0.9359201548610669,
+        "significant_bh": false
+      },
+      {
+        "label": "Halle synagogue shooting",
+        "p_original": 0.0002909098090716198,
+        "p_adjusted": 0.003612014129117814,
+        "significant_bh": true
+      },
+      {
+        "label": "London Bridge attack (2019)",
+        "p_original": 0.7047932310073999,
+        "p_adjusted": 0.7975291824557419,
+        "significant_bh": false
+      },
+      {
+        "label": "Jersey City kosher market shooting",
+        "p_original": 0.0014966615182536872,
+        "p_adjusted": 0.009828234996897714,
+        "significant_bh": true
+      },
+      {
+        "label": "WHO declares COVID-19 PHEIC",
+        "p_original": 0.3738642482286799,
+        "p_adjusted": 0.5449546669096011,
+        "significant_bh": false
+      },
+      {
+        "label": "Hanau shootings",
+        "p_original": 0.6201540268127096,
+        "p_adjusted": 0.7225192842546735,
+        "significant_bh": false
+      },
+      {
+        "label": "WHO declares COVID-19 pandemic",
+        "p_original": 0.04042045660289773,
+        "p_adjusted": 0.11213416993061952,
+        "significant_bh": false
+      },
+      {
+        "label": "COVID-19 stock market crash (Black Monday)",
+        "p_original": 0.03184934754900131,
+        "p_adjusted": 0.09444978928324527,
+        "significant_bh": false
+      },
+      {
+        "label": "Nova Scotia rampage",
+        "p_original": 0.5278549857951191,
+        "p_adjusted": 0.6775452056474663,
+        "significant_bh": false
+      },
+      {
+        "label": "George Floyd killing / BLM protests",
+        "p_original": 0.859369480013638,
+        "p_adjusted": 0.9100876800190123,
+        "significant_bh": false
+      },
+      {
+        "label": "Reading stabbings",
+        "p_original": 0.321930954418718,
+        "p_adjusted": 0.4775971922283588,
+        "significant_bh": false
+      },
+      {
+        "label": "Samuel Paty beheading",
+        "p_original": 0.5473268825347954,
+        "p_adjusted": 0.6922075279116531,
+        "significant_bh": false
+      },
+      {
+        "label": "Nice basilica stabbing",
+        "p_original": 0.25357390613856945,
+        "p_adjusted": 0.41937222938301866,
+        "significant_bh": false
+      },
+      {
+        "label": "Vienna shooting",
+        "p_original": 0.01421341583068651,
+        "p_adjusted": 0.0554459652275541,
+        "significant_bh": false
+      },
+      {
+        "label": "U.S. Capitol storming",
+        "p_original": 6.744330688032708e-05,
+        "p_adjusted": 0.0014500310979270322,
+        "significant_bh": true
+      }
+    ]
+  },
+  "ar1_controlled": {
+    "label": "pooled_ar1",
+    "n_obs": 4380,
+    "b_level": -0.0006278619698568875,
+    "b_slope": -1.6387938446194483e-05,
+    "b_y_lag1": 0.6700301973071536,
+    "p_level": 0.5028760486405119,
+    "p_slope": 0.7585163605084436,
+    "p_y_lag1": 0.0,
+    "r_squared": 0.4495870263924677
+  },
+  "summary": {
+    "checks_passed": 2,
+    "checks_total": 5
+  }
+}

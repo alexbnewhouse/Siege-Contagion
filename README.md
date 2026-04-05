@@ -4,7 +4,7 @@ Analysis pipeline testing whether the publication of the "Iron March edition" of
 
 ## Research Overview
 
-This project implements a multi-method quantitative analysis of ideological diffusion on the Iron March (IM) neo-fascist forum (2011–2017) and 4chan's /pol/ board, using the leaked Iron March MySQL database and the 4plebs /pol/ archive (Asagi schema). The pipeline tests fourteen hypotheses spanning macro-temporal trends, network contagion, collective exegesis, spatial diffusion, and cross-platform contagion:
+This project implements a multi-method quantitative analysis of ideological diffusion on the Iron March (IM) neo-fascist forum (2011–2017) and 4chan's /pol/ board, using the leaked Iron March MySQL database and the 4plebs /pol/ archive (Asagi schema). The pipeline tests fourteen hypotheses spanning macro-temporal trends, network contagion, collective exegesis, spatial diffusion, and cross-platform contagion, plus an apocalypticism chapter examining post-attack rhetoric:
 
 | # | Hypothesis | Method | Key Finding |
 |---|-----------|--------|-------------|
@@ -29,6 +29,23 @@ This project implements a multi-method quantitative analysis of ideological diff
 | H14 | Content bridges (URLs, phrases) propagate from IM → /pol/ | URL overlap, n-gram fingerprinting, temporal priority |
 
 Additionally, H8 (thread escalation) and H10 (semantic convergence) are adapted for /pol/'s anonymous structure.
+
+### Apocalypticism Chapter
+
+A separate analysis chapter tests whether mass-casualty violent events trigger apocalyptic rhetoric on /pol/. Uses a transformer-based classifier (logistic regression + multi-facet contrastive similarity on `all-MiniLM-L6-v2` embeddings) to identify five sub-themes of apocalypticism: racial apocalypse, eschatological, civilizational collapse, accelerationist, and conspiratorial.
+
+| Analysis | Method | Key Finding |
+|----------|--------|-------------|
+| Event catalogue | 136 events (110 mass-violence + 26 non-violence controls) across 2010–2023 | 23 countries, 6 ideology categories |
+| Classifier | LR (0.6) + contrastive similarity (0.4), threshold 0.55 | 3.71% binary classification rate |
+| Per-event ITS | Newey-West HAC regression per event | 34/86 significant at α=0.05 |
+| Pooled ITS | Stacked ITS with event FE | β₂ = −0.0018 (p=0.043) — slight *decrease* |
+| Category comparison | Violence vs non-violence falsification | Mass-violence β₂=−0.0025; economic-shock β₂=+0.016 |
+| Severity correlations | Pearson/Spearman of β₂ vs casualties | No significant correlation |
+| Ideology comparison | Kruskal-Wallis across ideology groups | H=3.22 (p=0.67), no significant differences |
+| Domestic vs intl | Mann-Whitney comparison | p=0.19, no significant difference |
+| Multiple regression | OLS of β₂ on log(killed), domestic, nexus, ideology | R²=0.14; domestic (p=0.01\*) is only significant predictor |
+| Robustness | Placebo, bandwidth, dose–response, lag, DoW, BH FDR, AR(1) | 2/5 checks passed |
 
 ### Theoretical Framework
 
@@ -72,7 +89,7 @@ Rscript export_rda.R
 
 ## Running the Pipeline
 
-The pipeline has 17 Iron March stages plus 9 /pol/ and cross-platform stages, orchestrated by `main.py`. Each stage is idempotent.
+The pipeline has 17 Iron March stages plus 9 /pol/ and cross-platform stages plus 5 apocalypticism stages, orchestrated by `main.py`. Each stage is idempotent.
 
 ```bash
 # Run the Iron March pipeline (default)
@@ -83,6 +100,9 @@ uv run python main.py --platform pol
 
 # Run everything: IM + /pol/ + cross-platform analyses
 uv run python main.py --platform both
+
+# Run the apocalypticism chapter
+uv run python main.py --platform apoc
 
 # Resume from a specific stage (e.g. after fixing an error)
 uv run python main.py --from 4
@@ -132,13 +152,23 @@ uv run python main.py --only 2 3
 | 18 | `18_cross_platform_granger.py` | H13: Cross-platform Granger causality |
 | 19 | `19_cross_platform_bridges.py` | H14: Content bridge detection |
 
+### Apocalypticism Chapter Stages (`--platform apoc`)
+
+| Stage | Script | Description |
+|-------|--------|-------------|
+| 29 | `29_mass_casualty_events.py` | Mass-casualty & discontinuity event dataset (136 events) |
+| 30 | `30_pol_apocalypticism.py` | Transformer-based apocalypticism classifier (LR + contrastive) |
+| 31 | `31_apocalypticism_its.py` | Per-event & pooled ITS, stratified by ideology & event category |
+| 32 | `32_apocalypticism_robustness.py` | 8-test robustness battery (placebo, bandwidth, dose–response, etc.) |
+| 33 | `33_attack_characteristic_correlations.py` | Severity, ideology, geography & multiple regression on β₂ |
+
 ## Running Tests
 
 ```bash
 uv run pytest tests/ -v
 ```
 
-142 tests covering lexicon scoring, embedding boost, preprocessing, network construction, contagion model, report generation, all five exegesis-theory modules, /pol/ ingest/preprocessing, and cross-platform analysis modules.
+262 tests covering lexicon scoring, embedding boost, preprocessing, network construction, contagion model, report generation, all five exegesis-theory modules, /pol/ ingest/preprocessing, cross-platform analysis modules, and the full apocalypticism pipeline (event validation, transformer classifier, ITS regression, robustness checks, and attack-characteristic correlations).
 
 ## Project Structure
 
@@ -181,9 +211,15 @@ Siege-Contagion/
 │   ├── 18_cross_platform_granger.py # H13: Cross-platform Granger
 │   ├── 19_cross_platform_bridges.py # H14: Content bridges
 │   ├── 20_pol_thread_escalation.py # H8-pol: /pol/ thread escalation
-│   └── 21_pol_semantic_convergence.py # H10-pol: /pol/ convergence
-├── tests/                    # 142 unit tests
+│   ├── 21_pol_semantic_convergence.py # H10-pol: /pol/ convergence
+│   ├── 29_mass_casualty_events.py # Apocalypticism: event dataset
+│   ├── 30_pol_apocalypticism.py   # Apocalypticism: LR+contrastive classifier
+│   ├── 31_apocalypticism_its.py   # Apocalypticism: ITS analysis
+│   ├── 32_apocalypticism_robustness.py # Apocalypticism: robustness battery
+│   └── 33_attack_characteristic_correlations.py # Apocalypticism: correlations
+├── tests/                    # 262 unit tests
 │   ├── conftest.py
+│   ├── test_apocalypticism.py # 88 apocalypticism pipeline tests
 │   ├── test_contagion.py
 │   ├── test_exegesis.py      # H7–H11 tests
 │   ├── test_ingest.py

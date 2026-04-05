@@ -67,6 +67,15 @@ CROSS_STAGES: list[tuple[str, str]] = [
     ("28_domain_diffusion",    "H21 – URL domain diffusion"),
 ]
 
+# ── Apocalypticism chapter stages ────────────────────────────────────
+APOC_STAGES: list[tuple[str, str]] = [
+    ("29_mass_casualty_events",    "Mass-casualty event dataset construction"),
+    ("30_pol_apocalypticism",      "Apocalypticism classification (/pol/)"),
+    ("31_apocalypticism_its",      "Apocalypticism ITS (post-attack rhetoric)"),
+    ("32_apocalypticism_robustness", "Apocalypticism robustness checks"),
+    ("33_attack_characteristic_correlations", "Attack-characteristic correlations"),
+]
+
 
 def run_stage(module_name: str, description: str) -> None:
     print(f"\n{'━' * 60}")
@@ -90,8 +99,8 @@ def main():
         help="Run only the listed stage numbers (e.g. --only 2 3)",
     )
     parser.add_argument(
-        "--platform", choices=["im", "pol", "both"], default="im",
-        help="Which platform pipeline to run: im (default), pol, or both",
+        "--platform", choices=["im", "pol", "both", "apoc"], default="im",
+        help="Which platform pipeline to run: im (default), pol, both, or apoc (apocalypticism chapter)",
     )
     args = parser.parse_args()
 
@@ -106,6 +115,8 @@ def main():
         stages = POL_STAGES
     elif args.platform == "both":
         stages = IM_STAGES + POL_STAGES + CROSS_STAGES
+    elif args.platform == "apoc":
+        stages = APOC_STAGES
 
     pipeline_start = time.perf_counter()
     for module_name, description in stages:

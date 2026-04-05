@@ -1,0 +1,209 @@
+{
+  "total_events": 136,
+  "date_range": [
+    "2010-02-18",
+    "2023-12-21"
+  ],
+  "by_category": [
+    {
+      "event_category": "mass_violence",
+      "len": 110
+    },
+    {
+      "event_category": "political",
+      "len": 9
+    },
+    {
+      "event_category": "natural_disaster",
+      "len": 9
+    },
+    {
+      "event_category": "economic_shock",
+      "len": 6
+    },
+    {
+      "event_category": "health_crisis",
+      "len": 2
+    }
+  ],
+  "by_ideology": [
+    {
+      "ideology": "islamist",
+      "len": 45
+    },
+    {
+      "ideology": "other",
+      "len": 30
+    },
+    {
+      "ideology": "N/A",
+      "len": 26
+    },
+    {
+      "ideology": "far_right",
+      "len": 24
+    },
+    {
+      "ideology": "school_shooting",
+      "len": 5
+    },
+    {
+      "ideology": "incel",
+      "len": 4
+    },
+    {
+      "ideology": "far_left",
+      "len": 2
+    }
+  ],
+  "by_country": [
+    {
+      "location_country": "US",
+      "len": 68
+    },
+    {
+      "location_country": "UK",
+      "len": 13
+    },
+    {
+      "location_country": "France",
+      "len": 11
+    },
+    {
+      "location_country": "Germany",
+      "len": 9
+    },
+    {
+      "location_country": "Canada",
+      "len": 5
+    },
+    {
+      "location_country": "Turkey",
+      "len": 4
+    },
+    {
+      "location_country": "Norway",
+      "len": 3
+    },
+    {
+      "location_country": "Belgium",
+      "len": 3
+    },
+    {
+      "location_country": "Denmark",
+      "len": 2
+    },
+    {
+      "location_country": "Ukraine",
+      "len": 2
+    },
+    {
+      "location_country": "Japan",
+      "len": 2
+    },
+    {
+      "location_country": "Afghanistan",
+      "len": 2
+    },
+    {
+      "location_country": "Switzerland",
+      "len": 2
+    },
+    {
+      "location_country": "Czech Republic",
+      "len": 1
+    },
+    {
+      "location_country": "New Zealand",
+      "len": 1
+    },
+    {
+      "location_country": "Sri Lanka",
+      "len": 1
+    },
+    {
+      "location_country": "Israel",
+      "len": 1
+    },
+    {
+      "location_country": "Sweden",
+      "len": 1
+    },
+    {
+      "location_country": "Austria",
+      "len": 1
+    },
+    {
+      "location_country": "Slovakia",
+      "len": 1
+    },
+    {
+      "location_country": "Netherlands",
+      "len": 1
+    },
+    {
+      "location_country": "Australia",
+      "len": 1
+    },
+    {
+      "location_country": "Spain",
+      "len": 1
+    }
+  ],
+  "online_nexus_count": 48,
+  "mean_killed": 563.8088235294117,
+  "median_killed": 5.0,
+  "total_killed": 76678,
+  "mass_violence": {
+    "count": 110,
+    "by_ideology": [
+      {
+        "ideology": "islamist",
+        "len": 45
+      },
+      {
+        "ideology": "other",
+        "len": 30
+      },
+      {
+        "ideology": "far_right",
+        "len": 24
+      },
+      {
+        "ideology": "school_shooting",
+        "len": 5
+      },
+      {
+        "ideology": "incel",
+        "len": 4
+      },
+      {
+        "ideology": "far_left",
+        "len": 2
+      }
+    ],
+    "mean_killed": 26.563636363636363,
+    "total_killed": 2922
+  },
+  "nonviolence": {
+    "count": 26,
+    "by_category": [
+      {
+        "event_category": "natural_disaster",
+        "len": 9
+      },
+      {
+        "event_category": "political",
+        "len": 9
+      },
+      {
+        "event_category": "economic_shock",
+        "len": 6
+      },
+      {
+        "event_category": "health_crisis",
+        "len": 2
+      }
+    ]
+  }
+}
