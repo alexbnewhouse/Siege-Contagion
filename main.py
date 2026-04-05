@@ -74,6 +74,8 @@ APOC_STAGES: list[tuple[str, str]] = [
     ("31_apocalypticism_its",      "Apocalypticism ITS (post-attack rhetoric)"),
     ("32_apocalypticism_robustness", "Apocalypticism robustness checks"),
     ("33_attack_characteristic_correlations", "Attack-characteristic correlations"),
+    ("34_advanced_ts_apocalypticism", "Advanced time-series methods (VAR/ARDL/BSTS/LP)"),
+    ("35_offline_online_hypotheses", "H22-H26 offline violence ↔ online rhetoric"),
 ]
 
 

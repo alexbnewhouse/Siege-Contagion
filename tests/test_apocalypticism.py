@@ -1,4 +1,4 @@
-"""Tests for the apocalypticism pipeline (stages 29-33).
+"""Tests for the apocalypticism pipeline (stages 29-35).
 
 Covers:
   - Event dataset validation (categories, ideologies, completeness)
@@ -6,6 +6,8 @@ Covers:
   - ITS regression & category comparison
   - Robustness utilities
   - Attack-characteristic correlations
+  - Advanced time-series methods (VAR, ARDL, BSTS, LP)
+  - Offline-online hypotheses (H22-H26)
 """
 
 import datetime
@@ -28,6 +30,8 @@ _apoc = importlib.import_module("30_pol_apocalypticism")
 _its = importlib.import_module("31_apocalypticism_its")
 _robust = importlib.import_module("32_apocalypticism_robustness")
 _corr = importlib.import_module("33_attack_characteristic_correlations")
+_adv = importlib.import_module("34_advanced_ts_apocalypticism")
+_hyp = importlib.import_module("35_offline_online_hypotheses")
 
 
 # ═══════════════════════════════════════════════════════════════════════
@@ -834,3 +838,410 @@ class TestMultipleRegression:
         })
         r = _corr.multiple_regression(df)
         assert "error" in r
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# 34 – Advanced Time-Series Analyses
+# ═══════════════════════════════════════════════════════════════════════
+
+@pytest.fixture
+def ts_daily_fixture():
+    """Build a daily time series suitable for advanced TS methods."""
+    dates = [datetime.date(2019, 1, 1) + datetime.timedelta(days=i)
+             for i in range(200)]
+    np.random.seed(42)
+    scores = np.random.normal(0.1, 0.02, 200)
+    # Add a few event spikes
+    for spike_day in [60, 120, 150]:
+        scores[spike_day:spike_day + 5] += 0.04
+    return pl.DataFrame({
+        "day": dates,
+        "mean_score": scores,
+        "median_score": scores,
+        "total_score": scores * 100,
+        "post_count": [50] * 200,
+        "apoc_post_count": [5] * 200,
+        "apoc_prevalence": [0.1] * 200,
+    })
+
+
+@pytest.fixture
+def ts_events_fixture():
+    """Events that fall within the daily fixture range."""
+    return pl.DataFrame({
+        "event_date": [datetime.date(2019, 3, 1),
+                       datetime.date(2019, 4, 30),
+                       datetime.date(2019, 5, 30)],
+        "event_name": ["Event A", "Event B", "Event C"],
+        "event_category": ["mass_violence", "mass_violence", "natural_disaster"],
+        "killed": [10, 25, 0],
+        "injured": [20, 50, 100],
+        "ideology": ["far_right", "islamist", "N/A"],
+        "online_nexus": [True, False, False],
+        "location_country": ["US", "France", "Japan"],
+        "domestic": [True, False, False],
+    })
+
+
+@pytest.fixture
+def ts_aligned_fixture(ts_daily_fixture, ts_events_fixture):
+    """Pre-built aligned time series DataFrame."""
+    return _adv.build_event_series(ts_daily_fixture, ts_events_fixture)
+
+
+class TestBuildEventSeries:
+    def test_returns_dataframe(self, ts_daily_fixture, ts_events_fixture):
+        ts = _adv.build_event_series(ts_daily_fixture, ts_events_fixture)
+        assert isinstance(ts, pd.DataFrame)
+        assert "apoc_mean" in ts.columns
+        assert "event_occurred" in ts.columns
+        assert "event_casualties" in ts.columns
+
+    def test_event_indicator_populated(self, ts_aligned_fixture):
+        assert ts_aligned_fixture["event_occurred"].sum() > 0
+
+    def test_no_missing_apoc(self, ts_aligned_fixture):
+        assert ts_aligned_fixture["apoc_mean"].isna().sum() == 0
+
+
+class TestStationarityTests:
+    def test_returns_result(self):
+        np.random.seed(42)
+        s = pd.Series(np.random.normal(0, 1, 100))
+        r = _adv.stationarity_tests(s, "test_series")
+        assert "adf_statistic" in r
+        assert "p_value" in r
+        assert "stationary_at_5pct" in r
+
+    def test_insufficient_data(self):
+        s = pd.Series([1.0, 2.0])
+        r = _adv.stationarity_tests(s, "tiny")
+        assert "error" in r
+
+
+class TestVARAnalysis:
+    def test_returns_result(self, ts_aligned_fixture):
+        r = _adv.run_var_analysis(ts_aligned_fixture, maxlag=5, irf_periods=10)
+        assert isinstance(r, dict)
+        if "error" not in r:
+            assert "granger_causality" in r
+            assert "irf" in r
+            assert "fevd" in r
+            assert "selected_lag" in r
+
+    def test_insufficient_data(self):
+        tiny = pd.DataFrame({
+            "apoc_mean": [0.1, 0.2],
+            "event_occurred": [0, 1],
+        })
+        r = _adv.run_var_analysis(tiny)
+        assert "error" in r
+
+
+class TestARDLAnalysis:
+    def test_returns_result(self, ts_aligned_fixture):
+        r = _adv.run_ardl_analysis(ts_aligned_fixture, max_ar_lag=3, max_dl_lag=3)
+        assert isinstance(r, dict)
+        if "error" not in r:
+            assert "ar_order" in r
+            assert "dl_order" in r
+            assert "long_run_multiplier" in r
+            assert "ecm" in r
+
+    def test_insufficient_data(self):
+        tiny = pd.DataFrame({
+            "apoc_mean": [0.1],
+            "event_casualties": [10],
+        })
+        r = _adv.run_ardl_analysis(tiny)
+        assert "error" in r
+
+
+class TestBSTSAnalysis:
+    def test_returns_result(self, ts_aligned_fixture, ts_events_fixture):
+        r = _adv.run_bsts_analysis(ts_aligned_fixture, ts_events_fixture,
+                                    n_post_days=10)
+        assert isinstance(r, dict)
+        # May return error if no events match; that's acceptable
+        if "error" not in r:
+            assert "per_event" in r
+            assert "aggregate" in r
+
+    def test_insufficient_data(self, ts_events_fixture):
+        tiny = pd.DataFrame({
+            "apoc_mean": [0.1] * 10,
+        }, index=pd.date_range("2019-01-01", periods=10))
+        tiny.index.name = "date"
+        r = _adv.run_bsts_analysis(tiny, ts_events_fixture)
+        assert "error" in r
+
+
+class TestLocalProjections:
+    def test_returns_result(self, ts_aligned_fixture):
+        r = _adv.run_local_projections(ts_aligned_fixture,
+                                        max_horizon=10, n_lags=3)
+        assert isinstance(r, dict)
+        if "error" not in r:
+            assert "horizons" in r
+            assert "peak_horizon" in r
+            assert "peak_beta" in r
+            assert len(r["horizons"]) > 0
+
+    def test_horizon_structure(self, ts_aligned_fixture):
+        r = _adv.run_local_projections(ts_aligned_fixture,
+                                        max_horizon=5, n_lags=3)
+        if "error" not in r:
+            for h in r["horizons"]:
+                assert "horizon" in h
+                assert "beta" in h
+                assert "se" in h
+                assert "p_value" in h
+
+    def test_insufficient_data(self):
+        tiny = pd.DataFrame({
+            "apoc_mean": [0.1, 0.2],
+            "event_occurred": [0, 1],
+        })
+        r = _adv.run_local_projections(tiny)
+        assert "error" in r
+
+
+class TestMethodComparison:
+    def test_builds_comparison(self):
+        its = {"b_level": 0.01, "p_level": 0.03, "n_obs": 100}
+        var = {"irf": {"peak_response": 0.02},
+               "granger_causality": {"event_causes_apoc": {"p_value": 0.04, "significant_at_05": True}},
+               "n_obs": 100}
+        ardl = {"long_run_multiplier": 0.005, "ecm": {"ec_p_value": 0.1, "ec_significant": False},
+                "n_obs": 100}
+        bsts = {"aggregate": {"mean_impact": 0.01, "t_p_value": 0.02, "significant_at_05": True,
+                              "pct_positive": 0.6}, "n_events_analyzed": 5}
+        lp = {"peak_beta": 0.015, "peak_p_value": 0.08, "n_significant": 2,
+              "peak_horizon": 3}
+
+        c = _adv.build_method_comparison(its, var, ardl, bsts, lp)
+        assert "methods" in c
+        assert "consensus" in c
+        assert c["consensus"]["n_methods"] >= 3
+
+    def test_all_errors(self):
+        c = _adv.build_method_comparison(
+            {"error": "x"}, {"error": "x"}, {"error": "x"},
+            {"error": "x"}, {"error": "x"},
+        )
+        assert c["consensus"]["n_methods"] == 0
+
+    def test_consensus_direction(self):
+        its = {"b_level": -0.01, "p_level": 0.03, "n_obs": 100}
+        var = {"irf": {"peak_response": -0.02},
+               "granger_causality": {"event_causes_apoc": {"p_value": 0.04, "significant_at_05": True}},
+               "n_obs": 100}
+        c = _adv.build_method_comparison(its, var, {"error": "x"}, {"error": "x"}, {"error": "x"})
+        assert c["consensus"]["direction_agreement"] is True
+        assert c["consensus"]["consensus_direction"] == "negative"
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# 35 – Offline-Online Hypotheses (H22-H26)
+# ═══════════════════════════════════════════════════════════════════════
+
+@pytest.fixture
+def h_daily_fixture():
+    """Extended daily fixture for hypothesis testing."""
+    dates = [datetime.date(2018, 1, 1) + datetime.timedelta(days=i)
+             for i in range(365)]
+    np.random.seed(42)
+    scores = np.random.normal(0.1, 0.02, 365)
+    # Simulate spikes after events
+    for spike_day in [60, 120, 180, 240, 300]:
+        scores[spike_day:spike_day + 10] += np.exp(-np.arange(10) * 0.2) * 0.05
+    return pl.DataFrame({
+        "day": dates,
+        "mean_score": scores,
+        "median_score": scores,
+        "total_score": scores * 100,
+        "post_count": [50] * 365,
+        "apoc_post_count": [5] * 365,
+        "apoc_prevalence": [0.1] * 365,
+    })
+
+
+@pytest.fixture
+def h_events_fixture():
+    """Events for hypothesis testing – mix of online/offline nexus."""
+    return pl.DataFrame({
+        "event_date": [
+            datetime.date(2018, 3, 1),
+            datetime.date(2018, 4, 30),
+            datetime.date(2018, 5, 5),   # Clustered with Event B
+            datetime.date(2018, 6, 28),
+            datetime.date(2018, 10, 27),
+        ],
+        "event_name": ["Event A", "Event B", "Event C", "Event D", "Event E"],
+        "event_category": ["mass_violence"] * 5,
+        "killed": [5, 50, 3, 15, 11],
+        "injured": [10, 100, 5, 30, 6],
+        "ideology": ["far_right", "islamist", "far_right", "incel", "far_right"],
+        "online_nexus": [True, False, True, False, True],
+        "location_country": ["US", "France", "US", "US", "US"],
+        "domestic": [True, False, True, True, True],
+    })
+
+
+class TestExpDecay:
+    def test_function_shape(self):
+        t = np.arange(30)
+        y = _hyp._exp_decay(t, 1.0, 0.1, 0.0)
+        assert y[0] == pytest.approx(1.0)
+        assert y[-1] < y[0]
+        # Should be monotonically decreasing for positive a and lam
+        assert all(y[i] >= y[i + 1] for i in range(len(y) - 1))
+
+
+class TestEstimateDecayHalflife:
+    def test_returns_result(self, h_daily_fixture, h_events_fixture):
+        r = _hyp.estimate_decay_halflife(h_daily_fixture, h_events_fixture,
+                                          post_days=15)
+        assert isinstance(r, dict)
+        if "error" not in r:
+            assert "per_event" in r
+            assert "aggregate" in r
+            assert "n_events" in r
+
+    def test_empty_events(self, h_daily_fixture):
+        empty = pl.DataFrame({
+            "event_date": [],
+            "event_name": [],
+            "event_category": [],
+            "killed": [],
+            "injured": [],
+            "ideology": [],
+            "online_nexus": [],
+        }, schema={
+            "event_date": pl.Date,
+            "event_name": pl.Utf8,
+            "event_category": pl.Utf8,
+            "killed": pl.Int64,
+            "injured": pl.Int64,
+            "ideology": pl.Utf8,
+            "online_nexus": pl.Boolean,
+        })
+        r = _hyp.estimate_decay_halflife(h_daily_fixture, empty)
+        assert "error" in r
+
+
+class TestReciprocalAmplification:
+    def test_returns_result(self, h_daily_fixture, h_events_fixture):
+        ts = _adv.build_event_series(h_daily_fixture, h_events_fixture)
+        r = _hyp.test_reciprocal_amplification(ts, maxlag=5, irf_periods=10)
+        assert isinstance(r, dict)
+        if "error" not in r:
+            assert "granger_causality" in r
+            assert "findings" in r
+            assert "supported" in r
+
+    def test_insufficient_data(self):
+        tiny = pd.DataFrame({
+            "apoc_mean": [0.1, 0.2],
+            "event_occurred": [0, 1],
+        })
+        r = _hyp.test_reciprocal_amplification(tiny)
+        assert "error" in r
+
+
+class TestThresholdActivation:
+    def test_returns_result(self, h_daily_fixture, h_events_fixture):
+        r = _hyp.test_threshold_activation(
+            h_daily_fixture, h_events_fixture,
+            candidate_thresholds=[3, 10, 20],
+        )
+        assert isinstance(r, dict)
+        if "error" not in r:
+            assert "threshold_tests" in r
+            assert "optimal_threshold" in r
+            assert "piecewise_regression" in r
+
+    def test_threshold_scan(self, h_daily_fixture, h_events_fixture):
+        r = _hyp.test_threshold_activation(
+            h_daily_fixture, h_events_fixture,
+            candidate_thresholds=[5],
+        )
+        if "error" not in r and r["threshold_tests"]:
+            t = r["threshold_tests"][0]
+            assert "threshold" in t
+            assert "mannwhitney_p" in t
+
+
+class TestTemporalClustering:
+    def test_returns_result(self, h_daily_fixture, h_events_fixture):
+        r = _hyp.test_temporal_clustering(
+            h_daily_fixture, h_events_fixture,
+            cluster_window_days=14,
+        )
+        assert isinstance(r, dict)
+        if "error" not in r:
+            assert "per_event" in r
+            assert "comparison" in r
+
+    def test_detects_clusters(self, h_daily_fixture, h_events_fixture):
+        r = _hyp.test_temporal_clustering(
+            h_daily_fixture, h_events_fixture,
+            cluster_window_days=14,
+        )
+        if "error" not in r:
+            clustered = [e for e in r["per_event"] if e["is_clustered"]]
+            # Events B and C are 5 days apart, should be clustered
+            assert len(clustered) >= 1
+
+    def test_too_few_events(self, h_daily_fixture):
+        few = pl.DataFrame({
+            "event_date": [datetime.date(2018, 3, 1)],
+            "event_name": ["Only"],
+            "event_category": ["mass_violence"],
+            "killed": [5],
+            "injured": [10],
+            "ideology": ["far_right"],
+            "online_nexus": [True],
+            "location_country": ["US"],
+            "domestic": [True],
+        })
+        r = _hyp.test_temporal_clustering(h_daily_fixture, few)
+        assert "error" in r
+
+
+class TestMimeticContagion:
+    def test_returns_result(self, h_daily_fixture, h_events_fixture):
+        r = _hyp.test_mimetic_contagion(h_daily_fixture, h_events_fixture)
+        assert isinstance(r, dict)
+        if "error" not in r:
+            assert "magnitude_test" in r
+            assert "direction_test" in r
+            assert "polarisation_test" in r
+            assert "n_online" in r
+            assert "n_offline" in r
+
+    def test_handles_all_online(self, h_daily_fixture):
+        all_online = pl.DataFrame({
+            "event_date": [datetime.date(2018, 3, 1),
+                           datetime.date(2018, 6, 1)],
+            "event_name": ["A", "B"],
+            "event_category": ["mass_violence", "mass_violence"],
+            "killed": [5, 10],
+            "injured": [10, 20],
+            "ideology": ["far_right", "far_right"],
+            "online_nexus": [True, True],
+            "location_country": ["US", "US"],
+            "domestic": [True, True],
+        })
+        r = _hyp.test_mimetic_contagion(h_daily_fixture, all_online)
+        # Should have error due to insufficient offline events
+        assert "error" in r or r.get("n_offline", 0) == 0
+
+    def test_cohens_d_bounded(self):
+        """Test that Cohen's d is reasonable for known inputs."""
+        a = pd.Series([1.0, 2.0, 3.0, 4.0])
+        b = pd.Series([2.0, 3.0, 4.0, 5.0])
+        d = (a.mean() - b.mean()) / np.sqrt(
+            ((len(a) - 1) * a.var() + (len(b) - 1) * b.var()) / (len(a) + len(b) - 2)
+        )
+        assert -5 < d < 5

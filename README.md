@@ -4,7 +4,7 @@ Analysis pipeline testing whether the publication of the "Iron March edition" of
 
 ## Research Overview
 
-This project implements a multi-method quantitative analysis of ideological diffusion on the Iron March (IM) neo-fascist forum (2011–2017) and 4chan's /pol/ board, using the leaked Iron March MySQL database and the 4plebs /pol/ archive (Asagi schema). The pipeline tests twenty-one hypotheses spanning macro-temporal trends, network contagion, collective exegesis, spatial diffusion, and cross-platform contagion, plus an apocalypticism chapter examining post-attack rhetoric:
+This project implements a multi-method quantitative analysis of ideological diffusion on the Iron March (IM) neo-fascist forum (2011–2017) and 4chan's /pol/ board, using the leaked Iron March MySQL database and the 4plebs /pol/ archive (Asagi schema). The pipeline tests twenty-six hypotheses spanning macro-temporal trends, network contagion, collective exegesis, spatial diffusion, and cross-platform contagion, plus an apocalypticism chapter examining post-attack rhetoric with advanced time-series methods:
 
 | # | Hypothesis | Method | Key Finding |
 |---|-----------|--------|-------------|
@@ -53,6 +53,21 @@ A separate analysis chapter tests whether mass-casualty violent events trigger a
 | Domestic vs intl | Mann-Whitney comparison | p=0.19, no significant difference |
 | Multiple regression | OLS of β₂ on log(killed), domestic, nexus, ideology | R²=0.14; domestic (p=0.01\*) is only significant predictor |
 | Robustness | Placebo, bandwidth, dose–response, lag, DoW, BH FDR, AR(1) | 2/5 checks passed |
+| VAR / IRF / FEVD | Vector autoregression with impulse responses | Triangulates ITS direction & Granger within VAR framework |
+| ARDL bounds test | Autoregressive distributed lag, ECM form | Long-run multiplier & error-correction speed |
+| BSTS causal impact | Bayesian structural time series (local linear trend) | Counterfactual posterior comparison per event |
+| Local projections | Jordà (2005) horizon-by-horizon impulse responses | Non-parametric IRF with Newey-West HAC SEs |
+| Method comparison | ITS vs VAR vs ARDL vs BSTS vs LP concordance | Consensus direction, significance agreement |
+
+### Offline Violence ↔ Online Rhetoric Hypotheses (H22–H26)
+
+| # | Hypothesis | Method | Key Finding |
+|---|-----------|--------|-------------|
+| H22 | Post-attack apocalyptic rhetoric decays exponentially | Exponential decay curve fitting, half-life estimation | — |
+| H23 | Bidirectional feedback between violence and rhetoric | VAR Granger causality + IRF in both directions | — |
+| H24 | Rhetoric responds only above a casualty threshold | Piecewise regression, threshold scan, Mann-Whitney | — |
+| H25 | Temporally clustered attacks produce compounding effects | Cluster classification, isolated vs clustered comparison | — |
+| H26 | Online-nexus attacks trigger distinctive rhetoric shifts | Magnitude/direction/polarisation tests by online nexus | — |
 
 ### Theoretical Framework
 
@@ -96,7 +111,7 @@ Rscript export_rda.R
 
 ## Running the Pipeline
 
-The pipeline has 17 Iron March stages, 6 /pol/ stages, 10 cross-platform stages, and 5 apocalypticism stages (38 total), orchestrated by `main.py`. Each stage is idempotent.
+The pipeline has 17 Iron March stages, 6 /pol/ stages, 10 cross-platform stages, and 7 apocalypticism stages (40 total), orchestrated by `main.py`. Each stage is idempotent.
 
 ```bash
 # Run the Iron March pipeline (default)
@@ -175,6 +190,8 @@ uv run python main.py --only 2 3
 | 31 | `31_apocalypticism_its.py` | Per-event & pooled ITS, stratified by ideology & event category |
 | 32 | `32_apocalypticism_robustness.py` | 8-test robustness battery (placebo, bandwidth, dose–response, etc.) |
 | 33 | `33_attack_characteristic_correlations.py` | Severity, ideology, geography & multiple regression on β₂ |
+| 34 | `34_advanced_ts_apocalypticism.py` | Advanced TS: VAR, ARDL, BSTS, local projections, method comparison |
+| 35 | `35_offline_online_hypotheses.py` | H22–H26: offline violence ↔ online neo-fascist rhetoric |
 
 ## Running Tests
 
@@ -182,7 +199,7 @@ uv run python main.py --only 2 3
 uv run pytest tests/ -v
 ```
 
-262 tests covering lexicon scoring, embedding boost, preprocessing, network construction, contagion model, report generation, all five exegesis-theory modules, /pol/ ingest/preprocessing, cross-platform analysis modules, and the full apocalypticism pipeline (event validation, transformer classifier, ITS regression, robustness checks, and attack-characteristic correlations).
+292+ tests covering lexicon scoring, embedding boost, preprocessing, network construction, contagion model, report generation, all five exegesis-theory modules, /pol/ ingest/preprocessing, cross-platform analysis modules, and the full apocalypticism pipeline (event validation, transformer classifier, ITS regression, robustness checks, attack-characteristic correlations, advanced time-series methods, and offline-online hypothesis tests).
 
 ## Project Structure
 
@@ -237,10 +254,12 @@ Siege-Contagion/
 │   ├── 30_pol_apocalypticism.py   # Apocalypticism: LR+contrastive classifier
 │   ├── 31_apocalypticism_its.py   # Apocalypticism: ITS analysis
 │   ├── 32_apocalypticism_robustness.py # Apocalypticism: robustness battery
-│   └── 33_attack_characteristic_correlations.py # Apocalypticism: correlations
-├── tests/                    # 262 unit tests
+│   ├── 33_attack_characteristic_correlations.py # Apocalypticism: correlations
+│   ├── 34_advanced_ts_apocalypticism.py # VAR, ARDL, BSTS, local projections
+│   └── 35_offline_online_hypotheses.py # H22–H26: offline ↔ online hypotheses
+├── tests/                    # 292+ unit tests
 │   ├── conftest.py
-│   ├── test_apocalypticism.py # 88 apocalypticism pipeline tests
+│   ├── test_apocalypticism.py # 118 apocalypticism pipeline tests
 │   ├── test_contagion.py
 │   ├── test_exegesis.py      # H7–H11 tests
 │   ├── test_ingest.py
