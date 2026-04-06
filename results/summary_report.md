@@ -876,7 +876,7 @@ The strongest findings in this project concern the *internal* dynamics of Iron M
 2. **Endogeneity:** Network contagion results are subject to homophily confounds. Permutation tests provide model-free robustness checks.
 3. **DM corpus size:** The DM corpus (≈21.7K messages) is much smaller than the forum corpus (≈195K posts). DM-based analyses may be underpowered.
 4. **'Siege' overloading:** The word 'siege' appears in non-Mason contexts. The embedding approach provides natural robustness against this issue.
-5. **Apocalypticism classifier:** LR (0.6) + contrastive similarity (0.4) with threshold 0.55 yields a 3.71% binary classification rate. Sensitivity to threshold choice is a limitation.
+5. **Apocalypticism classifier:** MLP (0.6) + contrastive similarity (0.4) with threshold 0.55 yields a 3.71% binary classification rate. Sensitivity to threshold choice is a limitation.
 6. **Robustness:** The pooled apocalypticism ITS passes 2/5 robustness checks. The AR(1)-controlled model absorbs the level shift into autocorrelation, and the placebo test (p=0.254) does not reject the null. The effect is fragile and should be interpreted with caution.
 7. **Advanced TS triangulation:** VAR, ARDL, BSTS, and Local Projections provide complementary perspectives on the ITS findings. Consensus across methods strengthens conclusions; disagreement flags fragility.
 8. **Offline–online hypotheses (H22–H26):** These hypotheses test mechanisms rather than mere association. Decay half-life, threshold activation, and temporal clustering probe the *dynamics* of the rhetoric–violence nexus.

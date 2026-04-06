@@ -6,17 +6,18 @@ matching.
 
 Architecture
 ------------
-1. **Logistic-regression classifier on sentence embeddings** — trained
-   on a large synthetic dataset of positive (apocalyptic) and negative
-   (non-apocalyptic /pol/ content) examples.  Provides calibrated
-   probability scores.
+1. **MLP classifier on sentence embeddings** — a two-layer neural
+   network trained on a large synthetic dataset of positive (apocalyptic)
+   and negative (non-apocalyptic /pol/ content) examples, with Gaussian-
+   noise data augmentation for robustness.  Provides calibrated
+   probability scores via sigmoid.
 2. **Multi-facet contrastive similarity** — separate centroid vectors for
    five apocalyptic sub-themes (eschatological, accelerationist,
    civilisational collapse, racial apocalypse, conspiratorial) plus a
    negative centroid.  Contrastive score = max positive similarity −
    negative similarity.  This captures posts using novel phrasing that
-   the LR may not have seen in training.
-3. **Combined score** — 0.6 × LR probability + 0.4 × normalised
+   the classifier may not have seen in training.
+3. **Combined score** — 0.6 × MLP probability + 0.4 × normalised
    contrastive score.  Both components are entirely embedding-based;
    no keyword matching governs the final score.
 
@@ -45,8 +46,8 @@ from functools import partial
 import numpy as np
 import polars as pl
 import torch
+import torch.nn as nn
 from sentence_transformers import SentenceTransformer
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics.pairwise import cosine_similarity
 
 from utils import DATA_PROCESSED
@@ -61,6 +62,51 @@ BATCH_SIZE = 512
 LR_WEIGHT = 0.6
 CONTRASTIVE_WEIGHT = 0.4
 BINARY_THRESHOLD = 0.55  # on combined score
+
+
+# ══════════════════════════════════════════════════════════════════════
+# MLP classifier architecture
+# ══════════════════════════════════════════════════════════════════════
+
+class ApocalypticismMLP(nn.Module):
+    """2-layer MLP classifier head on sentence-transformer embeddings.
+
+    Architecture: input → Linear → BN → ReLU → Dropout →
+                  Linear → BN → ReLU → Dropout → Linear → logit
+    """
+
+    def __init__(
+        self,
+        input_dim: int = 384,
+        hidden_dims: tuple[int, ...] = (256, 128),
+        dropout: float = 0.3,
+    ):
+        super().__init__()
+        layers: list[nn.Module] = []
+        prev = input_dim
+        for h in hidden_dims:
+            layers += [
+                nn.Linear(prev, h),
+                nn.BatchNorm1d(h),
+                nn.ReLU(),
+                nn.Dropout(dropout),
+            ]
+            prev = h
+        layers.append(nn.Linear(prev, 1))
+        self.net = nn.Sequential(*layers)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        return self.net(x).squeeze(-1)
+
+    def predict_proba(self, embeddings: np.ndarray) -> np.ndarray:
+        """Return P(apocalyptic) for each row, sklearn-style interface."""
+        self.eval()
+        with torch.no_grad():
+            x = torch.tensor(embeddings, dtype=torch.float32)
+            logits = self.forward(x)
+            probs = torch.sigmoid(logits).cpu().numpy()
+        return probs
+
 
 # ══════════════════════════════════════════════════════════════════════
 # Apocalypticism category seeds (4-way disaggregation)
@@ -93,6 +139,26 @@ CATEGORY_SEEDS: dict[str, list[str]] = {
         "White revolution is the only solution. No political path remains.",
         "Leaderless resistance cells will bring down the corrupt system from within.",
         "The great replacement demands a violent response. Our survival is at stake.",
+        "There is no political solution. The system is beyond reform. Accelerate.",
+        "DOTR approaches. Every traitor and race mixer will be held accountable.",
+        "The Order of Nine Angles understands the cosmic war we are engaged in.",
+        "Terrorgram content shows the path forward for committed accelerationists.",
+        "Saints like Tarrant showed the world what one dedicated man can accomplish.",
+        "Tommasi and the NSLF pioneered the armed struggle philosophy decades ago.",
+        "Tom Metzger and White Aryan Resistance understood the coming racial apocalypse.",
+        "In Minecraft we will dismantle the power grid and watch civilization crumble.",
+        "Infrastructure is fragile. A few well-placed actions could bring the whole thing down.",
+        "The fire rises. Every act of chaos accelerates the inevitable collapse.",
+        "GtkRWN is not just a slogan. The race war is an inevitability of demographics.",
+        "1488. The fourteen words are the only moral imperative that matters now.",
+        "Pine Tree Gang understands ecological fascism is the answer to modernity.",
+        "Harassment Architecture was right about everything. Mike Ma is a prophet.",
+        "The militant accelerationist handbook lays out what must be done clearly.",
+        "Power grid attacks are the most effective way to bring about systemic collapse.",
+        "The great cleansing fire will purify this degenerate age and usher in rebirth.",
+        "Lone wolf resistance is the only strategy the system cannot defeat.",
+        "The NSLF, Atomwaffen, The Base — all understood the necessity of direct action.",
+        "Every fed who glows cannot stop the tide. The collapse is inevitable.",
     ],
     "rapture_christian": [
         "The rapture is near. Christ will return and take the faithful to heaven.",
@@ -115,6 +181,26 @@ CATEGORY_SEEDS: dict[str, list[str]] = {
         "The dragon and the beast wage war against the saints in these last days.",
         "Born again believers will be taken up in the rapture before the tribulation.",
         "God's wrath is being poured out on this wicked generation. Prepare your souls.",
+        "The Babylon system will fall. Mystery Babylon will be utterly destroyed.",
+        "We are the generation spoken of in Matthew 24. All these signs fulfilled.",
+        "The false prophet is here. The mark is being forced on the nations.",
+        "Ezekiel 38 and Gog and Magog prophecy is being fulfilled through current wars.",
+        "The great falling away has begun. Churches are compromised. End times are here.",
+        "Blood moons, earthquakes, wars and rumors of wars. All signs of the end.",
+        "The temple will be rebuilt in Jerusalem and then the tribulation truly begins.",
+        "Seal your foreheads with the blood of Christ. The day of wrath approaches.",
+        "The two witnesses will appear in Jerusalem. The final countdown has started.",
+        "The harvest of souls approaches. The wheat will be separated from the tares.",
+        "Psalm 83 and Isaiah 17 describe the coming wars that precede the end.",
+        "The dry bones of Israel are risen. Ezekiel's prophecy proves we are in the last days.",
+        "America is the new Babylon. Its judgment draws nigh. Come out of her my people.",
+        "The restrainer is being removed. The lawless one will be revealed soon.",
+        "The seven trumpets of Revelation will sound and bring divine judgment on earth.",
+        "The nephilim are returning. Days of Noah are upon us just as Jesus warned.",
+        "Dreams and visions prophesied in Joel are multiplying. The spirit is being poured out.",
+        "The prince of darkness rules this age but the kingdom of light approaches.",
+        "Soon every knee shall bow. The day of the Lord comes like a thief in the night.",
+        "The battle of Armageddon in the valley of Megiddo is imminent. Prepare your souls.",
     ],
     "prepper": [
         "When SHTF you need at least six months of food and water stored.",
@@ -137,6 +223,26 @@ CATEGORY_SEEDS: dict[str, list[str]] = {
         "A generator fuel and medical supplies are the holy trinity of prepping.",
         "The power grid is vulnerable. One well-placed attack could black out the entire country.",
         "Survival groups need to train together regularly. Operational security is paramount.",
+        "WROL conditions are coming. Without rule of law you need to be ready to defend yourself.",
+        "Innawoods is the only viable strategy. Get out of the cities before SHTF.",
+        "Roof Koreans had the right idea. Community defense is essential when order breaks down.",
+        "Gray man doctrine: blend in during the collapse and nobody targets you for resources.",
+        "Three is two, two is one, one is none. Redundancy in all your preps.",
+        "Night vision and thermal optics give you the decisive advantage in a grid down scenario.",
+        "Cache supplies at multiple locations. Never keep everything in one place.",
+        "The golden horde from the cities will flood the countryside when the food runs out.",
+        "Antibiotics, trauma kits, surgical supplies. Medical will be the biggest gap post-collapse.",
+        "Community defense perimeters and comms protocols need to be established before SHTF.",
+        "Body armor and plate carriers are essential gear for any serious prepper.",
+        "Solar, wind, and micro-hydro. Energy independence means survival independence.",
+        "Learn primitive skills: fire starting, snares, foraging. Technology will fail eventually.",
+        "The Carrington Event would destroy the entire power grid. Have an EMP plan.",
+        "Two weeks of chaos is all it takes for civilization to completely unravel.",
+        "NBC gear and decontamination supplies for nuclear, biological, chemical threats.",
+        "Shortwave radio and mesh networks for when cell towers and internet go down.",
+        "Precious metals and barter goods will replace fiat currency after the collapse.",
+        "Underground bunkers and hardened shelters for the worst case scenarios.",
+        "Operational security means keeping your preps quiet. Loose lips sink ships.",
     ],
     "general_collapsist": [
         "Western civilization is in terminal decline. The collapse is inevitable.",
@@ -159,6 +265,26 @@ CATEGORY_SEEDS: dict[str, list[str]] = {
         "The surveillance state is building a prison planet. There will be no escape.",
         "Social cohesion is gone. Without shared values and trust society cannot function.",
         "The pandemic was just a preview. The real collapse will make COVID look like nothing.",
+        "It's happening. The system is coming apart at the seams and nothing can stop it.",
+        "Happening thread. Everything is accelerating toward the breaking point right now.",
+        "This is the big one. The happening we have been waiting for is finally here.",
+        "The fire rises. Chaos breeds chaos and the spiral only goes in one direction.",
+        "Clown world honk honk. The absurdity of this society guarantees its collapse.",
+        "Nothing can save this system. The rot goes all the way to the foundation.",
+        "The spicy times are here. Everything from here on out gets worse not better.",
+        "Balkanization is inevitable. This country will fracture along racial and political lines.",
+        "Fourth turning is upon us. The crisis era will transform everything we know.",
+        "Rome was not built in a day but it fell in one generation. We are in that generation.",
+        "The Petrodollar is dying and with it American hegemony. What replaces it will be chaos.",
+        "Weimar conditions precede societal destruction. History does not repeat but it rhymes.",
+        "Two weeks. Give it two weeks and everything will be different. Mark my words.",
+        "Supply chains, financial systems, social trust — all are failing simultaneously.",
+        "The Kali Yuga demands dissolution before renewal. We are in the darkest phase.",
+        "Cities will become ungovernable. The rural areas will be the last stand of civilization.",
+        "Globalization is unraveling. The interconnected system is its own greatest vulnerability.",
+        "The age of abundance is ending. Scarcity and conflict will define the next century.",
+        "Every empire falls. Ours is no exception. The only question is how fast.",
+        "It is all so tiresome. But the collapse will cleanse the slate eventually.",
     ],
 }
 
@@ -199,6 +325,26 @@ POSITIVE_SEEDS: dict[str, list[str]] = {
         "The great tribulation spoken of by the prophets is starting now.",
         "Divine judgment is coming for this degenerate society. Nothing can stop what is coming.",
         "The signs of the times are unmistakable. We are in the final generation.",
+        "The nephilim are returning. Days of Noah repeat. The judgment comes swiftly.",
+        "Blood moons and eclipses align with prophecy. The cosmic signs are undeniable.",
+        "The restrainer is being removed. The man of lawlessness will be revealed imminently.",
+        "Daniel's statue of iron and clay is crumbling. The stone cut without hands approaches.",
+        "Gog and Magog armies are assembling. Ezekiel 38 unfolds before our eyes.",
+        "The seals are being opened one by one. We are past the fourth horseman.",
+        "Babylon the great has fallen. Come out of her my people before the plagues arrive.",
+        "The two witnesses will appear in Jerusalem and prophecy during the final days.",
+        "Trumpets are sounding in the heavens. The strange sounds people report are angelic warnings.",
+        "The prince of this world rules for a season but the kingdom of light draws near.",
+        "Maranatha. The Lord comes quickly. Every sign confirms the imminent return.",
+        "The wheat is being separated from the tares. The harvest of souls approaches.",
+        "All nations will turn against Israel and then the end will come just as prophesied.",
+        "The abyss is opening. The locusts of Revelation will torment mankind for five months.",
+        "The wrath of the Lamb is upon this generation. No bunker will save the wicked.",
+        "Seven bowls of God's wrath will be poured out. Plagues, darkness, and fire.",
+        "The final apostasy is here. Churches preach prosperity while the end approaches.",
+        "The fig tree generation will not pass away. Israel's rebirth starts the clock.",
+        "Wars and rumors of wars. Nation rising against nation. Birth pangs intensifying.",
+        "The abomination of desolation spoken of by Daniel stands in the holy place today.",
     ],
 
     "accelerationist": [
@@ -217,6 +363,31 @@ POSITIVE_SEEDS: dict[str, list[str]] = {
         "Accelerationism means making conditions worse so people wake up and fight back.",
         "There is no political solution. The ballot box is a trap. Only collapse will free us.",
         "Every institution is compromised. Burn it all down and rebuild from the ashes.",
+        "The boog is inevitable. Big igloo time is coming. Get your Hawaiian shirt ready.",
+        "Big luau energy. The boojahideen are preparing for what comes next.",
+        "It's happening. The happening is finally here. This is not a drill brothers.",
+        "Happening thread. Get in here. Everything is accelerating toward the breaking point.",
+        "The fire rises. Every day the flames grow higher and nothing can extinguish them.",
+        "DOTR is not a meme. The day of the rope is a promise not a threat.",
+        "Read Siege and prepare. Mason laid out the blueprint for total system collapse.",
+        "In Minecraft we will target the infrastructure. Power grid goes down first.",
+        "GtkRWN. The race war will come whether you want it to or not. Choose a side.",
+        "McNuke the feds. The boogaloo boys understand what the founding fathers intended.",
+        "Fedposting is just truth telling. The system deserves everything that is coming.",
+        "There is no political solution. Voting is cope. The only way out is through collapse.",
+        "Terrorgram channels distribute the knowledge that the system fears most.",
+        "The militant accelerationist handbook is required reading for serious people.",
+        "Power grid attacks cause maximum disruption with minimum effort. Think strategically.",
+        "Every saint who took direct action moved the timeline forward. Honor their sacrifice.",
+        "The Order of Nine Angles recognized the cosmic dimension of the struggle.",
+        "Atomwaffen Division understood that small cells can cause maximum systemic damage.",
+        "The Base was right about organizing for post-collapse territorial control.",
+        "Brenton Tarrant's manifesto section on acceleration was the most important part.",
+        "Civil War 2 electric boogaloo is not a joke. The first shots have already been fired.",
+        "1488 is not just numbers. It's a commitment to action when the time comes.",
+        "Nothing ever happens you say? Just wait. The happening will catch you off guard.",
+        "Spicy times ahead. When the balloon goes up you better be on the right side.",
+        "The system is a paper tiger. One good push and the whole thing topples.",
     ],
 
     "civilizational_collapse": [
@@ -235,6 +406,26 @@ POSITIVE_SEEDS: dict[str, list[str]] = {
         "Society is breaking down at every level. There is no going back to how things were.",
         "The point of no return has been passed. This civilization is finished.",
         "Cultural and demographic decline mean the West as we know it has maybe a generation left.",
+        "Honkler was right. This is a clown world and clown worlds always burn themselves down.",
+        "The Weimar conditions of today mirror the 1920s exactly. We know what comes next.",
+        "Fourth turning crisis period has arrived. The old order must be destroyed for renewal.",
+        "It is all so tiresome but the collapse will cleanse the slate eventually.",
+        "Balkanization is the only possible future. There is no united anything anymore.",
+        "The fire rises from the ashes of what was once a great civilization.",
+        "Spengler, Toynbee, and Evola all predicted this exact stage of civilizational decay.",
+        "The demographic time bomb is ticking. Mathematics guarantee civilizational transformation.",
+        "Bread and circuses while Rome burns. The masses are too distracted to see the end coming.",
+        "This civilization chose comfort over survival. It sealed its own fate with that choice.",
+        "The social contract is broken. Without trust, cooperation, and shared purpose all falls apart.",
+        "Every metric of civilizational health — fertility, social cohesion, institutional trust — is declining.",
+        "Oswald Spengler The Decline of the West reads like a news report about today.",
+        "Mass immigration into declining civilizations always accelerates the collapse. Every single time.",
+        "The cultural immune system of the West has been deliberately compromised from within.",
+        "Two more weeks until the next crisis. And the next. And the next. Accelerating collapse.",
+        "It's happening in slow motion but it's happening. The trajectory is clear and irreversible.",
+        "The long decline is here. Some things collapse fast but civilizations die slowly then suddenly.",
+        "Atlas is shrugging. The productive class is checking out. The system cannot sustain parasitism.",
+        "Anarcho-tyranny: the state punishes the law-abiding while the criminals run free. System failure.",
     ],
 
     "racial_apocalypse": [
@@ -253,6 +444,26 @@ POSITIVE_SEEDS: dict[str, list[str]] = {
         "Civil war along racial lines is coming. The demographics guarantee it.",
         "Blood and soil. Our ancestors' homeland is being taken from us and given to foreigners.",
         "The white race is under attack from every direction. This is an existential crisis.",
+        "ZOG orchestrates the demographic destruction of every white nation systematically.",
+        "1488. Fourteen words. We must secure the existence of our people. Whatever it takes.",
+        "The race war is not coming. It is already here. Demographics are destiny.",
+        "DOTR for every race traitor. The day of reckoning will not discriminate among the guilty.",
+        "White birth rates collapse while replacement migration floods every Western nation.",
+        "The Turner Diaries described a future that becomes more plausible with each passing year.",
+        "Ethnostate or extinction. There is no middle ground. Choose now.",
+        "South Africa shows the future of whites in a minority position. Farm murders are just the start.",
+        "Diversity plus proximity equals conflict. This is a law of nature not an opinion.",
+        "GtkRWN is not ironic for millions of people worldwide. The sentiment is real and growing.",
+        "Every interracial crime statistic proves that multicultural society is a one-sided war.",
+        "The Hart-Celler Act of 1965 was the beginning of the end for white America.",
+        "The browning of America is not natural demographic change. It is engineered genocide.",
+        "Fourteen eighty-eight. When you understand what those numbers mean you understand everything.",
+        "Rhodesia and South Africa are the prophetic templates for what awaits white minorities everywhere.",
+        "Race and IQ research proves that civilizational standards cannot be maintained through replacement.",
+        "White flight is a survival instinct. But there is nowhere left to flee. Stand or perish.",
+        "The race war will be fought street by street, neighborhood by neighborhood. Prepare accordingly.",
+        "The Camp of the Saints is not fiction. It is documentary prophecy unfolding before our eyes.",
+        "Multiculturalism is anti-white. Diversity is code for fewer white people. Wake up.",
     ],
 
     "conspiratorial_apocalypse": [
@@ -271,6 +482,26 @@ POSITIVE_SEEDS: dict[str, list[str]] = {
         "Wake up. The world governments are controlled by a cabal working toward total domination.",
         "The beast system of Revelation is being built through digital currency and surveillance.",
         "They want world war three because out of chaos comes their new order.",
+        "The storm is coming. Nothing can stop what is coming. Trust the plan then watch it crumble.",
+        "QAnon was right about the cabal even if the plan was compromised. The darkness is real.",
+        "Central bank digital currencies are the mark of the beast implementation phase.",
+        "The depopulation agenda is openly stated in their own documents. Read the Georgia Guidestones.",
+        "Agenda 2030 is the blueprint for global technocratic enslavement. Every goal is a cage.",
+        "Chemtrails, HAARP, weather modification — they are terraforming the planet against us.",
+        "The fluoride in the water is deliberate. Mass medication without consent to dumb down the populace.",
+        "Project Bluebeam will fake an alien invasion to unite the world under one government.",
+        "The banking cartel created every major war for profit. World War 3 is their next harvest.",
+        "MKUltra never ended. Mass shootings are programmed to advance the disarmament agenda.",
+        "Bohemian Grove, Bilderberg, Davos — they plan our destruction in their secret meetings.",
+        "The food supply is being deliberately poisoned to weaken and control the population.",
+        "Transhumanism is the endgame. Merge with machines or be left behind in their new world.",
+        "Event 201 proved they planned the pandemic. The next planned crisis will be worse.",
+        "The great awakening is countered by the great deception. Most people will choose the lie.",
+        "Digital ID and social credit scores are the infrastructure of the coming control grid.",
+        "Klaus Schwab's fourth industrial revolution is techno-feudalism wrapped in utopian language.",
+        "Fifteen minute cities are open air prisons. Restrict movement, restrict freedom, restrict life.",
+        "They create the crisis, offer the solution, and consolidate power. Problem reaction solution.",
+        "The controlled demolition of the economy is deliberate. Crash it and buy everything for pennies.",
     ],
 }
 
@@ -296,6 +527,16 @@ NEGATIVE_SEEDS: dict[str, list[str]] = {
         "Foreign aid spending is too high when we have problems here at home.",
         "The deficit keeps growing. Neither party actually cares about fiscal responsibility.",
         "Military spending needs an audit. The Pentagon can't account for trillions.",
+        "Border security is a legitimate issue that both sides refuse to address honestly.",
+        "The two-party system is broken. Third parties deserve a real chance.",
+        "Congressional term limits would fix half the corruption in Washington overnight.",
+        "The lobbying system is legalized bribery. Campaign finance reform is essential.",
+        "Gerrymandering makes most House races uncompetitive. The system is rigged for incumbents.",
+        "State's rights are being eroded by federal overreach on both sides of the aisle.",
+        "The primary system produces extremist candidates that the general electorate doesn't want.",
+        "Gun control debate is dishonest on both sides. Neither wants real compromise.",
+        "Social security will be insolvent within decades. Someone needs to address it seriously.",
+        "The media bias discussion is tiresome. Every outlet has an agenda. Read multiple sources.",
     ],
 
     "news_commentary": [
@@ -314,6 +555,16 @@ NEGATIVE_SEEDS: dict[str, list[str]] = {
         "The new phone release was underwhelming. Barely any improvements over last year.",
         "That documentary about the scandal was really well done. Shocking revelations.",
         "Traffic was terrible today because of the construction on the highway.",
+        "The wildfire coverage is heartbreaking. Those poor people losing everything.",
+        "Unemployment numbers are better than expected but underemployment is still high.",
+        "The chip shortage is affecting everything from cars to gaming consoles.",
+        "The train derailment is getting barely any coverage. Media priorities are bizarre.",
+        "Interest rates went up again. The Fed is trying to cool inflation at everyone's expense.",
+        "The airline cancelled my flight again. Third time this month. Industry is broken.",
+        "Crypto crashed hard today. A lot of people are going to lose their savings.",
+        "The new city council voted to defund parks maintenance. Priorities are backwards.",
+        "Hurricane season predictions are worse than usual this year. Better prepare.",
+        "Factory shut down in my town. Three hundred people lost their jobs overnight.",
     ],
 
     "casual_discussion": [
@@ -332,6 +583,16 @@ NEGATIVE_SEEDS: dict[str, list[str]] = {
         "The memes from yesterday's press conference were hilarious. Top quality content.",
         "I need to upgrade my PC. The graphics card is three generations behind.",
         "Coffee or energy drinks? I need something to get through this workday.",
+        "Just adopted a rescue dog. Best decision I have made in years honestly.",
+        "Cooking for one is depressing. Everything is portioned for families in the store.",
+        "The gym bros who never rerack their weights are a menace to society.",
+        "Anyone else binge the whole season in one night? I need to go outside.",
+        "Road trip playlist suggestions? Eight hours of driving ahead of me tomorrow.",
+        "My internet has been dropping all week. ISP says nothing is wrong. Classic.",
+        "The landlord raised rent again. Time to start looking for a new place.",
+        "Who else is procrastinating right now? I should be working but here I am.",
+        "The barber absolutely butchered my hair. Now I have to wear a hat for a month.",
+        "Anyone recommend a good podcast? I need something for my commute.",
     ],
 
     "hard_negatives": [
@@ -350,6 +611,21 @@ NEGATIVE_SEEDS: dict[str, list[str]] = {
         "The medieval period wasn't actually a dark age. That's a popular misconception.",
         "Nuclear war would be devastating but treaties have reduced arsenals significantly.",
         "The financial crisis of 2008 was bad but the system adapted and recovered.",
+        "Nothing ever happens. People have been predicting the end for centuries and we are still here.",
+        "It's happening but only in the movie I'm watching right now. Great film.",
+        "The boogaloo meme used to be funny before real extremists co-opted the term.",
+        "Siege is a terrible Tom Clancy game. I prefer the newer Rainbow Six entries.",
+        "Happening threads on pol are always false alarms. Literally nothing ever actually happens.",
+        "The collapse of that building was due to poor engineering not end times.",
+        "Prepper YouTube channels are entertainment not serious survival education.",
+        "Day of the Rope is just an edgy book reference. Nobody actually believes that garbage.",
+        "The race war predictions from the 1960s never materialized. Society adapted and moved on.",
+        "Accelerationism is a philosophy term from academia. Most people using it have no idea.",
+        "Clown world is just a meme expressing frustration with absurd situations.",
+        "Calling everything a happening is peak pol hyperbole. It was a minor event.",
+        "The great reset is a World Economic Forum phrase for post-COVID policy suggestions.",
+        "Kali Yuga references in metal music do not make someone a political extremist.",
+        "Turner Diaries is poorly written propaganda fiction that only fools take seriously.",
     ],
 
     "pol_baseline": [
@@ -368,6 +644,16 @@ NEGATIVE_SEEDS: dict[str, list[str]] = {
         "Seriously what is wrong with modern architecture? Everything looks soulless and ugly.",
         "Does anyone here actually have friends in real life or is it all online?",
         "Post your honest political compass results. No larping allowed.",
+        "Trad wife threads are cringe. Half of you can barely take care of yourselves.",
+        "Greentext thread. Post your most embarrassing social interaction stories.",
+        "Wage cage general. Another week of working for a company that doesn't care about you.",
+        "Feels bar is open. Get in here and share what is bothering you tonight.",
+        "Frog posting is a legitimate art form and I will die on this hill.",
+        "The jannies are out of control on this board. Free speech is dead here.",
+        "Post body. Oh wait you can't because you are a skinnyfat keyboard warrior.",
+        "Infographic thread. Post useful charts and data visualizations on any topic.",
+        "Boomer vs zoomer arguments are tiresome. Every generation has its problems.",
+        "Music thread. Share what you are listening to right now. No judgment.",
     ],
 }
 
@@ -384,10 +670,16 @@ DIAGNOSTIC_KEYWORDS: list[tuple[str, float]] = [
     (r"\bjudgment\s+day\b", 2.5),
     (r"\bjudgement\s+day\b", 2.5),
     (r"\bday\s+of\s+the\s+rope\b", 3.0),
+    (r"\bdotr\b", 3.0),
     (r"\brapture\b", 2.5),
     (r"\brace\s+war\b", 2.5),
     (r"\brahowa\b", 2.5),
-    (r"\bboogaloo\b", 2.0),
+    (r"\bboogaloo\b", 2.5),
+    (r"\bthe\s+boog\b", 2.5),
+    (r"\bbig\s+igloo\b", 2.5),
+    (r"\bbig\s+luau\b", 2.5),
+    (r"\bboojahideen\b", 2.5),
+    (r"\bcivil\s+war\s+2\b", 2.5),
     (r"\bcollapse\s+of\s+(?:civilization|society|the\s+west)\b", 2.5),
     (r"\bkali\s+yuga\b", 3.0),
     (r"\bgreat\s+replacement\b", 2.5),
@@ -396,7 +688,7 @@ DIAGNOSTIC_KEYWORDS: list[tuple[str, float]] = [
     (r"\bgreat\s+reset\b", 2.0),
     (r"\baccelerat(?:e|ion|ionism|ionist)\b", 2.0),
     (r"\bsiege\s*culture\b", 2.0),
-    (r"\bread\s+siege\b", 2.0),
+    (r"\bread\s+siege\b", 2.5),
     (r"\bday\s+of\s+reckoning\b", 2.5),
     (r"\bcivil\s+war\s+(?:is\s+)?coming\b", 2.5),
     (r"\bend\s+of\s+(?:civilization|the\s+west|the\s+world)\b", 2.5),
@@ -409,11 +701,49 @@ DIAGNOSTIC_KEYWORDS: list[tuple[str, float]] = [
     (r"\bdeus\s+vult\b", 2.0),
     (r"\bfinal\s+solution\b", 2.0),
     (r"\bclown\s+world\b", 0.5),
+    # 4chan-specific apocalyptic/happening terminology
+    (r"\bit'?s\s+happening\b", 2.0),
+    (r"\bthe\s+happening\b", 2.0),
+    (r"\bhappening\s+thread\b", 2.0),
+    (r"\bthe\s+fire\s+rises\b", 2.0),
+    (r"\bhonk\s*l?er\b", 1.0),
+    (r"\bhonk\s+honk\b", 0.5),
+    (r"\bnothing\s+ever\s+happens\b", -1.0),
+    (r"\bshtf\b", 2.0),
+    (r"\bwrol\b", 2.0),
+    (r"\bgrid\s+down\b", 2.0),
+    (r"\binnawoods\b", 1.5),
+    (r"\bin\s+minecraft\b", 1.5),
+    (r"\bfedpost(?:ing)?\b", 1.5),
+    (r"\bthe\s+storm\s+is\s+coming\b", 2.0),
+    (r"\bmcnuke\b", 1.5),
+    (r"\bturner\s+diaries\b", 2.5),
+    (r"\b1488\b", 2.0),
+    (r"\b14\s*words?\b", 2.0),
+    (r"\bgtkrwn\b", 3.0),
+    (r"\bspicy\s+times?\b", 1.5),
+    (r"\bno\s+political\s+solution\b", 2.5),
+    (r"\bthere\s+is\s+no\s+political\s+solution\b", 3.0),
+    (r"\bsaints?\b.*\baction\b", 1.5),
+    (r"\batomwaffen\b", 3.0),
+    (r"\bterrorgram\b", 3.0),
+    (r"\border\s+of\s+nine\s+angles\b", 2.5),
+    (r"\bthe\s+base\b.*\bcollapse\b", 2.0),
+    (r"\bleaderless\s+resistance\b", 2.5),
+    (r"\blone\s+wolf\b", 2.0),
+    (r"\bcamp\s+of\s+the\s+saints\b", 2.5),
+    (r"\bharassment\s+architecture\b", 2.0),
+    (r"\bpine\s+tree\b.*\bgang\b", 1.5),
+    (r"\bfourth\s+turning\b", 2.0),
+    (r"\bpower\s+grid\b.*\b(?:attack|down|destroy|vulnerable)\b", 2.0),
     # Counter-indicators
     (r"\bvideo\s+game\b", -2.0),
     (r"\bmovie\b", -1.0),
     (r"\bapocalypse\s+now\b", -2.0),
     (r"\bzombie\s+apocalypse\b", -1.5),
+    (r"\bfallout\s+\d\b", -1.5),
+    (r"\bwalking\s+dead\b", -1.5),
+    (r"\brainbow\s+six\b", -2.0),
 ]
 
 _COMPILED_KEYWORDS = [
@@ -527,11 +857,12 @@ def build_centroid(model: SentenceTransformer) -> np.ndarray:
     return pos
 
 
-def train_classifier(model: SentenceTransformer) -> LogisticRegression:
-    """Train logistic regression on sentence-transformer embeddings.
+def train_classifier(model: SentenceTransformer) -> ApocalypticismMLP:
+    """Train 2-layer MLP classifier on sentence-transformer embeddings.
 
-    Uses synthetic positive/negative seeds as training data.
-    Training is deterministic and fast (<1 s for ~200 examples on 384-d).
+    Uses synthetic positive/negative seeds as training data, augmented
+    with Gaussian noise for robustness.  Trains with Adam + BCE loss
+    and early stopping.
     """
     pos_texts = [t for texts in POSITIVE_SEEDS.values() for t in texts]
     neg_texts = [t for texts in NEGATIVE_SEEDS.values() for t in texts]
@@ -546,32 +877,85 @@ def train_classifier(model: SentenceTransformer) -> LogisticRegression:
     )
 
     X = np.vstack([pos_embs, neg_embs])
-    y = np.array([1] * len(pos_embs) + [0] * len(neg_embs))
+    y = np.array([1.0] * len(pos_embs) + [0.0] * len(neg_embs))
 
-    lr = LogisticRegression(
-        C=1.0, max_iter=1000, solver="lbfgs", random_state=42,
-    )
-    lr.fit(X, y)
+    # Data augmentation: Gaussian noise copies for robustness
+    rng = np.random.RandomState(42)
+    X_aug = [X]
+    y_aug = [y]
+    for _ in range(5):  # 5× augmentation
+        noise = rng.normal(0, 0.02, X.shape)
+        aug = X + noise
+        norms = np.linalg.norm(aug, axis=1, keepdims=True)
+        aug = aug / norms  # re-normalise
+        X_aug.append(aug)
+        y_aug.append(y)
 
-    return lr
+    X_train = np.vstack(X_aug)
+    y_train = np.concatenate(y_aug)
+
+    # Shuffle
+    idx = rng.permutation(len(X_train))
+    X_train = X_train[idx]
+    y_train = y_train[idx]
+
+    input_dim = X_train.shape[1]
+    mlp = ApocalypticismMLP(input_dim=input_dim)
+
+    X_t = torch.tensor(X_train, dtype=torch.float32)
+    y_t = torch.tensor(y_train, dtype=torch.float32)
+
+    optimizer = torch.optim.Adam(mlp.parameters(), lr=1e-3, weight_decay=1e-4)
+    criterion = nn.BCEWithLogitsLoss()
+
+    mlp.train()
+    best_loss = float("inf")
+    patience = 20
+    wait = 0
+
+    for epoch in range(300):
+        optimizer.zero_grad()
+        logits = mlp(X_t)
+        loss = criterion(logits, y_t)
+        loss.backward()
+        optimizer.step()
+
+        if loss.item() < best_loss - 1e-4:
+            best_loss = loss.item()
+            wait = 0
+        else:
+            wait += 1
+        if wait >= patience:
+            break
+
+    mlp.eval()
+
+    # Report training accuracy
+    with torch.no_grad():
+        preds = (torch.sigmoid(mlp(X_t)) >= 0.5).float()
+        acc = (preds == y_t).float().mean().item()
+    print(f"  MLP training accuracy on augmented seeds: {acc:.4f} "
+          f"({len(X_train)} samples, stopped at epoch {epoch + 1})")
+
+    return mlp
 
 
 def score_embeddings(
     embeddings: np.ndarray,
-    lr: LogisticRegression,
+    classifier: ApocalypticismMLP,
     positive_centroid: np.ndarray,
     negative_centroid: np.ndarray,
     subtheme_centroids: dict[str, np.ndarray],
     category_centroids: dict[str, np.ndarray] | None = None,
 ) -> dict[str, np.ndarray]:
-    """Score post embeddings using LR + contrastive similarity.
+    """Score post embeddings using MLP + contrastive similarity.
 
     Returns dict of arrays, each length N (number of posts).
     """
     n = embeddings.shape[0]
 
-    # 1. LR probability
-    lr_probs = lr.predict_proba(embeddings)[:, 1]
+    # 1. MLP probability
+    lr_probs = classifier.predict_proba(embeddings)
 
     # 2. Similarity to positive centroid (backward compat)
     pos_sim = cosine_similarity(
@@ -686,10 +1070,9 @@ def main():
     print(f"  Device: {device}")
     model = SentenceTransformer(MODEL_NAME, device=device)
 
-    # ── Train LR classifier on synthetic data ─────────────────────────
-    print("\n  Training logistic regression on synthetic seed data…")
-    lr = train_classifier(model)
-    print(f"  LR training accuracy on seeds: {lr.score(lr.__dict__.get('_X', np.empty(0)), lr.__dict__.get('_y', np.empty(0))) if hasattr(lr, '_X') else 'N/A'}")
+    # ── Train MLP classifier on synthetic data ─────────────────────────
+    print("\n  Training MLP classifier on synthetic seed data…")
+    classifier = train_classifier(model)
 
     # ── Build centroids ───────────────────────────────────────────────
     print("  Building apocalypticism centroids…")
@@ -735,9 +1118,9 @@ def main():
     )
 
     # ── 3. Score embeddings ───────────────────────────────────────────
-    print("  Scoring with LR + contrastive similarity…")
+    print("  Scoring with MLP + contrastive similarity…")
     scores = score_embeddings(
-        embeddings, lr, pos_centroid, neg_centroid, subtheme_centroids,
+        embeddings, classifier, pos_centroid, neg_centroid, subtheme_centroids,
         category_centroids=cat_centroids,
     )
 
@@ -760,7 +1143,7 @@ def main():
     pol.write_parquet(out_path)
 
     print(f"\n  Summary statistics:")
-    print(f"    LR prob mean:         {scores['apoc_lr_prob'].mean():.4f}")
+    print(f"    MLP prob mean:         {scores['apoc_lr_prob'].mean():.4f}")
     print(f"    Similarity mean:      {scores['apoc_similarity'].mean():.4f}")
     print(f"    Contrastive mean:     {scores['apoc_contrastive'].mean():.4f}")
     print(f"    Combined mean:        {scores['apoc_combined'].mean():.4f}")

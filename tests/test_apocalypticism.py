@@ -2,7 +2,7 @@
 
 Covers:
   - Event dataset validation (categories, ideologies, completeness)
-  - Transformer-based classifier (LR, centroids, contrastive scoring)
+  - Transformer-based classifier (MLP, centroids, contrastive scoring)
   - ITS regression & category comparison
   - Robustness utilities
   - Attack-characteristic correlations
@@ -237,24 +237,63 @@ class TestDiagnosticKeywordScore:
         r = _apoc.compute_apoc_keyword_score("Armageddon")
         assert r["apoc_binary"] == 1
 
+    def test_boogaloo_variants(self):
+        for term in ["boogaloo", "the boog", "big igloo", "big luau", "boojahideen"]:
+            r = _apoc.compute_diagnostic_keyword_score(f"The {term} is coming soon.")
+            assert r["apoc_binary"] == 1, f"Failed for '{term}'"
+
+    def test_happening_terminology(self):
+        for text in ["It's happening right now", "The happening is here",
+                     "Happening thread get in here"]:
+            r = _apoc.compute_diagnostic_keyword_score(text)
+            assert r["apoc_binary"] == 1, f"Failed for '{text}'"
+
+    def test_dotr_abbreviation(self):
+        r = _apoc.compute_diagnostic_keyword_score("DOTR is coming for traitors.")
+        assert r["apoc_binary"] == 1
+
+    def test_accelerationist_phrases(self):
+        r = _apoc.compute_diagnostic_keyword_score(
+            "There is no political solution to this problem."
+        )
+        assert r["apoc_binary"] == 1
+
+    def test_in_minecraft_euphemism(self):
+        r = _apoc.compute_diagnostic_keyword_score("We will do it in Minecraft.")
+        assert r["apoc_binary"] == 1
+
+    def test_turner_diaries(self):
+        r = _apoc.compute_diagnostic_keyword_score("Read the Turner Diaries.")
+        assert r["apoc_binary"] == 1
+
+    def test_counter_indicator_nothing_ever_happens(self):
+        r = _apoc.compute_diagnostic_keyword_score("Nothing ever happens.")
+        assert r["apoc_keyword_score"] == 0.0  # negative weight only
+
+    def test_counter_indicator_game_references(self):
+        for text in ["Playing Fallout 4", "Watching Walking Dead",
+                     "Rainbow Six Siege is fun"]:
+            r = _apoc.compute_diagnostic_keyword_score(text)
+            assert r["apoc_keyword_score"] == 0.0, f"Failed for '{text}'"
+
 
 class TestSeedData:
     """Validate the synthetic training data structure."""
 
     def test_positive_seeds_has_subthemes(self):
-        assert len(_apoc.POSITIVE_SEEDS) >= 4
+        assert len(_apoc.POSITIVE_SEEDS) >= 5
         for theme, texts in _apoc.POSITIVE_SEEDS.items():
-            assert len(texts) >= 10, f"Sub-theme '{theme}' has only {len(texts)} examples"
+            assert len(texts) >= 30, f"Sub-theme '{theme}' has only {len(texts)} examples"
 
     def test_negative_seeds_has_categories(self):
-        assert len(_apoc.NEGATIVE_SEEDS) >= 3
+        assert len(_apoc.NEGATIVE_SEEDS) >= 4
         for cat, texts in _apoc.NEGATIVE_SEEDS.items():
-            assert len(texts) >= 10, f"Negative category '{cat}' has only {len(texts)} examples"
+            assert len(texts) >= 20, f"Negative category '{cat}' has only {len(texts)} examples"
 
     def test_has_hard_negatives(self):
         """Hard negatives are crucial for classifier quality."""
         assert "hard_negatives" in _apoc.NEGATIVE_SEEDS
-        assert len(_apoc.NEGATIVE_SEEDS["hard_negatives"]) >= 10
+        assert len(_apoc.NEGATIVE_SEEDS["hard_negatives"]) >= 25
 
     def test_balanced_training_set(self):
         n_pos = sum(len(t) for t in _apoc.POSITIVE_SEEDS.values())
@@ -274,7 +313,7 @@ class TestCategorySeeds:
 
     def test_category_seeds_not_empty(self):
         for cat, texts in _apoc.CATEGORY_SEEDS.items():
-            assert len(texts) >= 15, f"Category '{cat}' has only {len(texts)} seeds"
+            assert len(texts) >= 35, f"Category '{cat}' has only {len(texts)} seeds"
 
     def test_category_names(self):
         expected = {"siegist_traditionalist", "rapture_christian",
@@ -331,7 +370,7 @@ class TestScoreEmbeddingsWithCategories:
         except Exception:
             pytest.skip("sentence-transformers not available")
 
-        lr = _apoc.train_classifier(model)
+        classifier = _apoc.train_classifier(model)
         pos, neg, subs = _apoc.build_centroids(model)
         cat_centroids = _apoc.build_category_centroids(model)
 
@@ -344,7 +383,7 @@ class TestScoreEmbeddingsWithCategories:
         embs = model.encode(texts, normalize_embeddings=True)
 
         scores = _apoc.score_embeddings(
-            embs, lr, pos, neg, subs,
+            embs, classifier, pos, neg, subs,
             category_centroids=cat_centroids,
         )
 
@@ -364,7 +403,7 @@ class TestScoreEmbeddingsWithCategories:
         except Exception:
             pytest.skip("sentence-transformers not available")
 
-        lr = _apoc.train_classifier(model)
+        classifier = _apoc.train_classifier(model)
         pos, neg, subs = _apoc.build_centroids(model)
         cat_centroids = _apoc.build_category_centroids(model)
 
@@ -377,7 +416,7 @@ class TestScoreEmbeddingsWithCategories:
         embs = model.encode(texts, normalize_embeddings=True)
 
         scores = _apoc.score_embeddings(
-            embs, lr, pos, neg, subs,
+            embs, classifier, pos, neg, subs,
             category_centroids=cat_centroids,
         )
 
@@ -396,11 +435,11 @@ class TestScoreEmbeddingsWithCategories:
         except Exception:
             pytest.skip("sentence-transformers not available")
 
-        lr = _apoc.train_classifier(model)
+        classifier = _apoc.train_classifier(model)
         pos, neg, subs = _apoc.build_centroids(model)
 
         embs = model.encode(["test text"], normalize_embeddings=True)
-        scores = _apoc.score_embeddings(embs, lr, pos, neg, subs)
+        scores = _apoc.score_embeddings(embs, classifier, pos, neg, subs)
 
         assert "apoc_category" not in scores
         assert "apoc_lr_prob" in scores
@@ -449,13 +488,15 @@ class TestTrainClassifier:
         except Exception:
             pytest.skip("sentence-transformers not available")
 
-        lr = _apoc.train_classifier(model)
+        classifier = _apoc.train_classifier(model)
+        assert isinstance(classifier, _apoc.ApocalypticismMLP)
+
         # Should predict apocalyptic text as positive
         apoc_emb = model.encode(
             ["The end times are here, Armageddon is coming"],
             normalize_embeddings=True,
         )
-        prob = lr.predict_proba(apoc_emb)[0, 1]
+        prob = classifier.predict_proba(apoc_emb)[0]
         assert prob > 0.5, f"Apocalyptic text scored only {prob:.3f}"
 
         # Should predict casual text as negative
@@ -463,8 +504,52 @@ class TestTrainClassifier:
             ["I had pizza for dinner and watched a movie"],
             normalize_embeddings=True,
         )
-        prob_neg = lr.predict_proba(casual_emb)[0, 1]
+        prob_neg = classifier.predict_proba(casual_emb)[0]
         assert prob_neg < 0.5, f"Casual text scored {prob_neg:.3f}"
+
+    def test_4chan_terminology_positive(self):
+        """4chan-specific apocalyptic terminology should score high."""
+        try:
+            from sentence_transformers import SentenceTransformer
+            model = SentenceTransformer("all-MiniLM-L6-v2")
+        except Exception:
+            pytest.skip("sentence-transformers not available")
+
+        classifier = _apoc.train_classifier(model)
+        texts = [
+            "It's happening. The boogaloo is finally here.",
+            "DOTR approaches. The fire rises brothers.",
+            "There is no political solution. Accelerate the collapse.",
+            "Big igloo time. The boojahideen are ready.",
+        ]
+        embs = model.encode(texts, normalize_embeddings=True)
+        probs = classifier.predict_proba(embs)
+        for i, prob in enumerate(probs):
+            assert prob > 0.5, (
+                f"4chan apocalyptic text [{i}] scored only {prob:.3f}: "
+                f"{texts[i][:60]}"
+            )
+
+    def test_hard_negatives_low(self):
+        """Hard negatives (media references, games) should score low."""
+        try:
+            from sentence_transformers import SentenceTransformer
+            model = SentenceTransformer("all-MiniLM-L6-v2")
+        except Exception:
+            pytest.skip("sentence-transformers not available")
+
+        classifier = _apoc.train_classifier(model)
+        texts = [
+            "Siege is a terrible Tom Clancy game.",
+            "Nothing ever happens. Literally nothing.",
+            "The apocalypse movie had great CGI effects.",
+        ]
+        embs = model.encode(texts, normalize_embeddings=True)
+        probs = classifier.predict_proba(embs)
+        for i, prob in enumerate(probs):
+            assert prob < 0.5, (
+                f"Hard negative [{i}] scored {prob:.3f}: {texts[i][:60]}"
+            )
 
 
 class TestScoreEmbeddings:
@@ -475,7 +560,7 @@ class TestScoreEmbeddings:
         except Exception:
             pytest.skip("sentence-transformers not available")
 
-        lr = _apoc.train_classifier(model)
+        classifier = _apoc.train_classifier(model)
         pos, neg, subs = _apoc.build_centroids(model)
 
         texts = [
@@ -485,7 +570,7 @@ class TestScoreEmbeddings:
         ]
         embs = model.encode(texts, normalize_embeddings=True)
 
-        scores = _apoc.score_embeddings(embs, lr, pos, neg, subs)
+        scores = _apoc.score_embeddings(embs, classifier, pos, neg, subs)
 
         assert "apoc_lr_prob" in scores
         assert "apoc_combined" in scores

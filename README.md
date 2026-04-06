@@ -39,7 +39,7 @@ Additionally, H8 (thread escalation) and H10 (semantic convergence) are adapted 
 
 ### Apocalypticism Chapter
 
-A separate analysis chapter tests whether mass-casualty violent events trigger apocalyptic rhetoric on /pol/. Uses a transformer-based classifier (logistic regression + multi-facet contrastive similarity on `all-MiniLM-L6-v2` embeddings) to identify five sub-themes of apocalypticism: racial apocalypse, eschatological, civilizational collapse, accelerationist, and conspiratorial. Posts classified as apocalyptic are further disaggregated into four conceptual categories:
+A separate analysis chapter tests whether mass-casualty violent events trigger apocalyptic rhetoric on /pol/. Uses a transformer-based classifier (MLP neural network + multi-facet contrastive similarity on `all-MiniLM-L6-v2` embeddings) to identify five sub-themes of apocalypticism: racial apocalypse, eschatological, civilizational collapse, accelerationist, and conspiratorial. Posts classified as apocalyptic are further disaggregated into four conceptual categories:
 
 1. **Siegist / Traditionalist** — Siege culture, accelerationism, Kali Yuga, Day of the Rope, Evola, Mason (80.6% of apocalyptic posts)
 2. **Rapture / Christian** — Rapture, Revelation, Armageddon, Tribulation, end times (8.4%)
@@ -49,7 +49,7 @@ A separate analysis chapter tests whether mass-casualty violent events trigger a
 | Analysis | Method | Key Finding |
 |----------|--------|-------------|
 | Event catalogue | 136 events (110 mass-violence + 26 non-violence controls) across 2010–2023 | 23 countries, 6 ideology categories |
-| Classifier | LR (0.6) + contrastive similarity (0.4), threshold 0.55 | 3.71% binary classification rate |
+| Classifier | MLP (0.6) + contrastive similarity (0.4), threshold 0.55 | 3.71% binary classification rate |
 | Per-event ITS | Newey-West HAC regression per event | 34/86 significant at α=0.05 |
 | Pooled ITS | Stacked ITS with event FE | β₂ = −0.0018 (p=0.043) — slight *decrease* |
 | Category comparison | Violence vs non-violence falsification | Mass-violence β₂=−0.0025; economic-shock β₂=+0.016 |
@@ -192,7 +192,7 @@ uv run python main.py --only 2 3
 | Stage | Script | Description |
 |-------|--------|-------------|
 | 29 | `29_mass_casualty_events.py` | Mass-casualty & discontinuity event dataset (136 events) |
-| 30 | `30_pol_apocalypticism.py` | Transformer-based apocalypticism classifier (LR + contrastive) + 4-category disaggregation |
+| 30 | `30_pol_apocalypticism.py` | Transformer-based apocalypticism classifier (MLP + contrastive) + 4-category disaggregation |
 | 31 | `31_apocalypticism_its.py` | Per-event & pooled ITS, stratified by ideology, event category & apocalypticism category |
 | 32 | `32_apocalypticism_robustness.py` | 8-test robustness battery (placebo, bandwidth, dose–response, etc.) |
 | 33 | `33_attack_characteristic_correlations.py` | Severity, ideology, geography & multiple regression on β₂ |
@@ -257,7 +257,7 @@ Siege-Contagion/
 │   ├── 27_subtheme_diffusion.py   # H20: Sub-theme disaggregation
 │   ├── 28_domain_diffusion.py     # H21: URL domain diffusion
 │   ├── 29_mass_casualty_events.py # Apocalypticism: event dataset
-│   ├── 30_pol_apocalypticism.py   # Apocalypticism: LR+contrastive classifier
+│   ├── 30_pol_apocalypticism.py   # Apocalypticism: MLP+contrastive classifier
 │   ├── 31_apocalypticism_its.py   # Apocalypticism: ITS analysis
 │   ├── 32_apocalypticism_robustness.py # Apocalypticism: robustness battery
 │   ├── 33_attack_characteristic_correlations.py # Apocalypticism: correlations
