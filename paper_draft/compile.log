@@ -1,0 +1,31 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex)
+ \write18 enabled.
+entering extended mode
+(./main.tex
+LaTeX2e <2025-11-01>
+L3 programming layer <2025-11-14>
+(./apsr_submission.cls
+Document Class: apsr_submission 2023/06/30 v1.3
+(/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2025/01/22 v1.4n Standard LaTeX document class
+(/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/base/size12.clo)) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/silence/silence.sty) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/generic/babel/babel.sty (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/generic/babel/txtbabel.def) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/generic/babel/locale/en/babel-english.tex) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/generic/babel-english/english.ldf)) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifxetex.sty (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty)) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifluatex.sty) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifpdf.sty) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/newtx/newtxtext.sty `newtxtext' v1.744, 2024/04/01 Text macros taking advantage of TeXGyre Termes and its extensions (msharpe) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/xpatch/xpatch.sty (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def)) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/l3packages/xparse/xparse.sty) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty)) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/xkeyval/xkeyval.sty (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkeyval.tex (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/xkvutils.tex (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/generic/xkeyval/keyval.tex)))) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/generic/xstring/xstring.sty (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/generic/xstring/xstring.tex)) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/carlisle/scalefnt.sty) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/generic/kastrup/binhex.tex) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/fontaxes/fontaxes.sty (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/fontaxes/fontaxes-v1.sty))) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/newtx/newtxmath.sty `newtxmath' v1.754, 2024/09/22 Math macros based originally on txfonts (msharpe) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty)) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty)) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/centernot.sty) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/generic/kastrup/binhex.tex)
+amsthm NOT loaded
+) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/microtype/microtype.sty (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/microtype/microtype-pdftex.def) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/microtype/microtype.cfg)) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/textcase/textcase.sty) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/lettrine/lettrine.sty
+Loading lettrine.cfg
+(/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/lettrine/lettrine.cfg)) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/mdframed/mdframed.sty (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty) (/Users/alexnewhouse/Library/TinyTeX/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty))
+
+! LaTeX Error: File `zref-abspage.sty' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name: 
+! Emergency stop.
+<read *> 
+         
+l.76 \RequirePackage
+                    {needspace}^^M
+!  ==> Fatal error occurred, no output PDF file produced!
+Transcript written on main.log.

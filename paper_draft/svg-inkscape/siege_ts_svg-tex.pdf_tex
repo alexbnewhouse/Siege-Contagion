@@ -1,0 +1,69 @@
+%% Creator: Inkscape 1.4.2 (ebf0e940, 2025-05-08), www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'siege_ts_svg-tex.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{498bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.68273092)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{siege_ts_svg-tex.pdf}}%
+    \put(0.05696787,0.09000001){\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}0\end{tabular}}}}%
+    \put(0.05696787,0.25399599){\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}10\end{tabular}}}}%
+    \put(0.05696787,0.41801204){\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}20\end{tabular}}}}%
+    \put(0.05696787,0.58202811){\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}30\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{siege_ts_svg-tex.pdf}}%
+    \put(0.1503012,0.0408835){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2012\end{tabular}}}}%
+    \put(0.42076304,0.0408835){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2014\end{tabular}}}}%
+    \put(0.69086343,0.0408835){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2016\end{tabular}}}}%
+    \put(0.96134538,0.0408835){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}2018\end{tabular}}}}%
+    \put(0.5278916,0.01646589){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Date\end{tabular}}}}%
+    \put(0.0264257,0.36769076){\rotatebox{90}{\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Percent of Daily Posts\end{tabular}}}}}%
+  \end{picture}%
+\endgroup%
